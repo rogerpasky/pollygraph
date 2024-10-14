@@ -140,7 +140,7 @@ node.append("title")
     .text(d => d.id);
 
 link.append("title")
-    .text(d => `${d.source.id} → ${d.target.id}`);
+    .text(d => `De ${d.source.id} a ${d.target.id}`);
 
 d3.select("body").on("keydown", function(event) {
     // Check if the "Enter" key was pressed
