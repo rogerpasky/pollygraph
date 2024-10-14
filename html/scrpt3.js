@@ -123,14 +123,12 @@ const node = svg.append("g")
     .selectAll()
     .data(nodes)
     .join("circle")
+        .attr('id', d => d.id)
         .attr('tabindex', 0)
         .attr('class', 'arc')
         .attr("r", 5)
         .attr("fill", d => color(d.group))
-        .on('focus', function() {
-            // Apply visual changes to indicate focus, e.g., change stroke color
-            d3.select(this).attr('stroke', 'blue');
-        })
+        .on('focus', onFocusNode)
         .on('blur', function() {
             // Revert visual changes when the element loses focus
             d3.select(this).attr('stroke', '#fff');
@@ -158,6 +156,16 @@ d3.select("body").on("keydown", function(event) {
     }
 });
 
+function onFocusNode() {
+    d3.select(this)
+        .attr('stroke', 'blue');
+    console.log(this.id)
+    // Highlight the links connected to the focused node.
+    link
+        .attr('stroke', d => {
+            return d.source.id === this.id || d.target.id === this.id ? 'blue' : '#999';
+        });
+}
 
 // Create the SVG container.
 // const svg = d3.create("svg")
