@@ -157,7 +157,7 @@ function onFocusNode() {
         currentFocusedLink.focus();
     }
     else {
-        connectedLinks[0].focus();
+        connectedLinks[0].focus();  // TODO: focus on the closest link
     }
     displayFocusOnNode(currentFocusedNode);
 }
@@ -167,11 +167,11 @@ function onFocusLink() {
     // display focus on one of the connected nodes if not already displayed
     const linkedNodes = selectLinkedNodes(currentFocusedLink).nodes();
     if (linkedNodes.includes(currentFocusedNode)) {
-        displayFocusOnNode(currentFocusedNode);  // re-done for first usage
+        displayFocusOnNode(currentFocusedNode);  // maybe sometimes redundant
     }
     else {
         displayUnfocusOnNode(currentFocusedNode);
-        currentFocusedNode = linkedNodes[0];
+        currentFocusedNode = linkedNodes[0];  // any of the linked nodes
         displayFocusOnNode(currentFocusedNode);
     }
     const connectedLinksSelection = selectConnectedLinks(currentFocusedNode);
@@ -203,7 +203,7 @@ function onKeydown(event) {
         DisplayFocusOnNextLink();
     }
     else if (event.key === "Enter" || event.key === " ") {
-        changeNodeFocusOnLink();
+        exchangeNodeFocusOnLink();
     }
 }
 
@@ -235,11 +235,12 @@ function getOtherSideOfLink(link, node) {
     return nodeGroup.filter(d => d.id === other).nodes()[0];
 }
 
-function changeNodeFocusOnLink() {
+function exchangeNodeFocusOnLink() {
     displayUnfocusOnNode(currentFocusedNode);
     const otherNode = getOtherSideOfLink(currentFocusedLink, currentFocusedNode);
     currentFocusedNode = otherNode;
     displayFocusOnNode(currentFocusedNode);
+
     const connectedLinksSelection = selectConnectedLinks(currentFocusedNode);
     preFocusConnectedLinks(connectedLinksSelection);
     displayFocusOnLink(currentFocusedLink);
@@ -255,9 +256,10 @@ function DisplayFocusOnPreviousLink() {
     }
     currentFocusedLink = connectedLinks.nodes()[nextLinkIndex];
     preFocusConnectedLinks(connectedLinks);
-    displayFocusOnLink(connectedLinks.select((d, i, nodes) => 
+    const previousLink = connectedLinks.select((d, i, nodes) => 
         nodes[i] === currentFocusedLink ? nodes[i] : null
-    ).nodes()[0]);
+    ).nodes()[0];
+    previousLink.focus();
 }
 
 function DisplayFocusOnNextLink() {
@@ -270,9 +272,10 @@ function DisplayFocusOnNextLink() {
     }
     currentFocusedLink = connectedLinks.nodes()[nextLinkIndex];
     preFocusConnectedLinks(connectedLinks);
-    displayFocusOnLink(connectedLinks.select((d, i, nodes) => 
+    const nextLink = connectedLinks.select((d, i, nodes) => 
         nodes[i] === currentFocusedLink ? nodes[i] : null
-    ).nodes()[0]);
+    ).nodes()[0];
+    nextLink.focus();
 }
 
 function preFocusConnectedLinks(connectedLinks) {
@@ -291,7 +294,6 @@ function preFocusConnectedLinks(connectedLinks) {
 }
 
 function displayFocusOnLink(link) {
-    link.focus();
     link.setAttribute('stroke', LINK_COLOR_FOCUSED)
     link.setAttribute('stroke-opacity', LINK_OPACITY_FOCUSED);
 }
