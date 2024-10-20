@@ -196,11 +196,11 @@ function onKeydown(event) {
         console.log("Left arrow key was pressed");
     }
     else if (event.key === "ArrowUp") {
-        DisplayFocusOnPreviousLink();
+        DisplayFocusOnNextLink(-1);
     }
     else if (event.key === "ArrowDown") {
         console.log("Down arrow key was pressed");
-        DisplayFocusOnNextLink();
+        DisplayFocusOnNextLink(1);
     }
     else if (event.key === "Enter" || event.key === " ") {
         exchangeNodeFocusOnLink();
@@ -246,36 +246,22 @@ function exchangeNodeFocusOnLink() {
     displayFocusOnLink(currentFocusedLink);
 }
 
-function DisplayFocusOnPreviousLink() {
+function DisplayFocusOnNextLink(delta) {
     const connectedLinks = selectConnectedLinks(currentFocusedNode);
-    var nextLinkIndex = connectedLinks.nodes().findIndex((d, i, nodes) => 
-        nodes[i] === currentFocusedLink
-    ) - 1;
-    if (nextLinkIndex === -1) {
-        nextLinkIndex = connectedLinks.nodes().length -1;
+    const n = connectedLinks.nodes().length;
+    if (connectedLinks.nodes().length === 1) {
+        return;
     }
-    currentFocusedLink = connectedLinks.nodes()[nextLinkIndex];
+    var linkIndex = connectedLinks.nodes().findIndex((d, i, nodes) => 
+        nodes[i] === currentFocusedLink
+    );
+    linkIndex = ((linkIndex + delta) % n + n) % n;
+    currentFocusedLink = connectedLinks.nodes()[linkIndex];
     preFocusConnectedLinks(connectedLinks);
     const previousLink = connectedLinks.select((d, i, nodes) => 
         nodes[i] === currentFocusedLink ? nodes[i] : null
     ).nodes()[0];
     previousLink.focus();
-}
-
-function DisplayFocusOnNextLink() {
-    const connectedLinks = selectConnectedLinks(currentFocusedNode);
-    var nextLinkIndex = connectedLinks.nodes().findIndex((d, i, nodes) => 
-        nodes[i] === currentFocusedLink
-    ) + 1;
-    if (nextLinkIndex === connectedLinks.nodes().length) {
-        nextLinkIndex = 0;
-    }
-    currentFocusedLink = connectedLinks.nodes()[nextLinkIndex];
-    preFocusConnectedLinks(connectedLinks);
-    const nextLink = connectedLinks.select((d, i, nodes) => 
-        nodes[i] === currentFocusedLink ? nodes[i] : null
-    ).nodes()[0];
-    nextLink.focus();
 }
 
 function preFocusConnectedLinks(connectedLinks) {
