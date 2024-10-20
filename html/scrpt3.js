@@ -166,7 +166,10 @@ function onFocusLink() {
     currentFocusedLink = this;
     // display focus on one of the connected nodes if not already displayed
     const linkedNodes = selectLinkedNodes(currentFocusedLink).nodes();
-    if (!linkedNodes.includes(currentFocusedNode)) {
+    if (linkedNodes.includes(currentFocusedNode)) {
+        displayFocusOnNode(currentFocusedNode);  // re-done for first usage
+    }
+    else {
         displayUnfocusOnNode(currentFocusedNode);
         currentFocusedNode = linkedNodes[0];
         displayFocusOnNode(currentFocusedNode);
