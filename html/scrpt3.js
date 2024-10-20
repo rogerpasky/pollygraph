@@ -67,27 +67,41 @@ const height = 600;
 // Specify the color scale.
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
+// Specify visual constants
+const NODE_COLOR_UNFOCUSED = '#fff';
+const NODE_COLOR_FOCUSED = '#f00';
+const NODE_BORDER_WIDTH = 1.5;
+const NODE_RADIUS = 5;
+const LINK_COLOR_UNFOCUSED = '#999';
+const LINK_COLOR_FOCUSED = '#f00';
+const LINK_OPACITY_UNFOCUSED = 0.2;
+const LINK_OPACITY_PREFOCUSED = 0.9;
+const LINK_OPACITY_FOCUSED = 1.0;
+
+// Hierarchy states
+const HIERARCHY_STATES = ['node', 'link'];
+
 // The force simulation mutates links and nodes, so create a copy
 // so that re-evaluating this cell produces the same result.
-const links = data.links.map(d => ({...d}));
-const nodes = data.nodes.map(d => ({...d}));
+const linksData = data.links.map(d => ({...d}));
+const nodesData = data.nodes.map(d => ({...d}));
 
 // Create a simulation with several forces.
-const simulation = d3.forceSimulation(nodes)
-    .force("link", d3.forceLink(links).id(d => d.id))
+const simulation = d3.forceSimulation(nodesData)
+    .force("link", d3.forceLink(linksData).id(d => d.id))
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2))
     .on("tick", ticked);
 
 // Set the position attributes of links and nodes each time the simulation ticks.
 function ticked() {
-    link
+    linkGroup
         .attr("x1", d => d.source.x)
         .attr("y1", d => d.source.y)
         .attr("x2", d => d.target.x)
         .attr("y2", d => d.target.y);
 
-    node
+    nodeGroup
         .attr("cx", d => d.x)
         .attr("cy", d => d.y);
 }
@@ -98,74 +112,205 @@ const svg = d3.select('#the-chart')
     .attr("viewBox", [0, 0, width, height])
     .attr("style", "max-width: 100%; height: auto;");
 
-// Add a line for each link, and a circle for each node.
-const link = svg.append("g")
-    .attr("stroke", "#999")
-    .attr("stroke-opacity", 0.6)
+// Add a line for each link.
+const linkGroup = svg.append("g")
+    .attr("stroke", LINK_COLOR_UNFOCUSED)
+    .attr("stroke-opacity", LINK_OPACITY_UNFOCUSED)
     .selectAll()
-    .data(links)
+    .data(linksData)
     .join("line")
-        .attr('tabindex', 0)
+        .attr('id', d => getLinkId(d))
+        .attr('aria-describedby', (d,i) => `Debería decir tooltip-${i}`)  // This is not working, but title does
         .attr('class', 'arc')
         .attr("stroke-width", d => Math.sqrt(d.value))
-        .on('focus', function() {
-            // Apply visual changes to indicate focus, e.g., change stroke color
-            d3.select(this).attr('stroke', 'blue');
-        })
-        .on('blur', function() {
-            // Revert visual changes when the element loses focus
-            d3.select(this).attr('stroke', '#999');
-        });
+        .on('focus', onFocusLink)
+        .on('blur', onBlurLink);
 
-const node = svg.append("g")
-    .attr("stroke", "#fff")
-    .attr("stroke-width", 1.5)
+// Add a circle for each node.
+const nodeGroup = svg.append("g")
+    .attr("stroke", NODE_COLOR_UNFOCUSED)
+    .attr("stroke-width", NODE_BORDER_WIDTH)
     .selectAll()
-    .data(nodes)
+    .data(nodesData)
     .join("circle")
         .attr('id', d => d.id)
-        .attr('tabindex', 0)
         .attr('class', 'arc')
-        .attr("r", 5)
-        .attr("fill", d => color(d.group))
+        .attr('r', NODE_RADIUS)
+        .attr('fill', d => color(d.group))
         .on('focus', onFocusNode)
-        .on('blur', function() {
-            // Revert visual changes when the element loses focus
-            d3.select(this).attr('stroke', '#fff');
-        });
+        .on('blur', onBlurNode);
 
-node.append("title")
+nodeGroup.append("title")
     .text(d => d.id);
 
-link.append("title")
-    .text(d => `De ${d.source.id} a ${d.target.id}`);
+linkGroup.append("title")
+    .text(d => `From ${d.source.id} to ${d.target.id}`);
 
-d3.select("body").on("keydown", function(event) {
-    // Check if the "Enter" key was pressed
-    if (event.key === "ArrowRight") {
+d3.select("body").on("keydown", onKeydown);
+
+function onFocusNode() {
+    displayUnfocusOnNode(currentFocusedNode);
+    currentFocusedNode = this;
+    // focus on one of the connected links if not already focused
+    const connectedLinks = selectConnectedLinks(currentFocusedNode).nodes();
+    if (connectedLinks.includes(currentFocusedLink)) {
+        currentFocusedLink.focus();
+    }
+    else {
+        connectedLinks[0].focus();
+    }
+    displayFocusOnNode(currentFocusedNode);
+}
+
+function onFocusLink() {
+    currentFocusedLink = this;
+    // display focus on one of the connected nodes if not already displayed
+    const linkedNodes = selectLinkedNodes(currentFocusedLink).nodes();
+    if (!linkedNodes.includes(currentFocusedNode)) {
+        displayUnfocusOnNode(currentFocusedNode);
+        currentFocusedNode = linkedNodes[0];
+        displayFocusOnNode(currentFocusedNode);
+    }
+    const connectedLinksSelection = selectConnectedLinks(currentFocusedNode);
+    preFocusConnectedLinks(connectedLinksSelection);
+    displayFocusOnLink(currentFocusedLink);
+}
+
+function onBlurLink() {
+    displayUnfocusOnLink(this);
+}
+
+function onBlurNode() {
+    displayUnfocusOnNode(this);
+}
+
+function onKeydown(event) {
+    console.log(`Key pressed: ${event.key}`);
+    if (event.key === "ArrowRight") {  // Dig-in in hierarchy
         console.log("Right arrow key was pressed");
     }
     else if (event.key === "ArrowLeft") {
         console.log("Left arrow key was pressed");
     }
     else if (event.key === "ArrowUp") {
-        console.log("Up arrow key was pressed");
+        DisplayFocusOnPreviousLink();
     }
     else if (event.key === "ArrowDown") {
         console.log("Down arrow key was pressed");
+        DisplayFocusOnNextLink();
     }
-});
+    else if (event.key === "Enter" || event.key === " ") {
+        changeNodeFocusOnLink();
+    }
+}
 
-function onFocusNode() {
-    d3.select(this)
-        .attr('stroke', 'blue');
-    console.log(this.id)
-    // Highlight the links connected to the focused node.
-    link
-        .attr('stroke', d => {
-            return d.source.id === this.id || d.target.id === this.id ? 'blue' : '#999';
+function getLinkId(linkData) {
+    // TODO: check redundancies
+    if (linkData.source.id < linkData.target.id) {
+        return `${linkData.source.id} - ${linkData.target.id}`;
+    }
+    else {
+        return `${linkData.target.id} - ${linkData.source.id}`;
+    }
+}
+
+function selectConnectedLinks(node) {
+    return linkGroup.filter(d => d.source.id === currentFocusedNode.getAttribute('id') || d.target.id === node.getAttribute('id'));
+}
+
+function selectLinkedNodes(link) {
+    const linkData = linksData.find(linkData => getLinkId(linkData) === link.getAttribute('id'));
+    return nodeGroup.filter(d => d.id === linkData.source.id || d.id === linkData.target.id);
+}
+
+function getOtherSideOfLink(link, node) {
+    const linkData = linksData.find(linkData => getLinkId(linkData) === link.getAttribute('id'));
+    if (linkData.source.id !== node.getAttribute('id') && linkData.target.id !== node.getAttribute('id')) {
+        return null;
+    }
+    const other = linkData.source.id === node.getAttribute('id') ? linkData.target.id : linkData.source.id;
+    return nodeGroup.filter(d => d.id === other).nodes()[0];
+}
+
+function changeNodeFocusOnLink() {
+    displayUnfocusOnNode(currentFocusedNode);
+    const otherNode = getOtherSideOfLink(currentFocusedLink, currentFocusedNode);
+    currentFocusedNode = otherNode;
+    displayFocusOnNode(currentFocusedNode);
+    const connectedLinksSelection = selectConnectedLinks(currentFocusedNode);
+    preFocusConnectedLinks(connectedLinksSelection);
+    displayFocusOnLink(currentFocusedLink);
+}
+
+function DisplayFocusOnPreviousLink() {
+    const connectedLinks = selectConnectedLinks(currentFocusedNode);
+    var nextLinkIndex = connectedLinks.nodes().findIndex((d, i, nodes) => 
+        nodes[i] === currentFocusedLink
+    ) - 1;
+    if (nextLinkIndex === -1) {
+        nextLinkIndex = connectedLinks.nodes().length -1;
+    }
+    currentFocusedLink = connectedLinks.nodes()[nextLinkIndex];
+    preFocusConnectedLinks(connectedLinks);
+    displayFocusOnLink(connectedLinks.select((d, i, nodes) => 
+        nodes[i] === currentFocusedLink ? nodes[i] : null
+    ).nodes()[0]);
+}
+
+function DisplayFocusOnNextLink() {
+    const connectedLinks = selectConnectedLinks(currentFocusedNode);
+    var nextLinkIndex = connectedLinks.nodes().findIndex((d, i, nodes) => 
+        nodes[i] === currentFocusedLink
+    ) + 1;
+    if (nextLinkIndex === connectedLinks.nodes().length) {
+        nextLinkIndex = 0;
+    }
+    currentFocusedLink = connectedLinks.nodes()[nextLinkIndex];
+    preFocusConnectedLinks(connectedLinks);
+    displayFocusOnLink(connectedLinks.select((d, i, nodes) => 
+        nodes[i] === currentFocusedLink ? nodes[i] : null
+    ).nodes()[0]);
+}
+
+function preFocusConnectedLinks(connectedLinks) {
+    linkGroup
+        .selectAll(function() {
+            this.setAttribute('stroke', LINK_COLOR_UNFOCUSED);
+            if (connectedLinks.nodes().includes(this)) {
+                this.setAttribute('stroke-opacity', LINK_OPACITY_PREFOCUSED);
+                this.setAttribute('tabindex', 0);
+            }
+            else {
+                this.setAttribute('stroke-opacity', LINK_OPACITY_UNFOCUSED);
+                this.setAttribute('tabindex', -1);
+            }
         });
 }
+
+function displayFocusOnLink(link) {
+    link.focus();
+    link.setAttribute('stroke', LINK_COLOR_FOCUSED)
+    link.setAttribute('stroke-opacity', LINK_OPACITY_FOCUSED);
+}
+
+function displayUnfocusOnLink(link) {
+    link.setAttribute('stroke', LINK_COLOR_UNFOCUSED);
+}
+
+function displayFocusOnNode(node) {
+    node.setAttribute('stroke', NODE_COLOR_FOCUSED);
+}
+
+function displayUnfocusOnNode(node) {
+    node.setAttribute('stroke', NODE_COLOR_UNFOCUSED);
+}
+
+// Initial global status
+var currentFocusedNode = nodeGroup.nodes()[0];
+var currentFocusedLink = selectConnectedLinks(currentFocusedNode).nodes()[0];
+
+currentFocusedLink.focus();
+
 
 // Create the SVG container.
 // const svg = d3.create("svg")
