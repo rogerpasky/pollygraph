@@ -59,7 +59,7 @@ export class View {
             .data(linksData)
             .join("line")
                 .attr('id', d => d.id)
-                .attr('aria-describedby', (d,i) => `Debería decir tooltip-${i}`)  // This is not working, but title does
+                .attr('role', 'treeitem')
                 .attr('class', 'arc')
                 .attr("stroke-width", d => Math.sqrt(d.value))
                 .on('focus', (event) => classThis.onFocusLink(event.target))
@@ -75,6 +75,7 @@ export class View {
             .data(nodesData)
             .join("circle")
                 .attr('id', d => d.id)
+                .attr('role', 'treeitem')
                 .attr('class', 'arc')
                 .attr('r', NODE_RADIUS)
                 .attr('fill', d => color(d.group))
@@ -83,6 +84,8 @@ export class View {
 
         this.nodesGroup.append("title")
             .text(d => d.id);
+        this.linksGroup.append("title")
+            .text(d => formatLinkText(d.source, d.target));
     }
 
     // Event handlers ----------------------------------------------------------
@@ -185,6 +188,17 @@ export class View {
         link.setAttribute('stroke', LINK_COLOR_UNFOCUSED);
     }
 
+    displayPreFocusOnNode(nodeId) {
+        node = document.getElementById(nodeId);
+        if (node) {
+            node.setAttribute('stroke-opacity', LINK_OPACITY_PREFOCUSED);
+            node.setAttribute('stroke', NODE_COLOR_PREFOCUSED);
+        }
+        else {
+            console.error(`Node with id ${nodeId} not found`);
+        }
+    }
+
     displayPreFocusOnConnectedLinks(connectedLinks) {
         this.linksGroup
             .selectAll(function() {
@@ -221,4 +235,8 @@ export class View {
             console.error(`Element with id ${elementId} not found`);
         }
     }
+}
+
+function formatLinkText(sourceText, targetText) {
+    return `from ${sourceText} to ${targetText}`;
 }
