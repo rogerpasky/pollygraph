@@ -40,8 +40,9 @@ export class View {
         var classThis = this;
         this.simulation = d3.forceSimulation(nodesData)
             .force("link", d3.forceLink(linksData).id(d => d.id))
-            .force("charge", d3.forceManyBody())
-            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("charge", d3.forceManyBody().strength(-5))
+            // .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("collide", d3.forceCollide(NODE_RADIUS + 1))
             .on("tick", () => classThis.onTicked());
     }
 
@@ -194,7 +195,7 @@ export class View {
         const width = maxX - minX;
         const height = maxY - minY;
 
-        this.svg.attr("viewBox", [minX, minY, width, height]);
+        this.svg.attr("viewBox", [minX - NODE_RADIUS, minY - NODE_RADIUS, width + 2*NODE_RADIUS, height + 2*NODE_RADIUS]);
     }
 
     // Visualization methods ---------------------------------------------------
