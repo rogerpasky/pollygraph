@@ -34,21 +34,30 @@ export class View {
     }
 
     createSimulation(linksData, nodesData) {
+        const width = this.getWidth(this.svg.node());
+        const height = this.getHeight(this.svg.node());
+
         var classThis = this;
-        // Create a simulation with several forces.
         this.simulation = d3.forceSimulation(nodesData)
             .force("link", d3.forceLink(linksData).id(d => d.id))
             .force("charge", d3.forceManyBody())
-            .force("center", d3.forceCenter(width / 2, height / 2))  // FIXME: get it from SVG
+            .force("center", d3.forceCenter(width / 2, height / 2))
             .on("tick", () => classThis.onTicked());
+    }
+
+    getWidth(element) {
+        const computedStyle = window.getComputedStyle(element);
+        return parseInt(computedStyle.width);
+    }
+
+    getHeight(element) {
+        const computedStyle = window.getComputedStyle(element);
+        return parseInt(computedStyle.height);
     }
 
     createSvg() {
         this.svg = d3.select('#the-chart')
-            .attr('width', width)  // FIXME: get it from SVG
-            .attr('height', height)  // FIXME: get it from SVG
-            .attr("viewBox", [0, 0, width, height])
-            .attr("style", "max-width: 100%; height: auto;");
+            .attr("viewBox", [0, 0, 2*width, 2*height]);
     }
 
     createLinks(linksData) {
@@ -68,7 +77,7 @@ export class View {
                 .on('blur', (event) => classThis.onBlurLink(event.target));
         this.linksGroup
             .append("title")
-                .text(d => formatLinkText(d.source, d.target));
+                .text(d => formatLinkText(d.source, d.target));  // TODO: have a fallback on id if no label
     }
 
     createNodes(nodesData) {
@@ -90,7 +99,7 @@ export class View {
 
         this.nodesGroup
             .append("title")
-                .text(d => d.id);
+                .text(d => d.label);  // TODO: have a fallback on id if no label
     }
 
     // Event handlers ----------------------------------------------------------
