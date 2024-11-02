@@ -56,8 +56,7 @@ export class View {
     }
 
     createSvg() {
-        this.svg = d3.select('#the-chart')
-            .attr("viewBox", [0, 0, 2*width, 2*height]);
+        this.svg = d3.select('#the-chart');
     }
 
     createLinks(linksData) {
@@ -187,6 +186,15 @@ export class View {
         this.nodesGroup
             .attr("cx", d => d.x)
             .attr("cy", d => d.y);
+
+        const minX = d3.min(this.nodesGroup.data(), d => d.x);
+        const maxX = d3.max(this.nodesGroup.data(), d => d.x);
+        const minY = d3.min(this.nodesGroup.data(), d => d.y);
+        const maxY = d3.max(this.nodesGroup.data(), d => d.y);
+        const width = maxX - minX;
+        const height = maxY - minY;
+
+        this.svg.attr("viewBox", [minX, minY, width, height]);
     }
 
     // Visualization methods ---------------------------------------------------
