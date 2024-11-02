@@ -96,8 +96,8 @@ export class Model {
 
     getNextLinkId(focusedNodeId, focusedLinkId, step) {
         const linkData = this.linksData.find(linkData => linkData.id === focusedLinkId);
-        const linksData = this.linksData.filter(linkData =>
-            linkData.source.id === focusedNodeId || linkData.target.id === focusedNodeId
+        const linksData = this.linksData.filter(data =>
+            focusedNodeId === data.source.id || focusedNodeId === data.target.id
         );
         const index = linksData.indexOf(linkData);
         return linksData[(index + step + linksData.length) % linksData.length].id;

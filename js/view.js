@@ -8,6 +8,7 @@ const color = d3.scaleOrdinal(d3.schemeCategory10);
 // Specify visual constants
 const NODE_COLOR_UNFOCUSED = '#fff';
 const NODE_COLOR_FOCUSED = '#f00';
+const NODE_COLOR_PREFOCUSED = '#999';
 const NODE_BORDER_WIDTH = 1.5;
 const NODE_RADIUS = 5;
 const LINK_COLOR_UNFOCUSED = '#999';
@@ -38,77 +39,89 @@ export class View {
         this.simulation = d3.forceSimulation(nodesData)
             .force("link", d3.forceLink(linksData).id(d => d.id))
             .force("charge", d3.forceManyBody())
-            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("center", d3.forceCenter(width / 2, height / 2))  // FIXME: get it from SVG
             .on("tick", () => classThis.onTicked());
     }
 
     createSvg() {
         this.svg = d3.select('#the-chart')
-            .attr('width', width)
-            .attr('height', height)
+            .attr('width', width)  // FIXME: get it from SVG
+            .attr('height', height)  // FIXME: get it from SVG
             .attr("viewBox", [0, 0, width, height])
             .attr("style", "max-width: 100%; height: auto;");
     }
 
     createLinks(linksData) {
         var classThis = this;
-        this.linksGroup = this.svg.append("g")
-            .attr("stroke", LINK_COLOR_UNFOCUSED)
-            .attr("stroke-opacity", LINK_OPACITY_UNFOCUSED)
+        this.linksGroup = this.svg
+            .append("g")
             .selectAll()
             .data(linksData)
             .join("line")
                 .attr('id', d => d.id)
                 .attr('role', 'treeitem')
                 .attr('class', 'arc')
+                .attr("stroke", LINK_COLOR_UNFOCUSED)
+                .attr("stroke-opacity", LINK_OPACITY_UNFOCUSED)
                 .attr("stroke-width", d => Math.sqrt(d.value))
                 .on('focus', (event) => classThis.onFocusLink(event.target))
                 .on('blur', (event) => classThis.onBlurLink(event.target));
+        this.linksGroup
+            .append("title")
+                .text(d => formatLinkText(d.source, d.target));
     }
 
     createNodes(nodesData) {
         var classThis = this;
-        this.nodesGroup = this.svg.append("g")
-            .attr("stroke", NODE_COLOR_UNFOCUSED)
-            .attr("stroke-width", NODE_BORDER_WIDTH)
+        this.nodesGroup = this.svg
+            .append("g")
             .selectAll()
             .data(nodesData)
             .join("circle")
                 .attr('id', d => d.id)
                 .attr('role', 'treeitem')
                 .attr('class', 'arc')
+                .attr("stroke", NODE_COLOR_UNFOCUSED)
+                .attr("stroke-width", NODE_BORDER_WIDTH)
                 .attr('r', NODE_RADIUS)
-                .attr('fill', d => color(d.group))
+                .attr('fill', d => color(d.group))  // TODO: decide right place/format in data
                 .on('focus', (event) => classThis.onFocusNode(event.target))
                 .on('blur', (event) => classThis.onBlurNode(event.target));
 
-        this.nodesGroup.append("title")
-            .text(d => d.id);
-        this.linksGroup.append("title")
-            .text(d => formatLinkText(d.source, d.target));
+        this.nodesGroup
+            .append("title")
+                .text(d => d.id);
     }
 
     // Event handlers ----------------------------------------------------------
 
     onFocusNode(node) {
         const nodeId = node.getAttribute('id');
-        this.displayFocusOnNode(nodeId);
+        this.displayFocusOnNodeId(nodeId);
         this.controller.focusNode(nodeId);
     }
 
     onBlurNode(node) {
-        this.displayUnfocusOnNode(node);
+        const nodeId = node.getAttribute('id');
+        if (this.controller.preFocusedNodeId === nodeId) {
+            this.displayPreFocusOnNodeId(nodeId);
+        }
+        else {
+            this.displayUnfocusOnNodeId(node);
+        }
     }
 
     onFocusLink(link) {
         const linkId = link.getAttribute('id');
-        this.displayPreFocusOnConnectedLinks(this.selectLink(linkId));
-        this.displayFocusOnLink(link);
+        if (this.controller.focusedLinkId) {
+            this.displayPreFocusOnNodeId(this.controller.preFocusedNodeId);
+        }
+        this._displayFocusOnLink(link);
         this.controller.focusLink(linkId);
     }
 
     onBlurLink(link) {
-        this.displayUnfocusOnLink(link);
+        this._displayUnfocusOnLink(link);
     }
 
     onKeydown(key) {
@@ -169,37 +182,61 @@ export class View {
 
     // Visualization methods ---------------------------------------------------
 
-    displayFocusOnNode(nodeId) {
-        this.displayPreFocusOnConnectedLinks(this.selectConnectedLinks(nodeId));
-        this.nodesGroup.filter(d => d.id === nodeId)
-            .attr('stroke', NODE_COLOR_FOCUSED);
+    displayFocusOnNodeId(nodeId) {
+        this.displayPreFocusOnConnectedLinksToNodeId(nodeId);
+        const node = document.getElementById(nodeId);
+        this._displayFocusOnNode(node);
     }
 
-    displayUnfocusOnNode(node) {
+    _displayFocusOnNode(node) {
+        node.setAttribute('stroke', NODE_COLOR_FOCUSED);
+    }
+
+    displayUnfocusOnNodeId(nodeId) {
+        const node = document.getElementById(nodeId);
+        this._displayUnfocusOnNode(node);
+    }
+
+    _displayUnfocusOnNode(node) {
         node.setAttribute('stroke', NODE_COLOR_UNFOCUSED);
     }
 
-    displayFocusOnLink(link) {
-        link.setAttribute('stroke', LINK_COLOR_FOCUSED)
+    displayFocusOnLinkId(linkId) {
+        const link = document.getElementById(linkId);
+        this._displayFocusOnLink(link);
+    }
+
+    _displayFocusOnLink(link) {
+        link.setAttribute('stroke', LINK_COLOR_FOCUSED);
         link.setAttribute('stroke-opacity', LINK_OPACITY_FOCUSED);
     }
 
-    displayUnfocusOnLink(link) {
+    displayUnfocusOnLinkId(linkId) {
+        const link = document.getElementById(linkId);
+        this._displayUnfocusOnLink(link);
+    }
+
+    _displayUnfocusOnLink(link) {
         link.setAttribute('stroke', LINK_COLOR_UNFOCUSED);
     }
 
-    displayPreFocusOnNode(nodeId) {
-        node = document.getElementById(nodeId);
+    displayPreFocusOnNodeId(nodeId) {
+        const node = document.getElementById(nodeId);
         if (node) {
-            node.setAttribute('stroke-opacity', LINK_OPACITY_PREFOCUSED);
-            node.setAttribute('stroke', NODE_COLOR_PREFOCUSED);
+            this._displayPreFocusOnNode(node);
         }
         else {
             console.error(`Node with id ${nodeId} not found`);
         }
     }
 
-    displayPreFocusOnConnectedLinks(connectedLinks) {
+    _displayPreFocusOnNode(node) {
+        node.setAttribute('stroke-opacity', LINK_OPACITY_PREFOCUSED);
+        node.setAttribute('stroke', NODE_COLOR_PREFOCUSED);
+    }
+
+    displayPreFocusOnConnectedLinksToNodeId(nodeId) {
+        const connectedLinks = this.selectConnectedLinks(nodeId);
         this.linksGroup
             .selectAll(function() {
                 this.setAttribute('stroke', LINK_COLOR_UNFOCUSED);

@@ -14,6 +14,7 @@ export class Controller {
         this.model.setController(this);
 
         this.focusedNodeId = null;
+        this.preFocusedNodeId = null;
         this.focusedLinkId = null;
         this.history = [];
     }
@@ -41,20 +42,22 @@ export class Controller {
 
     focusNode(nodeId) {  // TODO: review wether to reset history
         this.focusedNodeId = nodeId;
+        this.preFocusedNodeId = this.focusedNodeId;
         this.focusedLinkId = null;
         console.log("Focused Node: " + this.focusedNodeId);
     }
 
     focusLink(linkId) {  // TODO: review wether to reset history
         this.focusedLinkId = linkId;
-        // this.focusedNodeId = null;
+        this.focusedNodeId = null;
         console.log("Focused Link: " + this.focusedLinkId);
     }
 
     focusForward() {
         if (this.focusedLinkId) {
-            const nodeId = this.model.getNodeIdOnOtherSide(this.focusedNodeId, this.focusedLinkId);
+            const nodeId = this.model.getNodeIdOnOtherSide(this.preFocusedNodeId, this.focusedLinkId);
             this.history.push(this.focusedLinkId);
+            this.view.displayUnfocusOnNodeId(this.preFocusedNodeId);
             this.view.findAndFocusElement(nodeId);
         }
         else {
@@ -78,7 +81,7 @@ export class Controller {
             console.log("Focus Next Level");
         }
         else {
-            this.view.findAndFocusElement(this.model.getNextLinkId(this.focusedNodeId, this.focusedLinkId, 1));
+            this.view.findAndFocusElement(this.model.getNextLinkId(this.preFocusedNodeId, this.focusedLinkId, 1));
         }
     }
 
@@ -87,7 +90,7 @@ export class Controller {
             console.log("Focus Previous Level");
         }
         else {
-            this.view.findAndFocusElement(this.model.getNextLinkId(this.focusedNodeId, this.focusedLinkId, -1));
+            this.view.findAndFocusElement(this.model.getNextLinkId(this.preFocusedNodeId, this.focusedLinkId, -1));
         }
     }
 
