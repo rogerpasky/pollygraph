@@ -19,7 +19,10 @@ const LINK_OPACITY_FOCUSED = 1.0;
 
 
 export class View {
-    constructor() {
+    constructor(
+        linkTextFormatter = null,
+        directedLinkTextFormatter = null,
+    ) {
         this.controller = null;
         this.linksGroup = null;
         this.nodesGroup = null;
@@ -27,6 +30,8 @@ export class View {
         this.svg = this.getDomSvg();
         this.shiftPressed = false;
         this.setKeyCallbacks();
+        this.linkTextFormatter = linkTextFormatter || defaultLinkTextFormatter;
+        this.directedLinkTextFormatter = directedLinkTextFormatter || defaultDirectedLinkTextFormatter;
         this.restart()
     }
 
@@ -109,7 +114,7 @@ export class View {
                 .on('blur', (event) => classThis.onBlurLink(event.target));
         this.linksGroup
             .append("title")
-                .text(d => formatLinkText(d.source, d.target));  // TODO: have a fallback on id if no label
+                .text(d => this.formatLinkLabelbetweenTwoNodeId(d.source, d.target));
     }
 
     createSimulation(linksData, nodesData) {
@@ -277,9 +282,12 @@ export class View {
 
     displayPreFocusOnConnectedLinksToNodeId(nodeId) {
         const connectedLinks = this.selectConnectedLinks(nodeId);
+        this.linksGroup
+            .selectAll("title")
+                .text(d => this.formatLinkLabelbetweenTwoNodeId(d.source, d.target));
         connectedLinks
             .select("title")
-                .text(d => formatLinkLabelStartingFromNodeId(d, nodeId))
+                .text(d => this.formatLinkLabelStartingFromNodeId(d, nodeId))
         this.linksGroup
             .selectAll(function() {
                 this.setAttribute('stroke', LINK_COLOR_UNFOCUSED);
@@ -304,6 +312,27 @@ export class View {
         return this.linksGroup.filter(d => d.id === linkId);
     }
 
+    formatLinkLabelStartingFromNodeId(linkData, fromNodeId) {
+        if (linkData.source.id === fromNodeId) {
+            var toNodeId = linkData.target.id;
+        }
+        else {
+            var toNodeId = linkData.source.id;
+        }
+        const fromText = document.getElementById(fromNodeId).getElementsByTagName('title')[0].textContent;
+        const toText = document.getElementById(toNodeId).getElementsByTagName('title')[0].textContent;
+        return this.directedLinkTextFormatter(fromText, toText);
+    
+    }
+
+    formatLinkLabelbetweenTwoNodeId(sourceId, targetId) {
+        const sourceElement = document.getElementById(sourceId)
+        const sourceText = sourceElement ? sourceElement.getElementsByTagName('title')[0].textContent : sourceId;
+        const targetElement = document.getElementById(targetId)
+        const targetText = targetElement ? targetElement.getElementsByTagName('title')[0].textContent : targetId;
+        return this.linkTextFormatter(sourceText, targetText);
+    }
+
     // Find and Focus methods --------------------------------------------------
 
     findAndFocusElement(elementId) {
@@ -318,18 +347,10 @@ export class View {
 }
 
 
-function formatLinkText(sourceText, targetText) {
-    return `from ${sourceText} to ${targetText}`;
+function defaultLinkTextFormatter(sourceText, targetText) {
+    return `${sourceText} - ${targetText}`;
 }
 
-function formatLinkLabelStartingFromNodeId(linkData, fromNodeId) {  // TODO: split in two functions, one can be provided by user
-    if (linkData.source.id === fromNodeId) {
-        var nodeId = linkData.target.id;
-    }
-    else {
-        var nodeId = linkData.source.id;
-    }
-    const node = document.getElementById(nodeId);
-    return `to ${node.getElementsByTagName('title')[0].textContent}`;
-
+function defaultDirectedLinkTextFormatter(fromText, toText) {
+    return `from ${fromText} to ${toText}`;
 }

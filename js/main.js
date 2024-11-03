@@ -5,8 +5,13 @@ import { Controller } from './controller.js';
 import { countries } from './countries.js';
 
 
+function directedLinkTextFormatter(_fromText, toText) {
+    return `to ${toText}`;
+}
+
+
 const model = new Model();
-const view = new View();
+const view = new View(null, directedLinkTextFormatter);
 const controler = new Controller(model, view);
 
 
