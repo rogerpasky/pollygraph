@@ -54,19 +54,6 @@ export class View {
         this.controller = controller;
     }
 
-    createSimulation(linksData, nodesData) {
-        const width = this.getWidth(this.svg.node());
-        const height = this.getHeight(this.svg.node());
-
-        var classThis = this;
-        this.simulation = d3.forceSimulation(nodesData)
-            .force("link", d3.forceLink(linksData).id(d => d.id))
-            .force("charge", d3.forceManyBody().strength(-5))
-            // .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("collide", d3.forceCollide(NODE_RADIUS + 1))
-            .on("tick", () => classThis.onTicked());
-    }
-
     getWidth(element) {
         const computedStyle = window.getComputedStyle(element);
         return parseInt(computedStyle.width);
@@ -79,6 +66,29 @@ export class View {
 
     getDomSvg() {
         return d3.select('#the-graph');
+    }
+
+    createNodes(nodesData) {
+        var classThis = this;
+        this.nodesGroup = this.svg
+            .append("g")
+            .attr('id', 'nodes')
+            .selectAll()
+            .data(nodesData)
+            .join("circle")
+                .attr('id', d => d.id)
+                .attr('role', 'treeitem')
+                .attr('class', 'arc')
+                .attr("stroke", NODE_COLOR_UNFOCUSED)
+                .attr("stroke-width", NODE_BORDER_WIDTH)
+                .attr('r', NODE_RADIUS)
+                .attr('fill', d => color(d.group))  // TODO: decide right place/format in data
+                .on('focus', (event) => classThis.onFocusNode(event.target))
+                .on('blur', (event) => classThis.onBlurNode(event.target));
+
+        this.nodesGroup
+            .append("title")
+                .text(d => d.label ? d.label : d.id);
     }
 
     createLinks(linksData) {
@@ -102,27 +112,17 @@ export class View {
                 .text(d => formatLinkText(d.source, d.target));  // TODO: have a fallback on id if no label
     }
 
-    createNodes(nodesData) {
-        var classThis = this;
-        this.nodesGroup = this.svg
-            .append("g")
-            .attr('id', 'nodes')
-            .selectAll()
-            .data(nodesData)
-            .join("circle")
-                .attr('id', d => d.id)
-                .attr('role', 'treeitem')
-                .attr('class', 'arc')
-                .attr("stroke", NODE_COLOR_UNFOCUSED)
-                .attr("stroke-width", NODE_BORDER_WIDTH)
-                .attr('r', NODE_RADIUS)
-                .attr('fill', d => color(d.group))  // TODO: decide right place/format in data
-                .on('focus', (event) => classThis.onFocusNode(event.target))
-                .on('blur', (event) => classThis.onBlurNode(event.target));
+    createSimulation(linksData, nodesData) {
+        const width = this.getWidth(this.svg.node());
+        const height = this.getHeight(this.svg.node());
 
-        this.nodesGroup
-            .append("title")
-                .text(d => d.label);  // TODO: have a fallback on id if no label
+        var classThis = this;
+        this.simulation = d3.forceSimulation(nodesData)
+            .force("link", d3.forceLink(linksData).id(d => d.id))
+            .force("charge", d3.forceManyBody().strength(-5))
+            // .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("collide", d3.forceCollide(NODE_RADIUS + 1))
+            .on("tick", () => classThis.onTicked());
     }
 
     // Event handlers ----------------------------------------------------------
@@ -135,11 +135,11 @@ export class View {
 
     onBlurNode(node) {
         const nodeId = node.getAttribute('id');
-        if (this.controller.preFocusedNodeId === nodeId) {
+        if (this.controller.traversingNearby) {
             this.displayPreFocusOnNodeId(nodeId);
         }
         else {
-            this.displayUnfocusOnNodeId(node);
+            this.displayUnfocusOnNodeId(nodeId);
         }
     }
 
@@ -277,6 +277,9 @@ export class View {
 
     displayPreFocusOnConnectedLinksToNodeId(nodeId) {
         const connectedLinks = this.selectConnectedLinks(nodeId);
+        connectedLinks
+            .select("title")
+                .text(d => formatLinkLabelStartingFromNodeId(d, nodeId))
         this.linksGroup
             .selectAll(function() {
                 this.setAttribute('stroke', LINK_COLOR_UNFOCUSED);
@@ -314,6 +317,19 @@ export class View {
     }
 }
 
+
 function formatLinkText(sourceText, targetText) {
     return `from ${sourceText} to ${targetText}`;
+}
+
+function formatLinkLabelStartingFromNodeId(linkData, fromNodeId) {  // TODO: split in two functions, one can be provided by user
+    if (linkData.source.id === fromNodeId) {
+        var nodeId = linkData.target.id;
+    }
+    else {
+        var nodeId = linkData.source.id;
+    }
+    const node = document.getElementById(nodeId);
+    return `to ${node.getElementsByTagName('title')[0].textContent}`;
+
 }

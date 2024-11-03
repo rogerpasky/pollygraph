@@ -16,6 +16,7 @@ export class Controller {
         this.focusedNodeId = null;
         this.preFocusedNodeId = null;
         this.focusedLinkId = null;
+        this.traversingNearby = false;
         this.history = [];
     }
 
@@ -39,6 +40,7 @@ export class Controller {
     // Actions -----------------------------------------------------------------
 
     focusNode(nodeId) {  // TODO: review wether to reset history
+        this.traversingNearby = false;
         this.focusedNodeId = nodeId;
         this.preFocusedNodeId = this.focusedNodeId;
         this.focusedLinkId = null;
@@ -46,6 +48,7 @@ export class Controller {
     }
 
     focusLink(linkId) {  // TODO: review wether to reset history
+        this.traversingNearby = false;
         this.focusedLinkId = linkId;
         this.focusedNodeId = null;
         console.log("Focused Link: " + this.focusedLinkId);
@@ -53,12 +56,14 @@ export class Controller {
 
     focusForward() {
         if (this.focusedLinkId) {
+            this.traversingNearby = false;
             const nodeId = this.model.getNodeIdOnOtherSide(this.preFocusedNodeId, this.focusedLinkId);
             this.history.push(this.focusedLinkId);
             this.view.displayUnfocusOnNodeId(this.preFocusedNodeId);
             this.view.findAndFocusElement(nodeId);
         }
         else {
+            this.traversingNearby = true;
             const linkId = this.model.getFirstNonVisitedLinkId(this.focusedNodeId, this.history);
             this.history.push(this.focusedNodeId);
             this.view.findAndFocusElement(linkId);
