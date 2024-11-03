@@ -32,8 +32,6 @@ export class Controller {
     onDataChange(linksData, nodesData) {
         this.focusedNodeId = linksData[0].id;
         this.focusedLinkId = nodesData[0].id;
-        console.log(this.focusedNodeId);
-        console.log(this.focusedLinkId);
 
         this.view.onDataChange(linksData, nodesData);
     }

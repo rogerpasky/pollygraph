@@ -20,14 +20,35 @@ const LINK_OPACITY_FOCUSED = 1.0;
 
 export class View {
     constructor() {
+        this.controller = null;
+        this.linksGroup = null;
+        this.nodesGroup = null;
+        this.simulation = null;
+        this.svg = this.getDomSvg();
         this.shiftPressed = false;
+        this.setKeyCallbacks();
+        this.restart()
+    }
 
+    // Setup methods -----------------------------------------------------------
+
+    restart() {
+        if (this.simulation) {
+            this.simulation.stop();
+        }
+        if (this.linksGroup) {
+            this.svg.select("#links").remove();
+        }
+        if (this.nodesGroup) {
+            this.svg.select("#nodes").remove();
+        }
+    }
+
+    setKeyCallbacks() {
         d3.select("body")
             .on("keydown", (event) => this.onKeydown(event.key))
             .on("keyup", (event) => this.onKeyup(event.key));
     }
-
-    // Setup methods -----------------------------------------------------------
 
     setController(controller) {
         this.controller = controller;
@@ -56,14 +77,15 @@ export class View {
         return parseInt(computedStyle.height);
     }
 
-    createSvg() {
-        this.svg = d3.select('#the-chart');
+    getDomSvg() {
+        return d3.select('#the-graph');
     }
 
     createLinks(linksData) {
         var classThis = this;
         this.linksGroup = this.svg
             .append("g")
+            .attr('id', 'links')
             .selectAll()
             .data(linksData)
             .join("line")
@@ -84,6 +106,7 @@ export class View {
         var classThis = this;
         this.nodesGroup = this.svg
             .append("g")
+            .attr('id', 'nodes')
             .selectAll()
             .data(nodesData)
             .join("circle")
@@ -134,7 +157,6 @@ export class View {
     }
 
     onKeydown(key) {
-        console.log(`Key pressed: ${key}`);
         if (!this.controller) {
             return;
         }
@@ -168,7 +190,7 @@ export class View {
     }
 
     onDataChange(linksData, nodesData) {
-        this.createSvg();
+        this.restart();
         this.createLinks(linksData);
         this.createNodes(nodesData);
         this.createSimulation(linksData, nodesData);
