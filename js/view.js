@@ -295,7 +295,7 @@ export class View {
                     this.setAttribute('stroke-opacity', LINK_OPACITY_PREFOCUSED);
                     this.setAttribute('tabindex', 0);
                 }
-                else {
+                else {  // TODO: not working when link was focused and then focus on node
                     this.setAttribute('stroke-opacity', LINK_OPACITY_UNFOCUSED);
                     this.setAttribute('tabindex', -1);
                 }

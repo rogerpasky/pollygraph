@@ -39,15 +39,17 @@ export class Controller {
 
     // Actions -----------------------------------------------------------------
 
-    focusNode(nodeId) {  // TODO: review wether to reset history
+    focusNode(nodeId) {
         this.traversingNearby = false;
-        this.focusedNodeId = nodeId;
-        this.preFocusedNodeId = this.focusedNodeId;
+        if (this.preFocusedNodeId) {
+            this.view.displayUnfocusOnNodeId(this.preFocusedNodeId);
+        }
+        this.preFocusedNodeId = this.focusedNodeId = nodeId;
         this.focusedLinkId = null;
         console.log("Focused Node: " + this.focusedNodeId);
     }
 
-    focusLink(linkId) {  // TODO: review wether to reset history
+    focusLink(linkId) {  // TODO: it leaves the previous link pre-focused
         this.traversingNearby = false;
         this.focusedLinkId = linkId;
         this.focusedNodeId = null;
