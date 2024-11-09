@@ -84,10 +84,12 @@ export class View {
                 .attr('id', d => d.id)
                 .attr('role', 'treeitem')
                 .attr('class', 'arc')
+                .attr('tabindex', 0)  // needed for Safari and Firefox
                 .attr("stroke", NODE_COLOR_UNFOCUSED)
                 .attr("stroke-width", NODE_BORDER_WIDTH)
                 .attr('r', NODE_RADIUS)
                 .attr('fill', d => color(d.group))  // TODO: decide right place/format in data
+                // .on("click", (event) => console.log(`Click on ${event.target}`))
                 .on('focus', (event) => classThis.onFocusNode(event.target))
                 .on('blur', (event) => classThis.onBlurNode(event.target));
 
@@ -107,6 +109,7 @@ export class View {
                 .attr('id', d => d.id)
                 .attr('role', 'treeitem')
                 .attr('class', 'arc')
+                .attr('tabindex', 0)  // needed for Safari and Firefox
                 .attr("stroke", LINK_COLOR_UNFOCUSED)
                 .attr("stroke-opacity", LINK_OPACITY_UNFOCUSED)
                 .attr("stroke-width", d => Math.sqrt(d.value))
@@ -150,9 +153,9 @@ export class View {
 
     onFocusLink(link) {
         const linkId = link.getAttribute('id');
-        if (this.controller.focusedLinkId) {
-            this.displayPreFocusOnNodeId(this.controller.preFocusedNodeId);
-        }
+        // if (this.controller.focusedLinkId) {
+        this.displayPreFocusOnNodeId(this.controller.preFocusedNodeId);
+        // }
         this._displayFocusOnLink(link);
         this.controller.focusLink(linkId);
     }
@@ -338,6 +341,7 @@ export class View {
     findAndFocusElement(elementId) {
         const element = document.getElementById(elementId);
         if (element) {
+            console.log(`Focus on element with id ${elementId}`);
             element.focus();
         }
         else {

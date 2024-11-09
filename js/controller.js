@@ -22,10 +22,7 @@ export class Controller {
 
     // Setup methods -----------------------------------------------------------
 
-    init() {  // TODO: review if necessary
-        this.view.currentFocusedNode = this.model.data.nodes[0];
-        this.view.currentFocusedLink = this.model.data.links[0];
-        this.view.currentFocusedLink.focus();
+    init() {
     }
 
     // Event handlers ----------------------------------------------------------
@@ -35,6 +32,9 @@ export class Controller {
         this.focusedLinkId = nodesData[0].id;
 
         this.view.onDataChange(linksData, nodesData);
+        this.focusedNodeId = nodesData[0].id;
+        this.preFocusedNodeId = nodesData[0].id;
+        this.view.findAndFocusElement(this.focusedNodeId);
     }
 
     // Actions -----------------------------------------------------------------
@@ -67,8 +67,13 @@ export class Controller {
         else {
             this.traversingNearby = true;
             const linkId = this.model.getFirstNonVisitedLinkId(this.focusedNodeId, this.history);
-            this.history.push(this.focusedNodeId);
-            this.view.findAndFocusElement(linkId);
+            if (linkId) {
+                this.history.push(this.focusedNodeId);
+                this.view.findAndFocusElement(linkId);
+            }
+            else {
+                this.view.findAndFocusElement(this.focusedNodeId);
+            }
         }
         console.log("Focus Forward");
     }

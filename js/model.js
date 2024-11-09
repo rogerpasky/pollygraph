@@ -75,8 +75,8 @@ export class Model {
     }
 
     getFirstNonVisitedLinkId(focusedNodeId, history) {
-        var linkData = this.linksData.find(linkData =>
-            (linkData.source.id === focusedNodeId || linkData.target.id === focusedNodeId) && !history.includes(linkData.id)
+        var linkData = this.linksData.find(data =>
+            !history.includes(data.id) && ( data.source.id === focusedNodeId || data.target.id === focusedNodeId)
         );
         if (linkData) {
             return linkData.id;
@@ -86,6 +86,9 @@ export class Model {
         );
         if (linkData) {
             return linkData.id;
+        }
+        else {
+            return "";
         }
     }
 
