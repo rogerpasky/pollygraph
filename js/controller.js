@@ -40,6 +40,7 @@ export class Controller {
     // Actions -----------------------------------------------------------------
 
     focusNode(nodeId) {
+        this.view.displayFocusOnNodeId(nodeId);
         this.traversingNearby = false;
         if (this.preFocusedNodeId) {
             this.view.displayUnfocusOnNodeId(this.preFocusedNodeId);
@@ -49,11 +50,28 @@ export class Controller {
         console.log("Focused Node: " + this.focusedNodeId);
     }
 
+    unfocusNode(nodeId) {
+        if (this.traversingNearby) {
+            this.view.displayPreFocusOnNodeId(nodeId);
+        }
+        else {
+            this.view.displayUnfocusOnNodeId(nodeId);
+        }
+        console.log("Unfocused Node: " + nodeId);
+    }
+
     focusLink(linkId) {  // TODO: it leaves the previous link pre-focused
+        this.view.displayPreFocusOnNodeId(this.preFocusedNodeId);
+        this.view.displayFocusOnLinkId(linkId);
         this.traversingNearby = false;
         this.focusedLinkId = linkId;
         this.focusedNodeId = null;
         console.log("Focused Link: " + this.focusedLinkId);
+    }
+
+    unfocusLink(linkId) {
+        this.view.displayUnfocusOnLinkId(linkId);
+        console.log("Unfocused Link: " + linkId);
     }
 
     focusForward() {

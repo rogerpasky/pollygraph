@@ -137,31 +137,22 @@ export class View {
 
     onFocusNode(node) {
         const nodeId = node.getAttribute('id');
-        this.displayFocusOnNodeId(nodeId);
         this.controller.focusNode(nodeId);
     }
 
     onBlurNode(node) {
         const nodeId = node.getAttribute('id');
-        if (this.controller.traversingNearby) {
-            this.displayPreFocusOnNodeId(nodeId);
-        }
-        else {
-            this.displayUnfocusOnNodeId(nodeId);
-        }
+        this.controller.unfocusNode(nodeId);
     }
 
     onFocusLink(link) {
         const linkId = link.getAttribute('id');
-        // if (this.controller.focusedLinkId) {
-        this.displayPreFocusOnNodeId(this.controller.preFocusedNodeId);
-        // }
-        this._displayFocusOnLink(link);
         this.controller.focusLink(linkId);
     }
 
     onBlurLink(link) {
-        this._displayUnfocusOnLink(link);
+        const linkId = link.getAttribute('id');
+        this.controller.unfocusLink(linkId)
     }
 
     onKeydown(key) {
@@ -180,14 +171,14 @@ export class View {
         else if (key === "ArrowDown") {
             this.controller.focusNext(this.shiftPressed);
         }
-        else if (key === "Enter" || event.key === " ") {
+        else if (key === "Enter" || key === " ") {
             this.controller.focusDetails();
         }
         else if (key === "Shift") {
             this.shiftPressed = true;
         }
         else {
-            console.log(`Key pressed: ${key}`);
+            console.log(`Unhandled Key pressed: ${key}`);
         }
     }
 
@@ -225,7 +216,12 @@ export class View {
         const width = maxX - minX;
         const height = maxY - minY;
 
-        this.svg.attr("viewBox", [minX - NODE_RADIUS, minY - NODE_RADIUS, width + 2*NODE_RADIUS, height + 2*NODE_RADIUS]);
+        this.svg.attr("viewBox", [
+            minX - NODE_RADIUS, 
+            minY - NODE_RADIUS, 
+            width + 2 * NODE_RADIUS, 
+            height + 2 * NODE_RADIUS
+        ]);
     }
 
     // Visualization methods ---------------------------------------------------
@@ -311,9 +307,7 @@ export class View {
         return this.linksGroup.filter(d => d.source.id === nodeId || d.target.id === nodeId);
     }
 
-    selectLink(linkId) {
-        return this.linksGroup.filter(d => d.id === linkId);
-    }
+    // Formatting methods ------------------------------------------------------
 
     formatLinkLabelStartingFromNodeId(linkData, fromNodeId) {
         if (linkData.source.id === fromNodeId) {
@@ -350,6 +344,7 @@ export class View {
     }
 }
 
+// Default formatters ---------------------------------------------------------
 
 function defaultLinkTextFormatter(sourceText, targetText) {
     return `${sourceText} - ${targetText}`;
