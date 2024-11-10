@@ -37,7 +37,7 @@ export class Controller {
         this.view.findAndFocusElement(this.focusedNodeId);
     }
 
-    // Actions -----------------------------------------------------------------
+    // Focus methods -----------------------------------------------------------
 
     focusNode(nodeId) {
         if (this.preFocusedNodeId) {
@@ -72,7 +72,7 @@ export class Controller {
         console.log("Focused Link: " + this.focusedLinkId);
     }
 
-    unFocusLink(linkId) {  // FIXME: keep pre focus on links when traversing nearby
+    unFocusLink(linkId) {
         if (this.traversingNearby) {
             this.view.displayPreFocusOnLinkId(linkId);
         }
@@ -81,6 +81,8 @@ export class Controller {
         }
         console.log("UnFocused Link: " + linkId);
     }
+
+    // Actions -----------------------------------------------------------------
 
     focusForward() {
         if (this.focusedLinkId) {

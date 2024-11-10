@@ -127,7 +127,7 @@ export class View {
                 .on('blur', (event) => classThis.onBlurLink(event.target));
         this.linksGroup
             .append("title")
-                .text(d => this.formatLinkLabelbetweenTwoNodeId(d.source, d.target));
+                .text(d => this.formatLinkLabelbetweenTwoNodeId(d.source.id, d.target.id));
     }
 
     createSimulation(linksData, nodesData) {
@@ -296,11 +296,11 @@ export class View {
         link.setAttribute('stroke-opacity', LINK_OPACITY_UNFOCUSED);
     }
 
-    displayPreFocusOnConnectedLinksToNodeId(nodeId) {
+    displayPreFocusOnConnectedLinksToNodeId(nodeId) {  // TODO: optimize
         const connectedLinks = this.selectConnectedLinks(nodeId);
         this.linksGroup
             .selectAll("title")
-                .text(d => this.formatLinkLabelbetweenTwoNodeId(d.source, d.target));
+                .text(d => this.formatLinkLabelbetweenTwoNodeId(d.source.id, d.target.id));
         connectedLinks
             .select("title")
                 .text(d => this.formatLinkLabelStartingFromNodeId(d, nodeId))
@@ -309,11 +309,9 @@ export class View {
                 this.setAttribute('stroke', LINK_COLOR_UNFOCUSED);
                 if (connectedLinks.nodes().includes(this)) {
                     this.setAttribute('stroke-opacity', LINK_OPACITY_PREFOCUSED);
-                    this.setAttribute('tabindex', 0);
                 }
-                else {  // TODO: not working when link was focused and then focus on node
+                else {
                     this.setAttribute('stroke-opacity', LINK_OPACITY_UNFOCUSED);
-                    this.setAttribute('tabindex', -1);
                 }
             });
     }
