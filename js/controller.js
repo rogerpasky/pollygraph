@@ -50,6 +50,7 @@ export class Controller {
         this.focusedLinkId = null;
 
         this.view.displayFocusOnNodeId(this.focusedNodeId);
+        this.view.displayElementInfo(this.focusedNodeId);
         console.log("Focused Node: " + this.focusedNodeId);
     }
 
@@ -69,6 +70,7 @@ export class Controller {
         this.focusedLinkId = linkId;
 
         this.view.displayFocusOnLinkId(this.focusedLinkId);
+        this.view.displayElementInfo(this.focusedLinkId);
         console.log("Focused Link: " + this.focusedLinkId);
     }
 

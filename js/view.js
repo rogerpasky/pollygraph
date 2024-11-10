@@ -38,6 +38,7 @@ export class View {
         this.nodesGroup = null;
         this.simulation = null;
         this.svg = this.getDomSvg();
+        this.infoDiv = this.getInfoDiv();
         this.shiftPressed = false;
         this.setKeyCallbacks();
         this.linkTextFormatter = linkTextFormatter || defaultLinkTextFormatter;
@@ -81,6 +82,10 @@ export class View {
 
     getDomSvg() {
         return d3.select('#the-graph');
+    }
+
+    getInfoDiv() {
+        return document.getElementById('info');
     }
 
     createNodes(nodesData) {
@@ -316,6 +321,12 @@ export class View {
             });
     }
 
+    displayElementInfo(elementId) {
+        const element = document.getElementById(elementId);
+        const text = element.getElementsByTagName('title')[0].textContent;
+        this.infoDiv.innerHTML = text;
+    }
+
     // Selection methods -------------------------------------------------------
 
     selectConnectedLinks(nodeId) {
@@ -348,6 +359,9 @@ export class View {
     // Find and Focus methods --------------------------------------------------
 
     findAndFocusElement(elementId) {
+        if (!elementId) {
+            return;
+        }
         const element = document.getElementById(elementId);
         if (element) {
             console.log(`Focus on element with id ${elementId}`);

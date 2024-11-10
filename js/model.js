@@ -102,6 +102,9 @@ export class Model {
         const linksData = this.linksData.filter(data =>
             focusedNodeId === data.source.id || focusedNodeId === data.target.id
         );
+        if (!linksData) {
+            return "";
+        }
         const index = linksData.indexOf(linkData);
         return linksData[(index + step + linksData.length) % linksData.length].id;
     }
