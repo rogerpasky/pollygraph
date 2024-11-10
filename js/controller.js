@@ -40,58 +40,54 @@ export class Controller {
     // Actions -----------------------------------------------------------------
 
     focusNode(nodeId) {
-        this.view.displayFocusOnNodeId(nodeId);
-        this.traversingNearby = false;
         if (this.preFocusedNodeId) {
-            this.view.displayUnfocusOnNodeId(this.preFocusedNodeId);
+            this.view.displayUnFocusOnNodeId(this.preFocusedNodeId);
         }
-        this.preFocusedNodeId = this.focusedNodeId = nodeId;
+
+        this.focusedNodeId = this.preFocusedNodeId = nodeId;
+
+        this.view.displayPreFocusOnConnectedLinksToNodeId(this.preFocusedNodeId);
         this.focusedLinkId = null;
+
+        this.view.displayFocusOnNodeId(this.focusedNodeId);
         console.log("Focused Node: " + this.focusedNodeId);
     }
 
-    unfocusNode(nodeId) {
+    unFocusNode(nodeId) {
         if (this.traversingNearby) {
             this.view.displayPreFocusOnNodeId(nodeId);
         }
         else {
-            this.view.displayUnfocusOnNodeId(nodeId);
+            this.view.displayUnFocusOnNodeId(nodeId);
         }
-        console.log("Unfocused Node: " + nodeId);
+        console.log("UnFocused Node: " + nodeId);
     }
 
-    focusLink(linkId) {  // TODO: it leaves the previous link pre-focused
-        this.view.displayPreFocusOnNodeId(this.preFocusedNodeId);
-        this.view.displayFocusOnLinkId(linkId);
-        this.traversingNearby = false;
+    focusLink(linkId) {
+        this._cleanUpWhenFocusOnNonRelatedLink(linkId);
+
         this.focusedLinkId = linkId;
-        this.focusedNodeId = null;
+
+        this.view.displayFocusOnLinkId(this.focusedLinkId);
         console.log("Focused Link: " + this.focusedLinkId);
     }
 
-    unfocusLink(linkId) {
-        this.view.displayUnfocusOnLinkId(linkId);
-        console.log("Unfocused Link: " + linkId);
+    unFocusLink(linkId) {
+        this.view.displayUnFocusOnLinkId(linkId);
+        console.log("UnFocused Link: " + linkId);
     }
 
     focusForward() {
         if (this.focusedLinkId) {
+            this._focusOnOtherSideToPrefocusedNode();
+        }
+        else if (this.focusedNodeId) {
+            this.traversingNearby = true;
+            this._focusOnFirstNonVisitedLink();
             this.traversingNearby = false;
-            const nodeId = this.model.getNodeIdOnOtherSide(this.preFocusedNodeId, this.focusedLinkId);
-            this.history.push(this.focusedLinkId);
-            this.view.displayUnfocusOnNodeId(this.preFocusedNodeId);
-            this.view.findAndFocusElement(nodeId);
         }
         else {
-            this.traversingNearby = true;
-            const linkId = this.model.getFirstNonVisitedLinkId(this.focusedNodeId, this.history);
-            if (linkId) {
-                this.history.push(this.focusedNodeId);
-                this.view.findAndFocusElement(linkId);
-            }
-            else {
-                this.view.findAndFocusElement(this.focusedNodeId);
-            }
+            console.log("No focused element to go forward");
         }
         console.log("Focus Forward");
     }
@@ -108,8 +104,11 @@ export class Controller {
         if (levelMode) {
             console.log("Focus Next Level");
         }
-        else {
-            this.view.findAndFocusElement(this.model.getNextLinkId(this.preFocusedNodeId, this.focusedLinkId, 1));
+        else {  // FIXME: removing pre focus on links when traversing nearby
+            this.traversingNearby = true;
+            this.focusedLinkId = this.model.getNextLinkId(this.preFocusedNodeId, this.focusedLinkId, 1);
+            this.view.findAndFocusElement(this.focusedLinkId);
+            this.traversingNearby = false;
         }
     }
 
@@ -118,11 +117,43 @@ export class Controller {
             console.log("Focus Previous Level");
         }
         else {
-            this.view.findAndFocusElement(this.model.getNextLinkId(this.preFocusedNodeId, this.focusedLinkId, -1));
+            this.focusedLinkId = this.model.getNextLinkId(this.preFocusedNodeId, this.focusedLinkId, -1);
+            this.view.findAndFocusElement(this.focusedLinkId);
         }
     }
 
     focusDetails() {
         console.log("Focus Details");
+    }
+
+    // Internal methods --------------------------------------------------------
+
+    _focusOnOtherSideToPrefocusedNode() {
+        // this.traversingNearby = false;
+        const nodeId = this.model.getNodeIdOnOtherSide(this.preFocusedNodeId, this.focusedLinkId);
+        this.history.push(this.focusedLinkId);
+        this.view.displayUnFocusOnNodeId(this.preFocusedNodeId);
+        this.view.findAndFocusElement(nodeId);
+    }
+
+    _focusOnFirstNonVisitedLink() {
+        const linkId = this.model.getFirstNonVisitedLinkId(this.focusedNodeId, this.history);
+        if (linkId) {
+            this.history.push(this.focusedNodeId);
+            this.view.findAndFocusElement(linkId);
+        }
+        else {  // isolated node with no links
+            this.view.findAndFocusElement(this.focusedNodeId);
+        }
+    }
+
+    _cleanUpWhenFocusOnNonRelatedLink(linkId) {
+        if (this.focusedLinkId && !this.traversingNearby) {  // USE_CASE: when traversing outbound links
+            this.view.displayUnFocusOnNodeId(this.preFocusedNodeId);
+            this.preFocusedNodeId = this.model.getNodeIdOnOtherSide("", linkId);
+            this.view.displayPreFocusOnNodeId(this.preFocusedNodeId);
+            this.view.displayPreFocusOnConnectedLinksToNodeId(this.preFocusedNodeId);
+            this.focusedNodeId = null;
+        }
     }
 }

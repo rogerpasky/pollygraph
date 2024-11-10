@@ -6,16 +6,26 @@ const height = 600;
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
 // Specify visual constants
-const NODE_COLOR_UNFOCUSED = '#fff';
-const NODE_COLOR_FOCUSED = '#f00';
-const NODE_COLOR_PREFOCUSED = '#999';
 const NODE_BORDER_WIDTH = 1.5;
 const NODE_RADIUS = 5;
-const LINK_COLOR_UNFOCUSED = '#999';
+
+const NODE_COLOR_FOCUSED = '#f00';  // TODO: move to CSS classes
+const NODE_OPACITY_FOCUSED = 1.0;
+
+const NODE_COLOR_PREFOCUSED = '#999';
+const NODE_OPACITY_PREFOCUSED = 1.0;
+
+const NODE_COLOR_UNFOCUSED = '#fff';
+const NODE_OPACITY_UNFOCUSED = 1.0;
+
 const LINK_COLOR_FOCUSED = '#f00';
-const LINK_OPACITY_UNFOCUSED = 0.2;
-const LINK_OPACITY_PREFOCUSED = 0.9;
 const LINK_OPACITY_FOCUSED = 1.0;
+
+const LINK_COLOR_PREFOCUSED = '#999';
+const LINK_OPACITY_PREFOCUSED = 0.9;
+
+const LINK_COLOR_UNFOCUSED = '#999';
+const LINK_OPACITY_UNFOCUSED = 0.2;
 
 
 export class View {
@@ -142,7 +152,7 @@ export class View {
 
     onBlurNode(node) {
         const nodeId = node.getAttribute('id');
-        this.controller.unfocusNode(nodeId);
+        this.controller.unFocusNode(nodeId);
     }
 
     onFocusLink(link) {
@@ -152,7 +162,7 @@ export class View {
 
     onBlurLink(link) {
         const linkId = link.getAttribute('id');
-        this.controller.unfocusLink(linkId)
+        this.controller.unFocusLink(linkId)
     }
 
     onKeydown(key) {
@@ -227,22 +237,33 @@ export class View {
     // Visualization methods ---------------------------------------------------
 
     displayFocusOnNodeId(nodeId) {
-        this.displayPreFocusOnConnectedLinksToNodeId(nodeId);
         const node = document.getElementById(nodeId);
         this._displayFocusOnNode(node);
     }
 
     _displayFocusOnNode(node) {
         node.setAttribute('stroke', NODE_COLOR_FOCUSED);
+        node.setAttribute('stroke-opacity', NODE_OPACITY_FOCUSED);
     }
 
-    displayUnfocusOnNodeId(nodeId) {
+    displayPreFocusOnNodeId(nodeId) {
         const node = document.getElementById(nodeId);
-        this._displayUnfocusOnNode(node);
+        this._displayPreFocusOnNode(node);
     }
 
-    _displayUnfocusOnNode(node) {
+    _displayPreFocusOnNode(node) {
+        node.setAttribute('stroke', NODE_COLOR_PREFOCUSED);
+        node.setAttribute('stroke-opacity', NODE_OPACITY_PREFOCUSED);
+    }
+
+    displayUnFocusOnNodeId(nodeId) {
+        const node = document.getElementById(nodeId);
+        this._displayUnFocusOnNode(node);
+    }
+
+    _displayUnFocusOnNode(node) {
         node.setAttribute('stroke', NODE_COLOR_UNFOCUSED);
+        node.setAttribute('stroke-opacity', NODE_OPACITY_UNFOCUSED);
     }
 
     displayFocusOnLinkId(linkId) {
@@ -255,28 +276,14 @@ export class View {
         link.setAttribute('stroke-opacity', LINK_OPACITY_FOCUSED);
     }
 
-    displayUnfocusOnLinkId(linkId) {
+    displayUnFocusOnLinkId(linkId) {
         const link = document.getElementById(linkId);
-        this._displayUnfocusOnLink(link);
+        this._displayUnFocusOnLink(link);
     }
 
-    _displayUnfocusOnLink(link) {
+    _displayUnFocusOnLink(link) {
         link.setAttribute('stroke', LINK_COLOR_UNFOCUSED);
-    }
-
-    displayPreFocusOnNodeId(nodeId) {
-        const node = document.getElementById(nodeId);
-        if (node) {
-            this._displayPreFocusOnNode(node);
-        }
-        else {
-            console.error(`Node with id ${nodeId} not found`);
-        }
-    }
-
-    _displayPreFocusOnNode(node) {
-        node.setAttribute('stroke-opacity', LINK_OPACITY_PREFOCUSED);
-        node.setAttribute('stroke', NODE_COLOR_PREFOCUSED);
+        link.setAttribute('stroke-opacity', LINK_OPACITY_UNFOCUSED);
     }
 
     displayPreFocusOnConnectedLinksToNodeId(nodeId) {

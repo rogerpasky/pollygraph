@@ -78,21 +78,21 @@ export class Model {
         var linkData = this.linksData.find(data =>
             !history.includes(data.id) && ( data.source.id === focusedNodeId || data.target.id === focusedNodeId)
         );
-        if (linkData) {
+        if (linkData) {  // first non-visited link found
             return linkData.id;
         }
-        linkData = this.linksData.find(linkData =>
-                linkData.source.id === focusedNodeId || linkData.target.id === focusedNodeId
+        linkData = this.linksData.find(data =>
+                data.source.id === focusedNodeId || data.target.id === focusedNodeId
         );
-        if (linkData) {
+        if (linkData) {  // first link found
             return linkData.id;
         }
         else {
-            return "";
+            return "";  // isolated node with no links
         }
     }
 
-    getNodeIdOnOtherSide(focusedNodeId, focusedLinkId) {
+    getNodeIdOnOtherSide(focusedNodeId, focusedLinkId) {  // if no focusedNodeId, returns the source node id
         const linkData = this.linksData.find(linkData => linkData.id === focusedLinkId);
         return linkData.source.id === focusedNodeId ? linkData.target.id : linkData.source.id;
     }
