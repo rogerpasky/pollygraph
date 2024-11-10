@@ -276,6 +276,16 @@ export class View {
         link.setAttribute('stroke-opacity', LINK_OPACITY_FOCUSED);
     }
 
+    displayPreFocusOnLinkId(linkId) {
+        const link = document.getElementById(linkId);
+        this._displayPreFocusOnLink(link);
+    }
+
+    _displayPreFocusOnLink(link) {
+        link.setAttribute('stroke', LINK_COLOR_PREFOCUSED);
+        link.setAttribute('stroke-opacity', LINK_OPACITY_PREFOCUSED);
+    }
+
     displayUnFocusOnLinkId(linkId) {
         const link = document.getElementById(linkId);
         this._displayUnFocusOnLink(link);

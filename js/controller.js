@@ -72,8 +72,13 @@ export class Controller {
         console.log("Focused Link: " + this.focusedLinkId);
     }
 
-    unFocusLink(linkId) {
-        this.view.displayUnFocusOnLinkId(linkId);
+    unFocusLink(linkId) {  // FIXME: keep pre focus on links when traversing nearby
+        if (this.traversingNearby) {
+            this.view.displayPreFocusOnLinkId(linkId);
+        }
+        else {
+            this.view.displayUnFocusOnLinkId(linkId);
+        }
         console.log("UnFocused Link: " + linkId);
     }
 
@@ -104,9 +109,9 @@ export class Controller {
         if (levelMode) {
             console.log("Focus Next Level");
         }
-        else {  // FIXME: removing pre focus on links when traversing nearby
-            this.traversingNearby = true;
+        else {
             this.focusedLinkId = this.model.getNextLinkId(this.preFocusedNodeId, this.focusedLinkId, 1);
+            this.traversingNearby = true;
             this.view.findAndFocusElement(this.focusedLinkId);
             this.traversingNearby = false;
         }
@@ -118,7 +123,9 @@ export class Controller {
         }
         else {
             this.focusedLinkId = this.model.getNextLinkId(this.preFocusedNodeId, this.focusedLinkId, -1);
+            this.traversingNearby = true;
             this.view.findAndFocusElement(this.focusedLinkId);
+            this.traversingNearby = false;
         }
     }
 
@@ -148,12 +155,13 @@ export class Controller {
     }
 
     _cleanUpWhenFocusOnNonRelatedLink(linkId) {
-        if (this.focusedLinkId && !this.traversingNearby) {  // USE_CASE: when traversing outbound links
-            this.view.displayUnFocusOnNodeId(this.preFocusedNodeId);
-            this.preFocusedNodeId = this.model.getNodeIdOnOtherSide("", linkId);
-            this.view.displayPreFocusOnNodeId(this.preFocusedNodeId);
-            this.view.displayPreFocusOnConnectedLinksToNodeId(this.preFocusedNodeId);
-            this.focusedNodeId = null;
-        }
+        if (!this.focusedLinkId || this.traversingNearby) {
+            return;
+        }  // USE_CASE: when traversing outbound links
+        this.view.displayUnFocusOnNodeId(this.preFocusedNodeId);
+        this.preFocusedNodeId = this.model.getNodeIdOnOtherSide("", linkId);
+        this.view.displayPreFocusOnNodeId(this.preFocusedNodeId);
+        this.view.displayPreFocusOnConnectedLinksToNodeId(this.preFocusedNodeId);
+        this.focusedNodeId = null;
     }
 }
