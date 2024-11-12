@@ -4,8 +4,7 @@ import { data } from './default_data.js';
 export class Model {
     constructor(dataSource = null) {
         this.controller = null;
-        this.linksData = null;
-        this.nodesData = null;
+        this.data = null;
 
         this.setDataSource(dataSource ? dataSource : data);
     }
@@ -49,40 +48,59 @@ export class Model {
             throw new Error('Invalid data source');
         }
 
+        const nestedData = getClusteredData(rawData);
+
+        const nonUnitaryCluster = nestedData.nodes.find(node => node.inner.nodes.length > 1);
+
+        this.setNewData(nonUnitaryCluster.inner.links, nonUnitaryCluster.inner.nodes, nestedData);
+    }
+
+    setNewData(links, nodes, outer) {
         // TODO: review if needed
         // The force simulation mutates links and nodes, so create a copy
         // so that re-evaluating this cell produces the same result.
-        this.linksData = rawData.links.map(d => ({...d, id: this.getLinkId(d)}));
-        this.nodesData = rawData.nodes.map(d => ({...d}));
+        // this.linksData = rawData.links.map(d => ({...d, id: this.getLinkId(d)}));
+        // this.nodesData = rawData.nodes.map(d => ({...d}));
+        this.data = {
+            links: links.map(d => ({...d, id: getLinkId(d.source, d.target)})),
+            nodes: nodes,
+            outer: outer
+        }
 
         this.notifyDataChange();
     }
 
-    notifyDataChange() {
-        if (this.controller) {
-            this.controller.onDataChange(this.linksData, this.nodesData);
+    setOuterData() {
+        if (this.data.outer) {
+            this.setNewData(this.data.outer.links, this.data.outer.nodes, this.data.outer);  // FIXME: outer should be Null sometimes
         }
     }
 
-    getLinkId(linkData) {
-        // TODO: check redundancies
-        if (linkData.source.id < linkData.target.id) {
-            return `${linkData.source} - ${linkData.target}`;
+    setInnerData(nodeId) {
+        const node = this.data.nodes.find(n => n.id === nodeId);
+        if (node && node.inner) {
+            this.setNewData(node.inner.links, node.inner.nodes, this.data);
         }
-        else {
-            return `${linkData.target} - ${linkData.source}`;
+    }
+
+    notifyDataChange() {
+        if (this.controller) {
+            this.controller.onDataChange(
+                this.data.links.map(d => ({...d})), 
+                this.data.nodes.map(d => ({...d}))
+            );
         }
     }
 
     getFirstNonVisitedLinkId(focusedNodeId, history) {
-        var linkData = this.linksData.find(data =>
-            !history.includes(data.id) && ( data.source.id === focusedNodeId || data.target.id === focusedNodeId)
+        var linkData = this.data.links.find(data =>
+            !history.includes(data.id) && (data.source === focusedNodeId || data.target === focusedNodeId)
         );
         if (linkData) {  // first non-visited link found
             return linkData.id;
         }
-        linkData = this.linksData.find(data =>
-                data.source.id === focusedNodeId || data.target.id === focusedNodeId
+        linkData = this.data.links.find(data =>
+                data.source === focusedNodeId || data.target === focusedNodeId
         );
         if (linkData) {  // first link found
             return linkData.id;
@@ -93,19 +111,93 @@ export class Model {
     }
 
     getNodeIdOnOtherSide(focusedNodeId, focusedLinkId) {  // if no focusedNodeId, returns the source node id
-        const linkData = this.linksData.find(linkData => linkData.id === focusedLinkId);
-        return linkData.source.id === focusedNodeId ? linkData.target.id : linkData.source.id;
+        const linkData = this.data.links.find(linkData => linkData.id === focusedLinkId);
+        return linkData.source === focusedNodeId ? linkData.target : linkData.source;
     }
 
     getNextLinkId(focusedNodeId, focusedLinkId, step) {
-        const linkData = this.linksData.find(linkData => linkData.id === focusedLinkId);
-        const linksData = this.linksData.filter(data =>
-            focusedNodeId === data.source.id || focusedNodeId === data.target.id
+        const linkData = this.data.links.find(linkData => linkData.id === focusedLinkId);
+        const linksData = this.data.links.filter(data =>
+            focusedNodeId === data.source || focusedNodeId === data.target
         );
         if (!linksData) {
             return "";
         }
         const index = linksData.indexOf(linkData);
         return linksData[(index + step + linksData.length) % linksData.length].id;
+    }
+}
+
+
+function getClusteredData(rawData) {
+    const outerData = { nodes: [], links: [], outer: null };
+    const nodeClusters =  clusterizeNodes(rawData.nodes, rawData.links);
+    const maxSize = nodeClusters.reduce((max, cluster) => Math.max(max, cluster.length), 0);
+    const minSize = nodeClusters.reduce((min, cluster) => Math.min(min, cluster.length), maxSize);
+
+    var i = 0;
+    for (const cluster of nodeClusters) {
+        const clusterIds = cluster.map(node => node.id);
+        const innerData = {nodes: [], links: [], outer: outerData};
+        innerData.nodes.push(...cluster);
+        innerData.links.push(...rawData.links.filter(link => clusterIds.includes(link.source) && clusterIds.includes(link.target)));
+        const outerNode = getNewNode(`C.${i}`, `Cluster ${i}, ${cluster.length} nodes`, i, (cluster.length - minSize) / (maxSize - minSize), "", innerData);
+        const newLinks = getNewLinks(outerNode, outerData.nodes);
+        if (newLinks.length > 0) {
+            outerData.links.push(...newLinks);
+        }
+        outerData.nodes.push(outerNode);
+        i++;
+    }
+    return outerData;
+}
+
+
+function getNewNode(id, label, group, size = 0.5, info = "", inner = {}) {
+    return {id, label, group, size, info, inner};
+}
+
+function getNewLinks(node, nodes) {
+    // return nodes.map(n => ({source: node.id, target: n.id, value: 1, id: getLinkId(node.id, n.id)}));
+    return nodes.map(otherNode => ({source: node.id, target: otherNode.id, value: 1}));
+}
+
+
+function clusterizeNodes(nodes, links) {
+    const clusters = [];
+    const visited = new Set();
+
+    for (const node of nodes) {
+        if (!visited.has(node.id)) {
+            const cluster = [];
+            dfs(nodes, links, visited, node, cluster);
+            clusters.push(cluster);
+        }
+    }
+
+    return clusters;
+}
+
+
+function dfs(nodes, links, visited, node, cluster) {
+    visited.add(node.id);
+    cluster.push(node);
+    const relatedLinks = links.filter(link => link.source === node.id || link.target === node.id);
+    const relatedNodes = relatedLinks.map(link => link.source === node.id ? link.target : link.source);
+    for (const relatedNodeId of relatedNodes) {
+        const relatedNode = nodes.find(n => n.id === relatedNodeId);
+        if (relatedNode && !visited.has(relatedNode.id)) {
+            dfs(nodes, links, visited, relatedNode, cluster);
+        }
+    }
+}
+
+function getLinkId(source, target) {
+    // TODO: check redundancies
+    if (source < target) {
+        return `${source} - ${target}`;
+    }
+    else {
+        return `${target} - ${source}`;
     }
 }

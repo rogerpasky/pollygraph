@@ -7,7 +7,8 @@ const color = d3.scaleOrdinal(d3.schemeCategory10);
 
 // Specify visual constants
 const NODE_BORDER_WIDTH = 1.5;
-const NODE_RADIUS = 5;
+const MAX_RADIUS = 20;
+const MIN_RADIUS = 5;
 
 const NODE_COLOR_FOCUSED = '#f00';  // TODO: move to CSS classes
 const NODE_OPACITY_FOCUSED = 1.0;
@@ -102,7 +103,7 @@ export class View {
                 .attr('tabindex', 0)  // needed for Safari and Firefox
                 .attr("stroke", NODE_COLOR_UNFOCUSED)
                 .attr("stroke-width", NODE_BORDER_WIDTH)
-                .attr('r', NODE_RADIUS)
+                .attr('r', d => getRadius(d))
                 .attr('fill', d => color(d.group))  // TODO: decide right place/format in data
                 // .on("click", (event) => console.log(`Click on ${event.target}`))
                 .on('focus', (event) => classThis.onFocusNode(event.target))
@@ -132,8 +133,10 @@ export class View {
                 .on('blur', (event) => classThis.onBlurLink(event.target));
         this.linksGroup
             .append("title")
-                .text(d => this.formatLinkLabelbetweenTwoNodeId(d.source.id, d.target.id));
-    }
+            // it is used`.id` because the data is an array of objects with `id` property
+            // .text(d => this.formatLinkLabelbetweenTwoNodeId(d.source.id, d.target.id));
+            .text(d => this.formatLinkLabelbetweenTwoNodeId(d.source.id, d.target.id));  // FIXME: I HAVE NO IDEA ABOUT IDs *********
+        }
 
     createSimulation(linksData, nodesData) {
         const width = this.getWidth(this.svg.node());
@@ -141,10 +144,10 @@ export class View {
 
         var classThis = this;
         this.simulation = d3.forceSimulation(nodesData)
-            .force("link", d3.forceLink(linksData).id(d => d.id))
-            .force("charge", d3.forceManyBody().strength(-5))
+            .force("link", d3.forceLink(linksData).id(d => d.id).strength(0.9))
+            .force("charge", d3.forceManyBody().strength(-4))
             // .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("collide", d3.forceCollide(NODE_RADIUS + 1))
+            .force("collide", d3.forceCollide(d => getRadius(d) + 3))
             .on("tick", () => classThis.onTicked());
     }
 
@@ -232,10 +235,10 @@ export class View {
         const height = maxY - minY;
 
         this.svg.attr("viewBox", [
-            minX - NODE_RADIUS, 
-            minY - NODE_RADIUS, 
-            width + 2 * NODE_RADIUS, 
-            height + 2 * NODE_RADIUS
+            minX - MAX_RADIUS, 
+            minY - MAX_RADIUS, 
+            width + 2 * MAX_RADIUS, 
+            height + 2 * MAX_RADIUS
         ]);
     }
 
@@ -381,4 +384,8 @@ function defaultLinkTextFormatter(sourceText, targetText) {
 
 function defaultDirectedLinkTextFormatter(fromText, toText) {
     return `from ${fromText} to ${toText}`;
+}
+
+function getRadius(d) {
+    return d.size * (MAX_RADIUS - MIN_RADIUS) + MIN_RADIUS;
 }

@@ -28,12 +28,12 @@ export class Controller {
     // Event handlers ----------------------------------------------------------
 
     onDataChange(linksData, nodesData) {
-        this.focusedNodeId = linksData[0].id;
-        this.focusedLinkId = nodesData[0].id;
+        this.focusedNodeId = nodesData[0].id;
+        this.preFocusedNodeId = this.focusedNodeId;
+        this.focusedLinkId = null;
+        this.traversingNearby = false;
 
         this.view.onDataChange(linksData, nodesData);
-        this.focusedNodeId = nodesData[0].id;
-        this.preFocusedNodeId = nodesData[0].id;
         this.view.findAndFocusElement(this.focusedNodeId);
     }
 
@@ -112,6 +112,7 @@ export class Controller {
     focusNext(levelMode) {
         if (levelMode) {
             console.log("Focus Next Level");
+            this.model.setInnerData(this.focusedNodeId ? this.focusedNodeId : this.preFocusedNodeId);
         }
         else {
             this.focusedLinkId = this.model.getNextLinkId(this.preFocusedNodeId, this.focusedLinkId, 1);
@@ -124,6 +125,7 @@ export class Controller {
     focusPrevious(levelMode) {
         if (levelMode) {
             console.log("Focus Previous Level");
+            this.model.setOuterData();
         }
         else {
             this.focusedLinkId = this.model.getNextLinkId(this.preFocusedNodeId, this.focusedLinkId, -1);

@@ -16,7 +16,7 @@
 
 .resizable {
     width: 40%;
-    height: 98%;
+    height: auto;
     border: 1px solid #000;
     padding: 10px;
     resize: horizontal;
