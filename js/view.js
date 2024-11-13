@@ -8,7 +8,7 @@ const color = d3.scaleOrdinal(d3.schemeCategory10);
 // Specify visual constants
 const NODE_BORDER_WIDTH = 1.5;
 const MAX_RADIUS = 20;
-const MIN_RADIUS = 5;
+const MIN_RADIUS = 2;
 
 const NODE_COLOR_FOCUSED = '#f00';  // TODO: move to CSS classes
 const NODE_OPACITY_FOCUSED = 1.0;
