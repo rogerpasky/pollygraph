@@ -1,4 +1,4 @@
-import { data } from './default_data.js';
+import { defaultData } from './default_data.js';
 
 
 export class Model {
@@ -6,7 +6,7 @@ export class Model {
         this.controller = null;
         this.data = null;
 
-        this.setDataSource(dataSource ? dataSource : data);
+        this.setDataSource(dataSource ? dataSource : defaultData);
     }
 
     setController(controller) {
@@ -30,7 +30,7 @@ export class Model {
             if (dataSource.startsWith('http')) {
                 fetch(dataSource)
                     .then(response => response.json())
-                    .then(data => this.data = data)
+                    .then(data => this._setNewData(data))
                     .catch(error => console.error('Error fetching data:', error));
             }
             // Otherwise, if the string is a JSON object, parse it
@@ -48,35 +48,32 @@ export class Model {
             throw new Error('Invalid data source');
         }
 
-        const nestedData = getClusteredData(rawData);
+        this._setNewData(this._normalizeData(rawData));
+    }
+
+    _normalizeData(rawData) {
+        rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info));
+        rawData.links = rawData.links.map(link => ({...link, id: _getLinkId(link.source, link.target)}));
+        // TODO: think about the outer data
+        const nestedData = _getClusteredData(rawData);
 
         const nonUnitaryCluster = nestedData.nodes.find(node => node.inner.nodes.length > 1);
 
-        this.setNewData(
-            {
-                nodes: nonUnitaryCluster.inner.nodes, 
-                links: nonUnitaryCluster.inner.links, 
-                outer: nestedData
-            }
-        );
+        const nodes = nonUnitaryCluster.inner.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info));
+        const links = nonUnitaryCluster.inner.links.map(link => ({...link, id: _getLinkId(link.source, link.target)}));
+        const outer = nestedData;
+        return {nodes, links, outer};
     }
 
-    setNewData(data) {
-        // TODO: review if needed
-        // The force simulation mutates links and nodes, so create a copy
-        // so that re-evaluating this cell produces the same result.
-        this.data = {
-            nodes: data.nodes,
-            links: data.links.map(d => ({...d, id: getLinkId(d.source, d.target)})),
-            outer: data.outer
-        }
+    _setNewData(data) {
+        this.data = data;
 
         this.notifyDataChange();
     }
 
     setOuterData() {
         if (this.data.outer) {
-            this.setNewData(
+            this._setNewData(
                 {
                     nodes: this.data.outer.nodes, 
                     links: this.data.outer.links, 
@@ -89,7 +86,7 @@ export class Model {
     setInnerData(nodeId) {
         const node = this.data.nodes.find(n => n.id === nodeId);
         if (node && node.inner) {
-            this.setNewData(
+            this._setNewData(
                 {
                     nodes: node.inner.nodes, 
                     links: node.inner.links, 
@@ -101,7 +98,7 @@ export class Model {
 
     notifyDataChange() {
         if (this.controller) {
-            this.controller.onDataChange(
+            this.controller.onDataChange(  // TODO: review why it is needed to do a copy of the data
                 this.data.links.map(d => ({...d})), 
                 this.data.nodes.map(d => ({...d}))
             );
@@ -145,7 +142,7 @@ export class Model {
 }
 
 
-function getClusteredData(rawData) {
+function _getClusteredData(rawData) {
     const outerData = { nodes: [], links: [], outer: null };
     const nodeClusters =  clusterizeNodes(rawData.nodes, rawData.links);
     const maxSize = nodeClusters.reduce((max, cluster) => Math.max(max, cluster.length), 0);
@@ -157,7 +154,7 @@ function getClusteredData(rawData) {
         const innerData = {nodes: [], links: [], outer: outerData};
         innerData.nodes.push(...cluster);
         innerData.links.push(...rawData.links.filter(link => clusterIds.includes(link.source) && clusterIds.includes(link.target)));
-        const outerNode = getNewNode(`C.${i}`, `Cluster ${i}, ${cluster.length} nodes`, i, (cluster.length - minSize) / (maxSize - minSize), "", innerData);
+        const outerNode = _getNewNode(`C.${i}`, `Cluster ${i}, ${cluster.length} nodes`, i, (cluster.length - minSize) / (maxSize - minSize), "", innerData);
         const newLinks = getNewLinks(outerNode, outerData.nodes);
         if (newLinks.length > 0) {
             outerData.links.push(...newLinks);
@@ -169,7 +166,7 @@ function getClusteredData(rawData) {
 }
 
 
-function getNewNode(id, label, group, size = 0.5, info = "", inner = {}) {
+function _getNewNode(id, label, group, size = 0.5, info = "", inner = null) {
     return {
         id, 
         label, 
@@ -197,7 +194,7 @@ function getNewLinks(node, targetNodes) {
     );
 }
 
-
+// TODO: create clusters of unitary clusters
 function clusterizeNodes(nodes, links) {
     const clusters = [];
     const visited = new Set();
@@ -227,7 +224,7 @@ function dfs(nodes, links, visited, node, cluster) {
     }
 }
 
-function getLinkId(source, target) {
+function _getLinkId(source, target) {
     // TODO: check redundancies
     if (source < target) {
         return `${source} - ${target}`;

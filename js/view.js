@@ -387,5 +387,5 @@ function defaultDirectedLinkTextFormatter(fromText, toText) {
 }
 
 function getRadius(d) {
-    return d.size * (MAX_RADIUS - MIN_RADIUS) + MIN_RADIUS;
+    return Math.sqrt(d.size) * (MAX_RADIUS - MIN_RADIUS) + MIN_RADIUS;
 }
