@@ -128,7 +128,7 @@ export class View {
                 .attr('tabindex', 0)  // needed for Safari and Firefox
                 .attr("stroke", LINK_COLOR_UNFOCUSED)
                 .attr("stroke-opacity", LINK_OPACITY_UNFOCUSED)
-                .attr("stroke-width", d => Math.sqrt(d.value))
+                .attr("stroke-width", d => Math.sqrt(d.size))
                 .on('focus', (event) => classThis.onFocusLink(event.target))
                 .on('blur', (event) => classThis.onBlurLink(event.target));
         this.linksGroup

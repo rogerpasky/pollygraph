@@ -52,19 +52,23 @@ export class Model {
 
         const nonUnitaryCluster = nestedData.nodes.find(node => node.inner.nodes.length > 1);
 
-        this.setNewData(nonUnitaryCluster.inner.links, nonUnitaryCluster.inner.nodes, nestedData);
+        this.setNewData(
+            {
+                nodes: nonUnitaryCluster.inner.nodes, 
+                links: nonUnitaryCluster.inner.links, 
+                outer: nestedData
+            }
+        );
     }
 
-    setNewData(links, nodes, outer) {
+    setNewData(data) {
         // TODO: review if needed
         // The force simulation mutates links and nodes, so create a copy
         // so that re-evaluating this cell produces the same result.
-        // this.linksData = rawData.links.map(d => ({...d, id: this.getLinkId(d)}));
-        // this.nodesData = rawData.nodes.map(d => ({...d}));
         this.data = {
-            links: links.map(d => ({...d, id: getLinkId(d.source, d.target)})),
-            nodes: nodes,
-            outer: outer
+            nodes: data.nodes,
+            links: data.links.map(d => ({...d, id: getLinkId(d.source, d.target)})),
+            outer: data.outer
         }
 
         this.notifyDataChange();
@@ -72,14 +76,26 @@ export class Model {
 
     setOuterData() {
         if (this.data.outer) {
-            this.setNewData(this.data.outer.links, this.data.outer.nodes, this.data.outer);  // FIXME: outer should be Null sometimes
+            this.setNewData(
+                {
+                    nodes: this.data.outer.nodes, 
+                    links: this.data.outer.links, 
+                    outer: this.data.outer
+                }
+            );  // FIXME: outer should be Null sometimes
         }
     }
 
     setInnerData(nodeId) {
         const node = this.data.nodes.find(n => n.id === nodeId);
         if (node && node.inner) {
-            this.setNewData(node.inner.links, node.inner.nodes, this.data);
+            this.setNewData(
+                {
+                    nodes: node.inner.nodes, 
+                    links: node.inner.links, 
+                    outer: this.data
+                }
+            );
         }
     }
 
@@ -154,12 +170,31 @@ function getClusteredData(rawData) {
 
 
 function getNewNode(id, label, group, size = 0.5, info = "", inner = {}) {
-    return {id, label, group, size, info, inner};
+    return {
+        id, 
+        label, 
+        group, 
+        size, 
+        info, 
+        inner
+    };
 }
 
-function getNewLinks(node, nodes) {
-    // return nodes.map(n => ({source: node.id, target: n.id, value: 1, id: getLinkId(node.id, n.id)}));
-    return nodes.map(otherNode => ({source: node.id, target: otherNode.id, value: 1}));
+function getNewLinks(node, targetNodes) {
+    return targetNodes.map(
+        target => (
+            {
+                // id: getLinkId(node.id, target.id),
+                source: node.id, 
+                target: target.id, 
+                // label: "",
+                // group: 0,
+                size: 1,
+                info: "",
+                inner: ""
+            }
+        )
+    );
 }
 
 
