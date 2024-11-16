@@ -15,7 +15,7 @@ export class Model {
         }
 
         this.controller = controller;
-        this.notifyDataChange()
+        this._notifyDataChange()
     }
 
     setDataSource(dataSource) {
@@ -25,7 +25,7 @@ export class Model {
 
         let rawData = null;
 
-        // if dataSource is a string, check if it is a URL and get a JSON object from it
+        // if dataSource is a string, check if it is an URL and get a JSON object from it
         if (dataSource.constructor === String) {
             if (dataSource.startsWith('http')) {
                 fetch(dataSource)
@@ -51,27 +51,7 @@ export class Model {
         this._setNewData(this._normalizeData(rawData));
     }
 
-    _normalizeData(rawData) {
-        rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info));
-        rawData.edges = rawData.edges.map(edge => ({...edge, id: _getEdgeId(edge.source, edge.target)}));
-        // TODO: think about the outer data
-        const nestedData = _getClusteredData(rawData);
-
-        const nonUnitaryCluster = nestedData.nodes.find(node => node.inner.nodes.length > 1);
-
-        const nodes = nonUnitaryCluster.inner.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info));
-        const edges = nonUnitaryCluster.inner.edges.map(edge => ({...edge, id: _getEdgeId(edge.source, edge.target)}));
-        const outer = nestedData;
-        return {nodes, edges, outer};
-    }
-
-    _setNewData(data) {
-        this.data = data;
-
-        this.notifyDataChange();
-    }
-
-    setOuterData() {
+    setDataFromOuterData() {
         if (this.data.outer) {
             this._setNewData(
                 {
@@ -83,7 +63,7 @@ export class Model {
         }
     }
 
-    setInnerData(nodeId) {
+    setDataFromInnerData(nodeId) {
         const node = this.data.nodes.find(n => n.id === nodeId);
         if (node && node.inner) {
             this._setNewData(
@@ -92,15 +72,6 @@ export class Model {
                     edges: node.inner.edges, 
                     outer: this.data
                 }
-            );
-        }
-    }
-
-    notifyDataChange() {
-        if (this.controller) {
-            this.controller.onDataChange(  // TODO: review why it is needed to do a copy of the data
-                this.data.edges.map(d => ({...d})), 
-                this.data.nodes.map(d => ({...d}))
             );
         }
     }
@@ -139,23 +110,57 @@ export class Model {
         const index = edgesData.indexOf(edgeData);
         return edgesData[(index + step + edgesData.length) % edgesData.length].id;
     }
+
+    // Internal methods --------------------------------------------------------
+
+    _normalizeData(rawData) {
+        rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info));
+        rawData.edges = rawData.edges.map(edge => ({...edge, id: _getEdgeId(edge.source, edge.target)}));
+        // TODO: think about the outer data
+        const nestedData = _getClusteredData(rawData);
+
+        const nonUnitaryCluster = nestedData.nodes.find(node => node.inner.nodes.length > 1);
+
+        const nodes = nonUnitaryCluster.inner.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info));
+        const edges = nonUnitaryCluster.inner.edges.map(edge => ({...edge, id: _getEdgeId(edge.source, edge.target)}));
+        const outer = nestedData;
+        return {nodes, edges, outer};
+    }
+
+    _setNewData(data) {
+        this.data = data;
+
+        this._notifyDataChange();
+    }
+
+    _notifyDataChange() {
+        if (this.controller) {
+            this.controller.onDataChange(  // TODO: review why it is needed to do a copy of the data
+                this.data.edges.map(d => ({...d})), 
+                this.data.nodes.map(d => ({...d}))
+            );
+        }
+    }
 }
 
 
+// TODO: create clusters of unitary clusters
 function _getClusteredData(rawData) {
-    const outerData = { nodes: [], edges: [], outer: null };
-    const nodeClusters =  clusterizeNodes(rawData.nodes, rawData.edges);
+    const nodeClusters =  _clusterizeNodes(rawData.nodes, rawData.edges);
     const maxSize = nodeClusters.reduce((max, cluster) => Math.max(max, cluster.length), 0);
     const minSize = nodeClusters.reduce((min, cluster) => Math.min(min, cluster.length), maxSize);
 
     var i = 0;
+    const outerData = _getNewGraph([], []);
+
     for (const cluster of nodeClusters) {
         const clusterIds = cluster.map(node => node.id);
         const innerData = {nodes: [], edges: [], outer: outerData};
         innerData.nodes.push(...cluster);
         innerData.edges.push(...rawData.edges.filter(edge => clusterIds.includes(edge.source) && clusterIds.includes(edge.target)));
-        const outerNode = _getNewNode(`C.${i}`, `Cluster ${i}, ${cluster.length} nodes`, i, (cluster.length - minSize) / (maxSize - minSize), "", innerData);
-        const newEdges = getNewEdges(outerNode, outerData.nodes);
+        const outerNodeSize = maxSize !== minSize ? (cluster.length - minSize) / (maxSize - minSize) : 0.5;  // bounded to [0, 1]
+        const outerNode = _getNewNode(`C.${i}`, `Cluster ${i}, ${cluster.length} nodes`, i, outerNodeSize, "", innerData);
+        const newEdges = _getNewEdgesFromSourceNode(outerNode, outerData.nodes);
         if (newEdges.length > 0) {
             outerData.edges.push(...newEdges);
         }
@@ -166,27 +171,39 @@ function _getClusteredData(rawData) {
 }
 
 
-function _getNewNode(id, label, group, size = 0.5, info = "", inner = null) {
+function _getNewGraph(nodes, edges, label = "", inner = null) {
     return {
-        id, 
+        nodes, 
+        edges, 
         label, 
-        group, 
-        size, 
-        info, 
         inner
     };
 }
 
-function getNewEdges(node, targetNodes) {
+
+function _getNewNode(id, label, group, size = 0.5, info = "", inner = null) {  // TODO: reordering parameters to make label optional = ""
+    label = label ? label : id;
+    return {
+        id, 
+        group, 
+        size, 
+        info, 
+        label, 
+        inner
+    };
+}
+
+
+function _getNewEdgesFromSourceNode(sourceNode, targetNodes) {
     return targetNodes.map(
-        target => (
+        targetNode => (
             {
-                // id: getEdgeId(node.id, target.id),
-                source: node.id, 
-                target: target.id, 
+                // id: getEdgeId(sourceNode.id, targetNode.id),
+                source: sourceNode.id, 
+                target: targetNode.id, 
                 // label: "",
                 // group: 0,
-                size: 1,
+                size: 1,  // TODO: review in the [0..1] range
                 info: "",
                 inner: ""
             }
@@ -194,15 +211,15 @@ function getNewEdges(node, targetNodes) {
     );
 }
 
-// TODO: create clusters of unitary clusters
-function clusterizeNodes(nodes, edges) {
+
+function _clusterizeNodes(nodes, edges) {
     const clusters = [];
     const visited = new Set();
 
     for (const node of nodes) {
         if (!visited.has(node.id)) {
             const cluster = [];
-            dfs(nodes, edges, visited, node, cluster);
+            _dfs(nodes, edges, visited, node, cluster);
             clusters.push(cluster);
         }
     }
@@ -211,7 +228,7 @@ function clusterizeNodes(nodes, edges) {
 }
 
 
-function dfs(nodes, edges, visited, node, cluster) {
+function _dfs(nodes, edges, visited, node, cluster) {
     visited.add(node.id);
     cluster.push(node);
     const relatedEdges = edges.filter(edge => edge.source === node.id || edge.target === node.id);
@@ -219,10 +236,11 @@ function dfs(nodes, edges, visited, node, cluster) {
     for (const relatedNodeId of relatedNodes) {
         const relatedNode = nodes.find(n => n.id === relatedNodeId);
         if (relatedNode && !visited.has(relatedNode.id)) {
-            dfs(nodes, edges, visited, relatedNode, cluster);
+            _dfs(nodes, edges, visited, relatedNode, cluster);
         }
     }
 }
+
 
 function _getEdgeId(source, target) {
     // TODO: check redundancies

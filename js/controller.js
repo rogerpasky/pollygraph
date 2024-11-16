@@ -112,7 +112,7 @@ export class Controller {
     focusNext(levelMode) {
         if (levelMode) {
             console.log("Focus Next Level");
-            this.model.setInnerData(this.focusedNodeId ? this.focusedNodeId : this.preFocusedNodeId);
+            this.model.setDataFromInnerData(this.focusedNodeId ? this.focusedNodeId : this.preFocusedNodeId);
         }
         else {
             this.focusedEdgeId = this.model.getNextEdgeId(this.preFocusedNodeId, this.focusedEdgeId, 1);
@@ -125,7 +125,7 @@ export class Controller {
     focusPrevious(levelMode) {
         if (levelMode) {
             console.log("Focus Previous Level");
-            this.model.setOuterData();
+            this.model.setDataFromOuterData();
         }
         else {
             this.focusedEdgeId = this.model.getNextEdgeId(this.preFocusedNodeId, this.focusedEdgeId, -1);
