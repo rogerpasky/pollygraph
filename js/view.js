@@ -1,7 +1,3 @@
-// Specify the dimensions of the chart.
-const width = 928;
-const height = 600;
-
 // Specify the color scale.
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -90,7 +86,7 @@ export class View {
     }
 
     createNodes(nodesData) {
-        var classThis = this;
+        var classThis = this;  // to avoid DOM `this` confusion
         this.nodesGroup = this.svg
             .append("g")
             .attr('id', 'nodes')
@@ -115,7 +111,7 @@ export class View {
     }
 
     createEdges(edgesData) {
-        var classThis = this;
+        var classThis = this;  // to avoid DOM `this` confusion
         this.edgesGroup = this.svg
             .append("g")
             .attr('id', 'edges')
@@ -133,16 +129,14 @@ export class View {
                 .on('blur', (event) => classThis.onBlurEdge(event.target));
         this.edgesGroup
             .append("title")
-            // it is used`.id` because the data is an array of objects with `id` property
-            // .text(d => this.formatEdgeLabelbetweenTwoNodeId(d.source.id, d.target.id));
-            .text(d => this.formatEdgeLabelbetweenTwoNodeId(d.source.id, d.target.id));  // FIXME: I HAVE NO IDEA ABOUT IDs *********
+            .text(d => this.formatEdgeLabelbetweenTwoNodeId(d.source, d.target));
         }
 
     createSimulation(edgesData, nodesData) {
         const width = this.getWidth(this.svg.node());
         const height = this.getHeight(this.svg.node());
 
-        var classThis = this;
+        var classThis = this;  // to avoid DOM `this` confusion
         this.simulation = d3.forceSimulation(nodesData)
             .force("edge", d3.forceLink(edgesData).id(d => d.id).strength(0.9))
             .force("charge", d3.forceManyBody().strength(-4))
@@ -217,6 +211,11 @@ export class View {
     }
 
     onTicked() {
+        this.relocateElements();
+        this.adjustViewBox();
+    }
+
+    relocateElements() {
         this.edgesGroup
             .attr("x1", d => d.source.x)
             .attr("y1", d => d.source.y)
@@ -226,7 +225,9 @@ export class View {
         this.nodesGroup
             .attr("cx", d => d.x)
             .attr("cy", d => d.y);
+    }
 
+    adjustViewBox() {
         const minX = d3.min(this.nodesGroup.data(), d => d.x);
         const maxX = d3.max(this.nodesGroup.data(), d => d.x);
         const minY = d3.min(this.nodesGroup.data(), d => d.y);
