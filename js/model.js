@@ -3,8 +3,8 @@ import { defaultData } from './default_data.js';
 
 export class Model {
     constructor(dataSource = null) {
-        this.controller = null;
-        this.data = null;
+        this._controller = null;
+        this._data = null;
 
         this.setDataSource(dataSource ? dataSource : defaultData);
     }
@@ -14,7 +14,7 @@ export class Model {
             throw new Error('Controller is required');
         }
 
-        this.controller = controller;
+        this._controller = controller;
         this._notifyDataChange()
     }
 
@@ -38,52 +38,52 @@ export class Model {
                 rawData = JSON.parse(dataSource);
             }
             else {
-                throw new Error('Invalid data source');
+                throw new Error('Invalid string data source (should be an URL or a JSON string)');
             }
         }
         else if (dataSource.constructor === Object) {
             rawData = dataSource;
         }
         else {
-            throw new Error('Invalid data source');
+            throw new Error('Invalid data source (should be a string or an object)');
         }
 
         this._setNewData(this._normalizeData(rawData));
     }
 
     setDataFromOuterData() {
-        if (this.data.outer) {
+        if (this._data.outer) {
             this._setNewData(
                 {
-                    nodes: this.data.outer.nodes, 
-                    edges: this.data.outer.edges, 
-                    outer: this.data.outer
+                    nodes: this._data.outer.nodes, 
+                    edges: this._data.outer.edges, 
+                    outer: this._data.outer
                 }
             );  // FIXME: outer should be Null sometimes
         }
     }
 
     setDataFromInnerData(nodeId) {
-        const node = this.data.nodes.find(n => n.id === nodeId);
+        const node = this._data.nodes.find(n => n.id === nodeId);
         if (node && node.inner) {
             this._setNewData(
                 {
                     nodes: node.inner.nodes, 
                     edges: node.inner.edges, 
-                    outer: this.data
+                    outer: this._data
                 }
             );
         }
     }
 
     getFirstNonVisitedEdgeId(focusedNodeId, history) {
-        var edgeData = this.data.edges.find(data =>
+        var edgeData = this._data.edges.find(data =>
             !history.includes(data.id) && (data.source === focusedNodeId || data.target === focusedNodeId)
         );
         if (edgeData) {  // first non-visited edge found
             return edgeData.id;
         }
-        edgeData = this.data.edges.find(data =>
+        edgeData = this._data.edges.find(data =>
                 data.source === focusedNodeId || data.target === focusedNodeId
         );
         if (edgeData) {  // first edge found
@@ -95,13 +95,13 @@ export class Model {
     }
 
     getNodeIdOnOtherSide(focusedNodeId, focusedEdgeId) {  // if no focusedNodeId, returns the source node id
-        const edgeData = this.data.edges.find(edgeData => edgeData.id === focusedEdgeId);
+        const edgeData = this._data.edges.find(edgeData => edgeData.id === focusedEdgeId);
         return edgeData.source === focusedNodeId ? edgeData.target : edgeData.source;
     }
 
     getNextEdgeId(focusedNodeId, focusedEdgeId, step) {
-        const edgeData = this.data.edges.find(edgeData => edgeData.id === focusedEdgeId);
-        const edgesData = this.data.edges.filter(data =>
+        const edgeData = this._data.edges.find(edgeData => edgeData.id === focusedEdgeId);
+        const edgesData = this._data.edges.filter(data =>
             focusedNodeId === data.source || focusedNodeId === data.target
         );
         if (!edgesData) {
@@ -112,6 +112,22 @@ export class Model {
     }
 
     // Internal methods --------------------------------------------------------
+
+    _setNewData(data) {
+        this._data = data;
+        this._notifyDataChange();
+    }
+
+    _notifyDataChange() {
+        if (! this._controller) {
+            return;
+        }
+
+        this._controller.onDataChange(  // TODO: review why it is needed to do a copy of the data
+            this._data.edges.map(d => ({...d})), 
+            this._data.nodes.map(d => ({...d}))
+        );
+    }
 
     _normalizeData(rawData) {
         rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info));
@@ -126,21 +142,49 @@ export class Model {
         const outer = nestedData;
         return {nodes, edges, outer};
     }
+}
 
-    _setNewData(data) {
-        this.data = data;
 
-        this._notifyDataChange();
-    }
+function _getNewGraph(nodes, edges, outer = null) {
+    return {
+        // id, 
+        nodes, 
+        edges, 
+        // label, 
+        // info, 
+        outer
+    };  // TODO: think about an id (for history track), a label and some info
+}
 
-    _notifyDataChange() {
-        if (this.controller) {
-            this.controller.onDataChange(  // TODO: review why it is needed to do a copy of the data
-                this.data.edges.map(d => ({...d})), 
-                this.data.nodes.map(d => ({...d}))
-            );
-        }
-    }
+
+function _getNewNode(id, label = "", group = 0, size = 0.5, info = "", inner = null) {
+    label = label ? label : id;
+    return {
+        id, 
+        label, 
+        group, 
+        size, 
+        info, 
+        inner
+    };
+}
+
+
+function _getNewEdgesFromSourceNode(sourceNode, targetNodes) {
+    return targetNodes.map(
+        targetNode => (
+            {
+                // id: getEdgeId(sourceNode.id, targetNode.id),
+                source: sourceNode.id, 
+                target: targetNode.id, 
+                // label: "",
+                // group: 0,
+                size: 1,  // TODO: review in the [0..1] range
+                info: "",
+                inner: ""
+            }  // TODO: think about an id, a label and a group
+        )
+    );
 }
 
 
@@ -168,47 +212,6 @@ function _getClusteredData(rawData) {
         i++;
     }
     return outerData;
-}
-
-
-function _getNewGraph(nodes, edges, label = "", inner = null) {
-    return {
-        nodes, 
-        edges, 
-        label, 
-        inner
-    };
-}
-
-
-function _getNewNode(id, label, group, size = 0.5, info = "", inner = null) {  // TODO: reordering parameters to make label optional = ""
-    label = label ? label : id;
-    return {
-        id, 
-        group, 
-        size, 
-        info, 
-        label, 
-        inner
-    };
-}
-
-
-function _getNewEdgesFromSourceNode(sourceNode, targetNodes) {
-    return targetNodes.map(
-        targetNode => (
-            {
-                // id: getEdgeId(sourceNode.id, targetNode.id),
-                source: sourceNode.id, 
-                target: targetNode.id, 
-                // label: "",
-                // group: 0,
-                size: 1,  // TODO: review in the [0..1] range
-                info: "",
-                inner: ""
-            }
-        )
-    );
 }
 
 
