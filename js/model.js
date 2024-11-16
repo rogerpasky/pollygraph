@@ -53,16 +53,16 @@ export class Model {
 
     _normalizeData(rawData) {
         rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info));
-        rawData.links = rawData.links.map(link => ({...link, id: _getLinkId(link.source, link.target)}));
+        rawData.edges = rawData.edges.map(edge => ({...edge, id: _getEdgeId(edge.source, edge.target)}));
         // TODO: think about the outer data
         const nestedData = _getClusteredData(rawData);
 
         const nonUnitaryCluster = nestedData.nodes.find(node => node.inner.nodes.length > 1);
 
         const nodes = nonUnitaryCluster.inner.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info));
-        const links = nonUnitaryCluster.inner.links.map(link => ({...link, id: _getLinkId(link.source, link.target)}));
+        const edges = nonUnitaryCluster.inner.edges.map(edge => ({...edge, id: _getEdgeId(edge.source, edge.target)}));
         const outer = nestedData;
-        return {nodes, links, outer};
+        return {nodes, edges, outer};
     }
 
     _setNewData(data) {
@@ -76,7 +76,7 @@ export class Model {
             this._setNewData(
                 {
                     nodes: this.data.outer.nodes, 
-                    links: this.data.outer.links, 
+                    edges: this.data.outer.edges, 
                     outer: this.data.outer
                 }
             );  // FIXME: outer should be Null sometimes
@@ -89,7 +89,7 @@ export class Model {
             this._setNewData(
                 {
                     nodes: node.inner.nodes, 
-                    links: node.inner.links, 
+                    edges: node.inner.edges, 
                     outer: this.data
                 }
             );
@@ -99,65 +99,65 @@ export class Model {
     notifyDataChange() {
         if (this.controller) {
             this.controller.onDataChange(  // TODO: review why it is needed to do a copy of the data
-                this.data.links.map(d => ({...d})), 
+                this.data.edges.map(d => ({...d})), 
                 this.data.nodes.map(d => ({...d}))
             );
         }
     }
 
-    getFirstNonVisitedLinkId(focusedNodeId, history) {
-        var linkData = this.data.links.find(data =>
+    getFirstNonVisitedEdgeId(focusedNodeId, history) {
+        var edgeData = this.data.edges.find(data =>
             !history.includes(data.id) && (data.source === focusedNodeId || data.target === focusedNodeId)
         );
-        if (linkData) {  // first non-visited link found
-            return linkData.id;
+        if (edgeData) {  // first non-visited edge found
+            return edgeData.id;
         }
-        linkData = this.data.links.find(data =>
+        edgeData = this.data.edges.find(data =>
                 data.source === focusedNodeId || data.target === focusedNodeId
         );
-        if (linkData) {  // first link found
-            return linkData.id;
+        if (edgeData) {  // first edge found
+            return edgeData.id;
         }
         else {
-            return "";  // isolated node with no links
+            return "";  // isolated node with no edges
         }
     }
 
-    getNodeIdOnOtherSide(focusedNodeId, focusedLinkId) {  // if no focusedNodeId, returns the source node id
-        const linkData = this.data.links.find(linkData => linkData.id === focusedLinkId);
-        return linkData.source === focusedNodeId ? linkData.target : linkData.source;
+    getNodeIdOnOtherSide(focusedNodeId, focusedEdgeId) {  // if no focusedNodeId, returns the source node id
+        const edgeData = this.data.edges.find(edgeData => edgeData.id === focusedEdgeId);
+        return edgeData.source === focusedNodeId ? edgeData.target : edgeData.source;
     }
 
-    getNextLinkId(focusedNodeId, focusedLinkId, step) {
-        const linkData = this.data.links.find(linkData => linkData.id === focusedLinkId);
-        const linksData = this.data.links.filter(data =>
+    getNextEdgeId(focusedNodeId, focusedEdgeId, step) {
+        const edgeData = this.data.edges.find(edgeData => edgeData.id === focusedEdgeId);
+        const edgesData = this.data.edges.filter(data =>
             focusedNodeId === data.source || focusedNodeId === data.target
         );
-        if (!linksData) {
+        if (!edgesData) {
             return "";
         }
-        const index = linksData.indexOf(linkData);
-        return linksData[(index + step + linksData.length) % linksData.length].id;
+        const index = edgesData.indexOf(edgeData);
+        return edgesData[(index + step + edgesData.length) % edgesData.length].id;
     }
 }
 
 
 function _getClusteredData(rawData) {
-    const outerData = { nodes: [], links: [], outer: null };
-    const nodeClusters =  clusterizeNodes(rawData.nodes, rawData.links);
+    const outerData = { nodes: [], edges: [], outer: null };
+    const nodeClusters =  clusterizeNodes(rawData.nodes, rawData.edges);
     const maxSize = nodeClusters.reduce((max, cluster) => Math.max(max, cluster.length), 0);
     const minSize = nodeClusters.reduce((min, cluster) => Math.min(min, cluster.length), maxSize);
 
     var i = 0;
     for (const cluster of nodeClusters) {
         const clusterIds = cluster.map(node => node.id);
-        const innerData = {nodes: [], links: [], outer: outerData};
+        const innerData = {nodes: [], edges: [], outer: outerData};
         innerData.nodes.push(...cluster);
-        innerData.links.push(...rawData.links.filter(link => clusterIds.includes(link.source) && clusterIds.includes(link.target)));
+        innerData.edges.push(...rawData.edges.filter(edge => clusterIds.includes(edge.source) && clusterIds.includes(edge.target)));
         const outerNode = _getNewNode(`C.${i}`, `Cluster ${i}, ${cluster.length} nodes`, i, (cluster.length - minSize) / (maxSize - minSize), "", innerData);
-        const newLinks = getNewLinks(outerNode, outerData.nodes);
-        if (newLinks.length > 0) {
-            outerData.links.push(...newLinks);
+        const newEdges = getNewEdges(outerNode, outerData.nodes);
+        if (newEdges.length > 0) {
+            outerData.edges.push(...newEdges);
         }
         outerData.nodes.push(outerNode);
         i++;
@@ -177,11 +177,11 @@ function _getNewNode(id, label, group, size = 0.5, info = "", inner = null) {
     };
 }
 
-function getNewLinks(node, targetNodes) {
+function getNewEdges(node, targetNodes) {
     return targetNodes.map(
         target => (
             {
-                // id: getLinkId(node.id, target.id),
+                // id: getEdgeId(node.id, target.id),
                 source: node.id, 
                 target: target.id, 
                 // label: "",
@@ -195,14 +195,14 @@ function getNewLinks(node, targetNodes) {
 }
 
 // TODO: create clusters of unitary clusters
-function clusterizeNodes(nodes, links) {
+function clusterizeNodes(nodes, edges) {
     const clusters = [];
     const visited = new Set();
 
     for (const node of nodes) {
         if (!visited.has(node.id)) {
             const cluster = [];
-            dfs(nodes, links, visited, node, cluster);
+            dfs(nodes, edges, visited, node, cluster);
             clusters.push(cluster);
         }
     }
@@ -211,20 +211,20 @@ function clusterizeNodes(nodes, links) {
 }
 
 
-function dfs(nodes, links, visited, node, cluster) {
+function dfs(nodes, edges, visited, node, cluster) {
     visited.add(node.id);
     cluster.push(node);
-    const relatedLinks = links.filter(link => link.source === node.id || link.target === node.id);
-    const relatedNodes = relatedLinks.map(link => link.source === node.id ? link.target : link.source);
+    const relatedEdges = edges.filter(edge => edge.source === node.id || edge.target === node.id);
+    const relatedNodes = relatedEdges.map(edge => edge.source === node.id ? edge.target : edge.source);
     for (const relatedNodeId of relatedNodes) {
         const relatedNode = nodes.find(n => n.id === relatedNodeId);
         if (relatedNode && !visited.has(relatedNode.id)) {
-            dfs(nodes, links, visited, relatedNode, cluster);
+            dfs(nodes, edges, visited, relatedNode, cluster);
         }
     }
 }
 
-function _getLinkId(source, target) {
+function _getEdgeId(source, target) {
     // TODO: check redundancies
     if (source < target) {
         return `${source} - ${target}`;

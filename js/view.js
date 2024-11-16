@@ -31,19 +31,19 @@ const LINK_OPACITY_UNFOCUSED = 0.2;
 
 export class View {
     constructor(
-        linkTextFormatter = null,
-        directedLinkTextFormatter = null,
+        edgeTextFormatter = null,
+        directedEdgeTextFormatter = null,
     ) {
         this.controller = null;
-        this.linksGroup = null;
+        this.edgesGroup = null;
         this.nodesGroup = null;
         this.simulation = null;
         this.svg = this.getDomSvg();
         this.infoDiv = this.getInfoDiv();
         this.shiftPressed = false;
         this.setKeyCallbacks();
-        this.linkTextFormatter = linkTextFormatter || defaultLinkTextFormatter;
-        this.directedLinkTextFormatter = directedLinkTextFormatter || defaultDirectedLinkTextFormatter;
+        this.edgeTextFormatter = edgeTextFormatter || defaultEdgeTextFormatter;
+        this.directedEdgeTextFormatter = directedEdgeTextFormatter || defaultDirectedEdgeTextFormatter;
         this.restart()
     }
 
@@ -53,8 +53,8 @@ export class View {
         if (this.simulation) {
             this.simulation.stop();
         }
-        if (this.linksGroup) {
-            this.svg.select("#links").remove();
+        if (this.edgesGroup) {
+            this.svg.select("#edges").remove();
         }
         if (this.nodesGroup) {
             this.svg.select("#nodes").remove();
@@ -114,13 +114,13 @@ export class View {
                 .text(d => d.label ? d.label : d.id);
     }
 
-    createLinks(linksData) {
+    createEdges(edgesData) {
         var classThis = this;
-        this.linksGroup = this.svg
+        this.edgesGroup = this.svg
             .append("g")
-            .attr('id', 'links')
+            .attr('id', 'edges')
             .selectAll()
-            .data(linksData)
+            .data(edgesData)
             .join("line")
                 .attr('id', d => d.id)
                 .attr('role', 'treeitem')
@@ -129,22 +129,22 @@ export class View {
                 .attr("stroke", LINK_COLOR_UNFOCUSED)
                 .attr("stroke-opacity", LINK_OPACITY_UNFOCUSED)
                 .attr("stroke-width", d => Math.sqrt(d.size))
-                .on('focus', (event) => classThis.onFocusLink(event.target))
-                .on('blur', (event) => classThis.onBlurLink(event.target));
-        this.linksGroup
+                .on('focus', (event) => classThis.onFocusEdge(event.target))
+                .on('blur', (event) => classThis.onBlurEdge(event.target));
+        this.edgesGroup
             .append("title")
             // it is used`.id` because the data is an array of objects with `id` property
-            // .text(d => this.formatLinkLabelbetweenTwoNodeId(d.source.id, d.target.id));
-            .text(d => this.formatLinkLabelbetweenTwoNodeId(d.source.id, d.target.id));  // FIXME: I HAVE NO IDEA ABOUT IDs *********
+            // .text(d => this.formatEdgeLabelbetweenTwoNodeId(d.source.id, d.target.id));
+            .text(d => this.formatEdgeLabelbetweenTwoNodeId(d.source.id, d.target.id));  // FIXME: I HAVE NO IDEA ABOUT IDs *********
         }
 
-    createSimulation(linksData, nodesData) {
+    createSimulation(edgesData, nodesData) {
         const width = this.getWidth(this.svg.node());
         const height = this.getHeight(this.svg.node());
 
         var classThis = this;
         this.simulation = d3.forceSimulation(nodesData)
-            .force("link", d3.forceLink(linksData).id(d => d.id).strength(0.9))
+            .force("edge", d3.forceLink(edgesData).id(d => d.id).strength(0.9))
             .force("charge", d3.forceManyBody().strength(-4))
             // .force("center", d3.forceCenter(width / 2, height / 2))
             .force("collide", d3.forceCollide(d => getRadius(d) + 3))
@@ -163,14 +163,14 @@ export class View {
         this.controller.unFocusNode(nodeId);
     }
 
-    onFocusLink(link) {
-        const linkId = link.getAttribute('id');
-        this.controller.focusLink(linkId);
+    onFocusEdge(edge) {
+        const edgeId = edge.getAttribute('id');
+        this.controller.focusEdge(edgeId);
     }
 
-    onBlurLink(link) {
-        const linkId = link.getAttribute('id');
-        this.controller.unFocusLink(linkId)
+    onBlurEdge(edge) {
+        const edgeId = edge.getAttribute('id');
+        this.controller.unFocusEdge(edgeId)
     }
 
     onKeydown(key) {
@@ -206,18 +206,18 @@ export class View {
         }
     }
 
-    onDataChange(linksData, nodesData) {
+    onDataChange(edgesData, nodesData) {
         this.restart();
-        this.createLinks(linksData);
+        this.createEdges(edgesData);
         this.createNodes(nodesData);
-        this.createSimulation(linksData, nodesData);
+        this.createSimulation(edgesData, nodesData);
 
         this.currentFocusedNode = this.nodesGroup.nodes()[0];
-        this.currentFocusedLink = this.selectConnectedLinks(this.currentFocusedNode).nodes()[0];    
+        this.currentFocusedEdge = this.selectConnectedEdges(this.currentFocusedNode).nodes()[0];    
     }
 
     onTicked() {
-        this.linksGroup
+        this.edgesGroup
             .attr("x1", d => d.source.x)
             .attr("y1", d => d.source.y)
             .attr("x2", d => d.target.x)
@@ -274,48 +274,48 @@ export class View {
         node.setAttribute('stroke-opacity', NODE_OPACITY_UNFOCUSED);
     }
 
-    displayFocusOnLinkId(linkId) {
-        const link = document.getElementById(linkId);
-        this._displayFocusOnLink(link);
+    displayFocusOnEdgeId(edgeId) {
+        const edge = document.getElementById(edgeId);
+        this._displayFocusOnEdge(edge);
     }
 
-    _displayFocusOnLink(link) {
-        link.setAttribute('stroke', LINK_COLOR_FOCUSED);
-        link.setAttribute('stroke-opacity', LINK_OPACITY_FOCUSED);
+    _displayFocusOnEdge(edge) {
+        edge.setAttribute('stroke', LINK_COLOR_FOCUSED);
+        edge.setAttribute('stroke-opacity', LINK_OPACITY_FOCUSED);
     }
 
-    displayPreFocusOnLinkId(linkId) {
-        const link = document.getElementById(linkId);
-        this._displayPreFocusOnLink(link);
+    displayPreFocusOnEdgeId(edgeId) {
+        const edge = document.getElementById(edgeId);
+        this._displayPreFocusOnEdge(edge);
     }
 
-    _displayPreFocusOnLink(link) {
-        link.setAttribute('stroke', LINK_COLOR_PREFOCUSED);
-        link.setAttribute('stroke-opacity', LINK_OPACITY_PREFOCUSED);
+    _displayPreFocusOnEdge(edge) {
+        edge.setAttribute('stroke', LINK_COLOR_PREFOCUSED);
+        edge.setAttribute('stroke-opacity', LINK_OPACITY_PREFOCUSED);
     }
 
-    displayUnFocusOnLinkId(linkId) {
-        const link = document.getElementById(linkId);
-        this._displayUnFocusOnLink(link);
+    displayUnFocusOnEdgeId(edgeId) {
+        const edge = document.getElementById(edgeId);
+        this._displayUnFocusOnEdge(edge);
     }
 
-    _displayUnFocusOnLink(link) {
-        link.setAttribute('stroke', LINK_COLOR_UNFOCUSED);
-        link.setAttribute('stroke-opacity', LINK_OPACITY_UNFOCUSED);
+    _displayUnFocusOnEdge(edge) {
+        edge.setAttribute('stroke', LINK_COLOR_UNFOCUSED);
+        edge.setAttribute('stroke-opacity', LINK_OPACITY_UNFOCUSED);
     }
 
-    displayPreFocusOnConnectedLinksToNodeId(nodeId) {  // TODO: optimize
-        const connectedLinks = this.selectConnectedLinks(nodeId);
-        this.linksGroup
+    displayPreFocusOnConnectedEdgesToNodeId(nodeId) {  // TODO: optimize
+        const connectedEdges = this.selectConnectedEdges(nodeId);
+        this.edgesGroup
             .selectAll("title")
-                .text(d => this.formatLinkLabelbetweenTwoNodeId(d.source.id, d.target.id));
-        connectedLinks
+                .text(d => this.formatEdgeLabelbetweenTwoNodeId(d.source.id, d.target.id));
+        connectedEdges
             .select("title")
-                .text(d => this.formatLinkLabelStartingFromNodeId(d, nodeId))
-        this.linksGroup
+                .text(d => this.formatEdgeLabelStartingFromNodeId(d, nodeId))
+        this.edgesGroup
             .selectAll(function() {
                 this.setAttribute('stroke', LINK_COLOR_UNFOCUSED);
-                if (connectedLinks.nodes().includes(this)) {
+                if (connectedEdges.nodes().includes(this)) {
                     this.setAttribute('stroke-opacity', LINK_OPACITY_PREFOCUSED);
                 }
                 else {
@@ -332,31 +332,31 @@ export class View {
 
     // Selection methods -------------------------------------------------------
 
-    selectConnectedLinks(nodeId) {
-        return this.linksGroup.filter(d => d.source.id === nodeId || d.target.id === nodeId);
+    selectConnectedEdges(nodeId) {
+        return this.edgesGroup.filter(d => d.source.id === nodeId || d.target.id === nodeId);
     }
 
     // Formatting methods ------------------------------------------------------
 
-    formatLinkLabelStartingFromNodeId(linkData, fromNodeId) {
-        if (linkData.source.id === fromNodeId) {
-            var toNodeId = linkData.target.id;
+    formatEdgeLabelStartingFromNodeId(edgeData, fromNodeId) {
+        if (edgeData.source.id === fromNodeId) {
+            var toNodeId = edgeData.target.id;
         }
         else {
-            var toNodeId = linkData.source.id;
+            var toNodeId = edgeData.source.id;
         }
         const fromText = document.getElementById(fromNodeId).getElementsByTagName('title')[0].textContent;
         const toText = document.getElementById(toNodeId).getElementsByTagName('title')[0].textContent;
-        return this.directedLinkTextFormatter(fromText, toText);
+        return this.directedEdgeTextFormatter(fromText, toText);
     
     }
 
-    formatLinkLabelbetweenTwoNodeId(sourceId, targetId) {
+    formatEdgeLabelbetweenTwoNodeId(sourceId, targetId) {
         const sourceElement = document.getElementById(sourceId)
         const sourceText = sourceElement ? sourceElement.getElementsByTagName('title')[0].textContent : sourceId;
         const targetElement = document.getElementById(targetId)
         const targetText = targetElement ? targetElement.getElementsByTagName('title')[0].textContent : targetId;
-        return this.linkTextFormatter(sourceText, targetText);
+        return this.edgeTextFormatter(sourceText, targetText);
     }
 
     // Find and Focus methods --------------------------------------------------
@@ -378,11 +378,11 @@ export class View {
 
 // Default formatters ---------------------------------------------------------
 
-function defaultLinkTextFormatter(sourceText, targetText) {
+function defaultEdgeTextFormatter(sourceText, targetText) {
     return `${sourceText} - ${targetText}`;
 }
 
-function defaultDirectedLinkTextFormatter(fromText, toText) {
+function defaultDirectedEdgeTextFormatter(fromText, toText) {
     return `from ${fromText} to ${toText}`;
 }
 

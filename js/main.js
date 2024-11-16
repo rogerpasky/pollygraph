@@ -5,13 +5,13 @@ import { Controller } from './controller.js';
 import { countries } from './countries.js';
 
 
-function directedLinkTextFormatter(_fromText, toText) {
+function directedEdgeTextFormatter(_fromText, toText) {
     return `to ${toText}`;
 }
 
 
 const model = new Model();
-const view = new View(null, directedLinkTextFormatter);
+const view = new View(null, directedEdgeTextFormatter);
 const controler = new Controller(model, view);
 
 
@@ -28,17 +28,17 @@ function processCountries(countries) {
     const nodes = countries.map(country => {
         return {id: country.cca3, label: country.name.common, group: regions.indexOf(country.region), size: (country.area - minSize) / (maxSize - minSize)}; // bounded to [0, 1]
     });
-    const links = [];
+    const edges = [];
     for (const country of countries) {
         const borders = country.borders;
         for (const border of borders) {
-            if (links.find(l => l.source === border && l.target === country.cca3)) {
+            if (edges.find(l => l.source === border && l.target === country.cca3)) {
                 continue;
             }
-            links.push({source: country.cca3, target: border, value: 1});
+            edges.push({source: country.cca3, target: border, value: 1});
         }
     }
-    return {nodes, links};
+    return {nodes, edges};
 }
 
 model.setDataSource(processCountries(countries));

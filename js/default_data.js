@@ -23,7 +23,7 @@ export const defaultData = {
         {id: "Favourite", group: 3},
         {id: "Dahlia", group: 3}
     ],
-    links: [
+    edges: [
         {source: "Napoleon", target: "Myriel", size: 1},
         {source: "Mlle.Baptistine", target: "Myriel", size: 8},
         {source: "Mme.Magloire", target: "Myriel", size: 10},
