@@ -109,30 +109,28 @@ export class Controller {
         }
     }
 
-    focusNext(levelMode) {
-        if (levelMode) {
-            console.log("Focus Next Level");
-            this.model.setDataFromInnerData(this.focusedNodeId ? this.focusedNodeId : this.preFocusedNodeId);
-        }
-        else {
-            this.focusedEdgeId = this.model.getNextEdgeId(this.preFocusedNodeId, this.focusedEdgeId, 1);
-            this.traversingNearby = true;
-            this.view.findAndFocusElement(this.focusedEdgeId);
-            this.traversingNearby = false;
-        }
+    focusNext() {
+        this.focusedEdgeId = this.model.getNextEdgeId(this.preFocusedNodeId, this.focusedEdgeId, 1);
+        this.traversingNearby = true;
+        this.view.findAndFocusElement(this.focusedEdgeId);
+        this.traversingNearby = false;
     }
 
-    focusPrevious(levelMode) {
-        if (levelMode) {
-            console.log("Focus Previous Level");
-            this.model.setDataFromOuterData();
-        }
-        else {
-            this.focusedEdgeId = this.model.getNextEdgeId(this.preFocusedNodeId, this.focusedEdgeId, -1);
-            this.traversingNearby = true;
-            this.view.findAndFocusElement(this.focusedEdgeId);
-            this.traversingNearby = false;
-        }
+    focusPrevious() {
+        this.focusedEdgeId = this.model.getNextEdgeId(this.preFocusedNodeId, this.focusedEdgeId, -1);
+        this.traversingNearby = true;
+        this.view.findAndFocusElement(this.focusedEdgeId);
+        this.traversingNearby = false;
+    }
+
+    focusInner() {
+        console.log("Focus Next Level");
+        this.model.setDataFromInnerData(this.focusedNodeId ? this.focusedNodeId : this.preFocusedNodeId);
+    }
+
+    focusOuter() {
+        console.log("Focus Previous Level");
+        this.model.setDataFromOuterData();
     }
 
     focusDetails() {

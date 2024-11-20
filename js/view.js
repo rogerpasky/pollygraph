@@ -103,7 +103,8 @@ export class View {
                 .attr('fill', d => color(d.group))  // TODO: decide right place/format in data
                 // .on("click", (event) => console.log(`Click on ${event.target}`))
                 .on('focus', (event) => classThis.onFocusNode(event.target))
-                .on('blur', (event) => classThis.onBlurNode(event.target));
+                .on('blur', (event) => classThis.onBlurNode(event.target))
+                .on('dblclick', () => classThis.onDoubleClickNode());
 
         this.nodesGroup
             .append("title")
@@ -167,6 +168,15 @@ export class View {
         this.controller.unFocusEdge(edgeId)
     }
 
+    onDoubleClickNode() {
+        if (this.shiftPressed) {
+            this.controller.focusOuter();
+        }
+        else {
+            this.controller.focusInner();
+        }
+    }
+
     onKeydown(key) {
         if (!this.controller) {
             return;
@@ -181,9 +191,15 @@ export class View {
             this.controller.focusPrevious(this.shiftPressed);
         }
         else if (key === "ArrowDown") {
-            this.controller.focusNext(this.shiftPressed);
+            this.controller.focusNext();
         }
-        else if (key === "Enter" || key === " ") {
+        else if (key === "Enter" && !this.shiftPressed) {
+            this.controller.focusInner();
+        }
+        else if (key === "Enter" && this.shiftPressed) {
+            this.controller.focusOuter();
+        }
+        else if (key === " ") {
             this.controller.focusDetails();
         }
         else if (key === "Shift") {
