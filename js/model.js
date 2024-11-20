@@ -30,8 +30,9 @@ export class Model {
             if (dataSource.startsWith('http')) {
                 fetch(dataSource)
                     .then(response => response.json())
-                    .then(data => this._setNewData(data))
+                    .then(data => this._setNewData(this._normalizeData(data)))
                     .catch(error => console.error('Error fetching data:', error));
+                return;
             }
             // Otherwise, if the string is a JSON object, parse it
             else if (dataSource.startsWith('{')) {
@@ -114,6 +115,7 @@ export class Model {
     // Internal methods --------------------------------------------------------
 
     _setNewData(data) {
+        console.log('New data:', data);
         this._data = data;
         this._notifyDataChange();
     }
@@ -134,13 +136,14 @@ export class Model {
         rawData.edges = rawData.edges.map(edge => ({...edge, id: _getEdgeId(edge.source, edge.target)}));
         // TODO: think about the outer data
         const nestedGraph = _getNestedGraph(rawData);
+        return nestedGraph;
 
-        const nonUnitaryCluster = nestedGraph.nodes.find(node => node.inner.nodes.length > 1);
+        // const nonUnitaryCluster = nestedGraph.nodes.find(node => node.inner.nodes.length > 1);
 
-        const nodes = nonUnitaryCluster.inner.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info));
-        const edges = nonUnitaryCluster.inner.edges.map(edge => ({...edge, id: _getEdgeId(edge.source, edge.target)}));
-        const outer = nestedGraph;
-        return _getNewGraph(nodes, edges, outer);
+        // const nodes = nonUnitaryCluster.inner.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info));
+        // const edges = nonUnitaryCluster.inner.edges.map(edge => ({...edge, id: _getEdgeId(edge.source, edge.target)}));
+        // const outer = nestedGraph;
+        // return _getNewGraph(nodes, edges, outer);
     }
 }
 

@@ -41,7 +41,8 @@ function processCountries(countries) {
     return {nodes, edges};
 }
 
-model.setDataSource(processCountries(countries));
+// model.setDataSource(processCountries(countries));
+model.setDataSource("http://localhost:8000/data/help-1.json");
 
 
 const a = {
