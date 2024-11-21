@@ -4,6 +4,7 @@
         {
             "id": "start", 
             "type": 0, 
+            "size": 0.5,
             "label": "Start", 
             "info": "<H1>Help</H1>This is a node.",
             "inner": "http://localhost:8000/data/help-2.json"

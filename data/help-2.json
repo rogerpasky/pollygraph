@@ -4,6 +4,7 @@
         {
             "id": "node-1", 
             "type": 1, 
+            "size": 0.5,
             "label": "Node One", 
             "info": "<H1>Help</H1>This is node one.",
             "inner": ""
@@ -11,6 +12,7 @@
         {
             "id": "node-2", 
             "type": 1, 
+            "size": 0.5,
             "label": "Node Two", 
             "info": "<H1>Help</H1>This is node two.<p>This is a <a href=\"http://google.com\">link</a> to Google.",
             "inner": ""
@@ -20,6 +22,7 @@
         {
             "source": "node-1", 
             "target": "node-2", 
+            "size": 0.5,
             "label": "Edge 1-2", 
             "info": "<H1>Help</H1>This is edge one to two."
         }
