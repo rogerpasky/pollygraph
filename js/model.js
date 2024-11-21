@@ -54,26 +54,14 @@ export class Model {
 
     setDataFromOuterData() {
         if (this._data.outer) {
-            this._setNewData(
-                {
-                    nodes: this._data.outer.nodes, 
-                    edges: this._data.outer.edges, 
-                    outer: this._data.outer
-                }
-            );  // FIXME: outer should be Null sometimes
+            this.setDataSource(this._data.outer);
         }
     }
 
     setDataFromInnerData(nodeId) {
         const node = this._data.nodes.find(n => n.id === nodeId);
         if (node && node.inner) {
-            this._setNewData(
-                {
-                    nodes: node.inner.nodes, 
-                    edges: node.inner.edges, 
-                    outer: this._data
-                }
-            );
+            this.setDataSource(node.inner);
         }
     }
 
@@ -112,6 +100,19 @@ export class Model {
         return edgesData[(index + step + edgesData.length) % edgesData.length].id;
     }
 
+    getInfo(elementId) {
+        const node = this._data.nodes.find(node => node.id === elementId);
+        if (node) {
+            return node.info ? node.info : node.label;
+        }
+        const edge = this._data.edges.find(edge => edge.id === elementId);
+        if (edge) {
+            return edge.info ? edge.info : edge.id;
+        }
+        // TODO: get graph info when available
+        return "";
+    }
+
     // Internal methods --------------------------------------------------------
 
     _setNewData(data) {
@@ -132,18 +133,12 @@ export class Model {
     }
 
     _normalizeData(rawData) {
-        rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info));
+        // TODO: review unexpected data and inexistences.
+        rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info, node.inner));
         rawData.edges = rawData.edges.map(edge => ({...edge, id: _getEdgeId(edge.source, edge.target)}));
         // TODO: think about the outer data
         const nestedGraph = _getNestedGraph(rawData);
         return nestedGraph;
-
-        // const nonUnitaryCluster = nestedGraph.nodes.find(node => node.inner.nodes.length > 1);
-
-        // const nodes = nonUnitaryCluster.inner.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info));
-        // const edges = nonUnitaryCluster.inner.edges.map(edge => ({...edge, id: _getEdgeId(edge.source, edge.target)}));
-        // const outer = nestedGraph;
-        // return _getNewGraph(nodes, edges, outer);
     }
 }
 
@@ -196,7 +191,14 @@ function _getNestedGraph(rawData, outerGraph=null) {
 
     const nonUnitaryClusters = nodesClusters.filter(cluster => cluster.length > 1);
     const unitaryClusters = nodesClusters.filter(cluster => cluster.length === 1);
-    const unitaryClustersGraph = _getClusteredGraph(unitaryClusters, rawData.edges, null, "Unitary_Cluster");
+    if (
+        (nonUnitaryClusters.length === 0 && unitaryClusters.length === 1) ||  // Single node graph
+        (nonUnitaryClusters.length === 1 && unitaryClusters.length === 0)     // Connected graph
+    ) {
+        return _getNewGraph(rawData.nodes, rawData.edges, rawData.outer ? rawData.outer : outerGraph);
+    }
+
+    const unitaryClustersGraph = _getClusteredGraph(unitaryClusters, rawData.edges, outerGraph, "Unitary_Cluster");
 
     var nonUnitaryEdges = rawData.edges.map(edge => ({...edge}));
     if (unitaryClustersGraph.nodes.length > 0) {
@@ -204,7 +206,9 @@ function _getNestedGraph(rawData, outerGraph=null) {
         nonUnitaryEdges = nonUnitaryEdges.concat(unitaryClustersGraph.edges);
     }
 
-    return _getClusteredGraph(nonUnitaryClusters, nonUnitaryEdges, outerGraph, "Cluster");
+    const clusteredGraph = _getClusteredGraph(nonUnitaryClusters, nonUnitaryEdges, outerGraph, "Cluster");
+    unitaryClustersGraph.outer = clusteredGraph;
+    return clusteredGraph;
 }
 
 

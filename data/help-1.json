@@ -5,12 +5,12 @@
             "id": "start", 
             "type": 0, 
             "label": "Start", 
-            "info": "This is a node.",
-            "inner": "http://localhost:8000/help-2.json"
+            "info": "<H1>Help</H1>This is a node.",
+            "inner": "http://localhost:8000/data/help-2.json"
         }
     ],
     "edges": [], 
     "label": "Help 1", 
-    "info":"This is the help file.", 
+    "info":"<H1>Help Graph</H1>This is the help file.", 
     "outer": ""
 }

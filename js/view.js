@@ -82,7 +82,9 @@ export class View {
     }
 
     getInfoDiv() {
-        return document.getElementById('info');
+        const div = document.getElementById('info');
+        div.setAttribute('tabindex', 0);
+        return div;
     }
 
     createNodes(nodesData) {
@@ -200,7 +202,7 @@ export class View {
             this.controller.focusOuter();
         }
         else if (key === " ") {
-            this.controller.focusDetails();
+            this.controller.focusDetails(this.shiftPressed);
         }
         else if (key === "Shift") {
             this.shiftPressed = true;
@@ -342,8 +344,9 @@ export class View {
     }
 
     displayElementInfo(elementId) {
-        const element = document.getElementById(elementId);
-        const text = element.getElementsByTagName('title')[0].textContent;
+        // const element = document.getElementById(elementId);
+        // const text = element.getElementsByTagName('title')[0].textContent;
+        const text = this.controller.getInfo(elementId);
         this.infoDiv.innerHTML = text;
     }
 
@@ -390,6 +393,10 @@ export class View {
         else {
             console.error(`Element with id ${elementId} not found`);
         }
+    }
+
+    focusInfo() {
+        this.infoDiv.focus();
     }
 }
 

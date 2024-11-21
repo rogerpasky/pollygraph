@@ -133,8 +133,25 @@ export class Controller {
         this.model.setDataFromOuterData();
     }
 
-    focusDetails() {
+    focusDetails(backToGraph) {
         console.log("Focus Details");
+        if (backToGraph) {
+            if (this.focusedEdgeId) {
+                this.view.findAndFocusElement(this.focusedEdgeId);
+            }
+            else {
+                this.view.findAndFocusElement(this.focusedNodeId);
+            }
+        }
+        else {
+            this.traversingNearby = true;
+            this.view.focusInfo();
+            this.traversingNearby = false;
+        }
+    }
+
+    getInfo(elementId) {
+        return this.model.getInfo(elementId);
     }
 
     // Internal methods --------------------------------------------------------
