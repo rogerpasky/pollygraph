@@ -133,20 +133,20 @@ export class Controller {
         this.model.setDataFromOuterData();
     }
 
-    focusDetails(backToGraph) {
+    focusDetails() {
         console.log("Focus Details");
-        if (backToGraph) {
-            if (this.focusedEdgeId) {
-                this.view.findAndFocusElement(this.focusedEdgeId);
-            }
-            else {
-                this.view.findAndFocusElement(this.focusedNodeId);
-            }
+        this.traversingNearby = true;
+        this.view.focusInfo();
+        this.traversingNearby = false;
+    }
+
+    focusBackFromDetails() {
+        console.log("Focus Back From Details");
+        if (this.focusedEdgeId) {
+            this.view.findAndFocusElement(this.focusedEdgeId);
         }
         else {
-            this.traversingNearby = true;
-            this.view.focusInfo();
-            this.traversingNearby = false;
+            this.view.findAndFocusElement(this.focusedNodeId);
         }
     }
 

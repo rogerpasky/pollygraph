@@ -27,7 +27,7 @@ export class Model {
 
         // if dataSource is a string, check if it is an URL and get a JSON object from it
         if (dataSource.constructor === String) {
-            if (dataSource.startsWith('http')) {
+            if (dataSource.startsWith('http') || dataSource.startsWith('./')) {
                 fetch(dataSource)
                     .then(response => response.json())
                     .then(data => this._setNewData(this._normalizeData(data)))
@@ -134,7 +134,7 @@ export class Model {
 
     _normalizeData(rawData) {
         // TODO: review unexpected data and inexistences.
-        rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.group, node.size, node.info, node.inner));
+        rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.type, node.size, node.info, node.inner));
         rawData.edges = rawData.edges.map(edge => ({...edge, id: _getEdgeId(edge.source, edge.target)}));
         // TODO: think about the outer data
         const nestedGraph = _getNestedGraph(rawData);
@@ -155,12 +155,12 @@ function _getNewGraph(nodes, edges, outer = null) {
 }
 
 
-function _getNewNode(id, label = "", group = 0, size = 0.5, info = "", inner = null) {
+function _getNewNode(id, label = "", type = 0, size = 0.5, info = "", inner = null) {
     label = label ? label : id;
     return {
         id, 
         label, 
-        group, 
+        type, 
         size, 
         info, 
         inner
@@ -176,11 +176,11 @@ function _getNewEdgesFromSourceNode(sourceNode, targetNodes) {
                 source: sourceNode.id, 
                 target: targetNode.id, 
                 // label: "",
-                // group: 0,
+                // type: 0,
                 size: 1,  // TODO: review in the [0..1] range
                 info: "",
                 inner: ""
-            }  // TODO: think about an id, a label and a group
+            }  // TODO: think about an id, a label and a type
         )
     );
 }

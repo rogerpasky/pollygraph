@@ -37,6 +37,9 @@ export class View {
         this.svg = this.getDomSvg();
         this.infoDiv = this.getInfoDiv();
         this.shiftPressed = false;
+        this.altPressed = false;
+        this.controlPressed = false;
+        this.metaPressed = false;
         this.setKeyCallbacks();
         this.edgeTextFormatter = edgeTextFormatter || defaultEdgeTextFormatter;
         this.directedEdgeTextFormatter = directedEdgeTextFormatter || defaultDirectedEdgeTextFormatter;
@@ -102,7 +105,7 @@ export class View {
                 .attr("stroke", NODE_COLOR_UNFOCUSED)
                 .attr("stroke-width", NODE_BORDER_WIDTH)
                 .attr('r', d => getRadius(d))
-                .attr('fill', d => color(d.group))  // TODO: decide right place/format in data
+                .attr('fill', d => color(d.type))  // TODO: decide right place/format in data
                 // .on("click", (event) => console.log(`Click on ${event.target}`))
                 .on('focus', (event) => classThis.onFocusNode(event.target))
                 .on('blur', (event) => classThis.onBlurNode(event.target))
@@ -183,29 +186,41 @@ export class View {
         if (!this.controller) {
             return;
         }
-        else if (key === "ArrowRight") {
+        else if (key === "ArrowRight" && this.noModifierKey()) {
             this.controller.focusForward();
         }
-        else if (key === "ArrowLeft") {
+        else if (key === "ArrowLeft" && this.noModifierKey()) {
             this.controller.focusBackward();
         }
-        else if (key === "ArrowUp") {
-            this.controller.focusPrevious(this.shiftPressed);
+        else if (key === "ArrowUp" && this.noModifierKey()) {
+            this.controller.focusPrevious(this.onlyShiftPressed());
         }
-        else if (key === "ArrowDown") {
+        else if (key === "ArrowDown" && this.noModifierKey()) {
             this.controller.focusNext();
         }
-        else if (key === "Enter" && !this.shiftPressed) {
+        else if (key === "Enter" && this.noModifierKey()) {
             this.controller.focusInner();
         }
-        else if (key === "Enter" && this.shiftPressed) {
+        else if (key === "Enter" && this.onlyShiftPressed()) {
             this.controller.focusOuter();
         }
-        else if (key === " ") {
-            this.controller.focusDetails(this.shiftPressed);
+        else if (key === " " && this.noModifierKey()) {
+            this.controller.focusDetails();
+        }
+        else if (key === "Escape" && this.onlyShiftPressed()) {
+            this.controller.focusBackFromDetails();
         }
         else if (key === "Shift") {
             this.shiftPressed = true;
+        }
+        else if (key === "Alt") {
+            this.altPressed = true;
+        }
+        else if (key === "Control") {
+            this.controlPressed = true;
+        }
+        else if (key === "Meta") {
+            this.metaPressed = true;
         }
         else {
             console.log(`Unhandled Key pressed: ${key}`);
@@ -216,6 +231,23 @@ export class View {
         if (key === "Shift") {
             this.shiftPressed = false;
         }
+        else if (key === "Alt") {
+            this.altPressed = false;
+        }
+        else if (key === "Control") {
+            this.controlPressed = false;
+        }
+        else if (key === "Meta") {
+            this.metaPressed = false;
+        }
+    }
+
+    noModifierKey() {
+        return !this.shiftPressed && !this.altPressed && !this.controlPressed && !this.metaPressed;
+    }
+
+    onlyShiftPressed() {
+        return this.shiftPressed && !this.altPressed && !this.controlPressed && !this.metaPressed;
     }
 
     onDataChange(edgesData, nodesData) {
@@ -344,8 +376,6 @@ export class View {
     }
 
     displayElementInfo(elementId) {
-        // const element = document.getElementById(elementId);
-        // const text = element.getElementsByTagName('title')[0].textContent;
         const text = this.controller.getInfo(elementId);
         this.infoDiv.innerHTML = text;
     }

@@ -26,7 +26,7 @@ function processCountries(countries) {
     const maxSize = countries.reduce((max, country) => Math.max(max, country.area), 0);
     const minSize = countries.reduce((min, country) => Math.min(min, country.area), maxSize);
     const nodes = countries.map(country => {
-        return {id: country.cca3, label: country.name.common, group: regions.indexOf(country.region), size: (country.area - minSize) / (maxSize - minSize)}; // bounded to [0, 1]
+        return {id: country.cca3, label: country.name.common, type: regions.indexOf(country.region), size: (country.area - minSize) / (maxSize - minSize)}; // bounded to [0, 1]
     });
     const edges = [];
     for (const country of countries) {
