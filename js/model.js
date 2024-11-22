@@ -126,17 +126,15 @@ export class Model {
             return;
         }
 
-        this._controller.onDataChange(  // TODO: review why it is needed to do a copy of the data
-            this._data.edges.map(d => ({...d})), 
-            this._data.nodes.map(d => ({...d}))
+        this._controller.onDataChange(
+            this._data.edges, 
+            this._data.nodes
         );
     }
 
     _normalizeData(rawData) {
-        // TODO: review unexpected data and inexistences.
         rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.type, node.size, node.info, node.inner));
-        rawData.edges = rawData.edges.map(edge => ({...edge, id: _getEdgeId(edge.source, edge.target)}));
-        // TODO: think about the outer data
+        rawData.edges = rawData.edges.map(edge => _getNewEdge(edge.source, edge.target, edge.id, edge.label, edge.size, edge.info));  // TODO: check redundancies
         const nestedGraph = _getNestedGraph(rawData);
         return nestedGraph;
     }
@@ -155,8 +153,12 @@ function _getNewGraph(nodes, edges, outer = null) {
 }
 
 
-function _getNewNode(id, label = "", type = 0, size = 0.5, info = "", inner = null) {
+function _getNewNode(id, label, type, size, info, inner) {
     label = label ? label : id;
+    type = type ? type : 0;
+    size = size ? size : 0.5;
+    info = info ? info : "";
+    inner = inner ? inner : "";
     return {
         id, 
         label, 
@@ -165,6 +167,23 @@ function _getNewNode(id, label = "", type = 0, size = 0.5, info = "", inner = nu
         info, 
         inner
     };
+}
+
+function _getNewEdge(source, target, id, label, size, info) {
+    id = id ? id : _getEdgeId(source, target);
+    label = label ? label : id;
+    size = size ? size : 0.5;
+    info = info ? info : "";
+    return {
+        source, 
+        target, 
+        id,
+        label,
+        // type: 0,
+        size,  // TODO: review in the [0..1] range
+        info, 
+        // inner
+    }
 }
 
 
@@ -271,7 +290,6 @@ function _dfs(nodes, edges, visited, node, cluster) {
 
 
 function _getEdgeId(source, target) {
-    // TODO: check redundancies
     if (source < target) {
         return `${source} - ${target}`;
     }
