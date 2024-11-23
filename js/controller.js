@@ -20,23 +20,6 @@ export class Controller {
         this.history = [];
     }
 
-    // Setup methods -----------------------------------------------------------
-
-    init() {
-    }
-
-    // Event handlers ----------------------------------------------------------
-
-    onDataChange(edgesData, nodesData) {
-        this.focusedNodeId = nodesData[0].id;
-        this.preFocusedNodeId = this.focusedNodeId;
-        this.focusedEdgeId = null;
-        this.traversingNearby = false;
-
-        this.view.onDataChange(edgesData, nodesData);
-        this.view.findAndFocusElement(this.focusedNodeId);
-    }
-
     // Focus methods -----------------------------------------------------------
 
     focusNode(nodeId) {
@@ -152,6 +135,18 @@ export class Controller {
 
     getInfo(elementId) {
         return this.model.getInfo(elementId);
+    }
+
+    // Event handlers ----------------------------------------------------------
+
+    onDataChange(edgesData, nodesData) {
+        this.focusedNodeId = nodesData[0].id;
+        this.preFocusedNodeId = this.focusedNodeId;
+        this.focusedEdgeId = null;
+        this.traversingNearby = false;
+
+        this.view.onDataChange(edgesData, nodesData);
+        this.view.findAndFocusElement(this.focusedNodeId);
     }
 
     // Internal methods --------------------------------------------------------

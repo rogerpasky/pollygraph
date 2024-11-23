@@ -1,4 +1,4 @@
-import { defaultData } from './default_data.js';
+const HELP_DATA_SOURCE = './graphs/help-1';
 
 
 export class Model {
@@ -6,20 +6,15 @@ export class Model {
         this._controller = null;
         this._data = null;
 
-        this.setDataSource(dataSource ? dataSource : defaultData);
-    }
-
-    setController(controller) {
-        if (!controller) {
-            throw new Error('Controller is required');
+        if (dataSource) {
+            this.setDataSource(dataSource);
         }
-
-        this._controller = controller;
-        this._notifyDataChange()
     }
 
-    setDataSource(dataSource) {
-        if (!dataSource) {
+    // Public methods ----------------------------------------------------------
+
+    setDataSource(dataSource = null) {
+        if (! dataSource) {
             throw new Error('Data source is required');
         }
 
@@ -52,6 +47,17 @@ export class Model {
         this._setNewData(this._normalizeData(rawData));
     }
 
+    // Actions -----------------------------------------------------------------
+
+    setController(controller = null) {
+        if (! controller) {
+            throw new Error('Controller is required');
+        }
+
+        this._controller = controller;
+        this._notifyDataChange()
+    }
+
     setDataFromOuterData() {
         if (this._data.outer) {
             this.setDataSource(this._data.outer);
@@ -66,14 +72,14 @@ export class Model {
     }
 
     getFirstNonVisitedEdgeId(focusedNodeId, history) {
-        var edgeData = this._data.edges.find(data =>
-            !history.includes(data.id) && (data.source === focusedNodeId || data.target === focusedNodeId)
+        var edgeData = this._data.edges.find(edge =>
+            ! history.includes(edge.id) && (edge.source === focusedNodeId || edge.target === focusedNodeId)
         );
         if (edgeData) {  // first non-visited edge found
             return edgeData.id;
         }
-        edgeData = this._data.edges.find(data =>
-                data.source === focusedNodeId || data.target === focusedNodeId
+        edgeData = this._data.edges.find(edge =>
+            edge.source === focusedNodeId || edge.target === focusedNodeId
         );
         if (edgeData) {  // first edge found
             return edgeData.id;
@@ -93,7 +99,7 @@ export class Model {
         const edgesData = this._data.edges.filter(data =>
             focusedNodeId === data.source || focusedNodeId === data.target
         );
-        if (!edgesData) {
+        if (edgesData.length === 0) {
             return "";
         }
         const index = edgesData.indexOf(edgeData);
@@ -122,13 +128,13 @@ export class Model {
     }
 
     _notifyDataChange() {
-        if (! this._controller) {
+        if (! this._controller || ! this._data) {
             return;
         }
 
-        this._controller.onDataChange(
-            this._data.edges, 
-            this._data.nodes
+        this._controller.onDataChange(  // TODO: review the need for a copy, because view simulation appears to change source and target to the pointed objects instead its ids
+            this._data.edges.map(edge => ({...edge})), 
+            this._data.nodes.map(node => ({...node}))
         );
     }
 
@@ -141,7 +147,7 @@ export class Model {
 }
 
 
-function _getNewGraph(nodes, edges, outer = null) {
+function _getNewGraph(nodes, edges, outer = "") {
     return {
         // id, 
         nodes, 
@@ -155,8 +161,8 @@ function _getNewGraph(nodes, edges, outer = null) {
 
 function _getNewNode(id, label, type, size, info, inner) {
     label = label ? label : id;
-    type = type ? type : 0;
-    size = size ? size : 0.5;
+    type = type !== undefined ? type : 0;
+    size = size !== undefined ? size : 0.5;
     info = info ? info : "";
     inner = inner ? inner : "";
     return {
@@ -205,7 +211,7 @@ function _getNewEdgesFromSourceNode(sourceNode, targetNodes) {
 }
 
 
-function _getNestedGraph(rawData, outerGraph=null) {
+function _getNestedGraph(rawData, outerGraph="") {
     const nodesClusters =  _clusterizeNodes(rawData.nodes, rawData.edges);
 
     const nonUnitaryClusters = nodesClusters.filter(cluster => cluster.length > 1);
@@ -264,7 +270,7 @@ function _clusterizeNodes(nodes, edges) {
     const visited = new Set();
 
     for (const node of nodes) {
-        if (!visited.has(node.id)) {
+        if (! visited.has(node.id)) {
             const cluster = [];
             _dfs(nodes, edges, visited, node, cluster);
             clusters.push(cluster);
@@ -282,7 +288,7 @@ function _dfs(nodes, edges, visited, node, cluster) {
     const relatedNodes = relatedEdges.map(edge => edge.source === node.id ? edge.target : edge.source);
     for (const relatedNodeId of relatedNodes) {
         const relatedNode = nodes.find(n => n.id === relatedNodeId);
-        if (relatedNode && !visited.has(relatedNode.id)) {
+        if (relatedNode && ! visited.has(relatedNode.id)) {
             _dfs(nodes, edges, visited, relatedNode, cluster);
         }
     }

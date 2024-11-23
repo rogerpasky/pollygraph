@@ -15,18 +15,12 @@ const view = new View(null, directedEdgeTextFormatter);
 const controler = new Controller(model, view);
 
 
-export function traverseGraph(dataSource = null) {
-    model.setDataSource(dataSource);
-    controler.init();
-}
-
-
 function processCountries(countries) {
     const regions = ["Asia", "Europe", "Africa", "Americas", "Oceania", "Antarctic"];
     const maxSize = countries.reduce((max, country) => Math.max(max, country.area), 0);
     const minSize = countries.reduce((min, country) => Math.min(min, country.area), maxSize);
     const nodes = countries.map(country => {
-        return {id: country.cca3, label: country.name.common, type: regions.indexOf(country.region), size: (country.area - minSize) / (maxSize - minSize)}; // bounded to [0, 1]
+        return {id: country.cca3, type: regions.indexOf(country.region), size: (country.area - minSize) / (maxSize - minSize), label: country.name.common}; // bounded to [0, 1]
     });
     const edges = [];
     for (const country of countries) {
@@ -41,8 +35,7 @@ function processCountries(countries) {
     return {nodes, edges};
 }
 
-// model.setDataSource(processCountries(countries));
-model.setDataSource("http://localhost:8000/data/help-1.json");
+model.setDataSource(processCountries(countries));
 
 
 const a = {

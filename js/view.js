@@ -330,7 +330,7 @@ export class View {
         else if (key === " " && this._noModifierKeyPressed()) {
             this.controller.focusDetails();
         }
-        else if (key === "Escape" && this._onlyShiftKeyPressed()) {
+        else if (key === "Escape" && this._noModifierKeyPressed()) {
             this.controller.focusBackFromDetails();
         }
         else if (key === "Shift") {
@@ -349,7 +349,7 @@ export class View {
             this.capsLockPressed = true;
         }
         else {
-            console.log(`Unhandled Key pressed: ${key}`);
+            console.log(`Unhandled Key pressed: ${key}\n{shift: ${this.shiftPressed}, alt: ${this.altPressed}, control: ${this.controlPressed}, meta: ${this.metaPressed}, capsLock: ${this.capsLockPressed}}`);
         }
     }
 
