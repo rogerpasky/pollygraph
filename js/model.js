@@ -159,6 +159,11 @@ function _getNewGraph(nodes, edges, outer = "") {
 }
 
 
+export function normalizeSize(size, minSize, maxSize) {
+    return maxSize !== minSize ? (size - minSize) / (maxSize - minSize) : 0.5;  // bounded to [0, 1]
+}
+
+
 function _getNewNode(id, label, type, size, info, inner) {
     label = label ? label : id;
     type = type !== undefined ? type : 0;
@@ -174,6 +179,7 @@ function _getNewNode(id, label, type, size, info, inner) {
         inner
     };
 }
+
 
 function _getNewEdge(source, target, id, label, size, info) {
     id = id ? id : _getEdgeId(source, target);
@@ -225,10 +231,9 @@ function _getNestedGraph(rawData, outerGraph="") {
 
     const unitaryClustersGraph = _getClusteredGraph(unitaryClusters, rawData.edges, outerGraph, "Unitary_Cluster");
 
-    var nonUnitaryEdges = rawData.edges.map(edge => ({...edge}));
+    const nonUnitaryEdges = rawData.edges.map(edge => ({...edge}));
     if (unitaryClustersGraph.nodes.length > 0) {
         nonUnitaryClusters.push(unitaryClustersGraph.nodes);
-        nonUnitaryEdges = nonUnitaryEdges.concat(unitaryClustersGraph.edges);
     }
 
     const clusteredGraph = _getClusteredGraph(nonUnitaryClusters, nonUnitaryEdges, outerGraph, "Cluster");
@@ -249,7 +254,7 @@ function _getClusteredGraph(nodesClusters, allEdges, outerGraph, label) {
         const innerEdges = allEdges.filter(edge => innerNodesIds.includes(edge.source) && innerNodesIds.includes(edge.target));
         const innerGraph = _getNewGraph(innerNodes, innerEdges, clusteredGraph);
 
-        const clusterNodeSize = maxSizeCluster !== minSizeCluster ? (innerNodes.length - minSizeCluster) / (maxSizeCluster - minSizeCluster) : 0.5;  // bounded to [0, 1]
+        const clusterNodeSize = normalizeSize(innerNodes.length, minSizeCluster, maxSizeCluster);
 
         const clusterNode = _getNewNode(`${label}_${i}`, `${label} ${i}, ${innerNodes.length} nodes, from ${innerNodes[0].label} to ${innerNodes[innerNodes.length - 1].label}`, i, clusterNodeSize, "", innerGraph);
 

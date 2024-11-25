@@ -94,6 +94,7 @@ export class Controller {
 
     focusNext() {
         this.focusedEdgeId = this.model.getNextEdgeId(this.preFocusedNodeId, this.focusedEdgeId, 1);
+        // this.view.displayPreFocusOnConnectedEdgesToNodeId(this.preFocusedNodeId);
         this.traversingNearby = true;
         this.view.findAndFocusElement(this.focusedEdgeId);
         this.traversingNearby = false;

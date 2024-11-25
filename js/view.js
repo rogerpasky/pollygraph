@@ -15,14 +15,14 @@ const NODE_OPACITY_PREFOCUSED = 1.0;
 const NODE_COLOR_UNFOCUSED = '#fff';
 const NODE_OPACITY_UNFOCUSED = 1.0;
 
-const LINK_COLOR_FOCUSED = '#f00';
-const LINK_OPACITY_FOCUSED = 1.0;
+const EDGE_COLOR_FOCUSED = '#f00';
+const EDGE_OPACITY_FOCUSED = 1.0;
 
-const LINK_COLOR_PREFOCUSED = '#999';
-const LINK_OPACITY_PREFOCUSED = 0.9;
+const EDGE_COLOR_PREFOCUSED = '#999';
+const EDGE_OPACITY_PREFOCUSED = 0.9;
 
-const LINK_COLOR_UNFOCUSED = '#999';
-const LINK_OPACITY_UNFOCUSED = 0.2;
+const EDGE_COLOR_UNFOCUSED = '#999';
+const EDGE_OPACITY_UNFOCUSED = 0.2;
 
 
 export class View {
@@ -95,22 +95,19 @@ export class View {
         this._displayUnFocusOnEdge(edge);
     }
 
-    displayPreFocusOnConnectedEdgesToNodeId(nodeId) {  // TODO: optimize
+    displayPreFocusOnConnectedEdgesToNodeId(nodeId) {
         const connectedEdges = this._selectConnectedEdges(nodeId);
+        const classThis = this;
         this.edgesGroup
-            .selectAll("title")
-                .text(d => this._formatEdgeLabelbetweenTwoNodeId(d.source.id, d.target.id));
-        connectedEdges
-            .select("title")
-                .text(d => this._formatEdgeLabelStartingFromNodeId(d, nodeId))
-        this.edgesGroup
-            .selectAll(function() {
-                this.setAttribute('stroke', LINK_COLOR_UNFOCUSED);
+            .selectAll(function(d) {
+                const title = this.getElementsByTagName('title')[0];
                 if (connectedEdges.nodes().includes(this)) {
-                    this.setAttribute('stroke-opacity', LINK_OPACITY_PREFOCUSED);
+                    classThis._displayPreFocusOnEdge(this);
+                    title.textContent = classThis._formatEdgeLabelStartingFromNodeId(d, nodeId);
                 }
                 else {
-                    this.setAttribute('stroke-opacity', LINK_OPACITY_UNFOCUSED);
+                    classThis._displayUnFocusOnEdge(this);
+                    title.textContent = classThis._formatEdgeLabelbetweenTwoNodeId(d.source.id, d.target.id);
                 }
             });
     }
@@ -218,8 +215,8 @@ export class View {
                 .attr('role', 'treeitem')
                 .attr('class', 'arc')
                 .attr('tabindex', 0)  // needed for Safari and Firefox
-                .attr("stroke", LINK_COLOR_UNFOCUSED)
-                .attr("stroke-opacity", LINK_OPACITY_UNFOCUSED)
+                .attr("stroke", EDGE_COLOR_UNFOCUSED)
+                .attr("stroke-opacity", EDGE_OPACITY_UNFOCUSED)
                 .attr("stroke-width", d => Math.sqrt(d.size))
                 .on('focus', (event) => classThis._onFocusEdge(event.target))
                 .on('blur', (event) => classThis._onBlurEdge(event.target));
@@ -397,18 +394,18 @@ export class View {
     }
 
     _displayFocusOnEdge(edge) {
-        edge.setAttribute('stroke', LINK_COLOR_FOCUSED);
-        edge.setAttribute('stroke-opacity', LINK_OPACITY_FOCUSED);
+        edge.setAttribute('stroke', EDGE_COLOR_FOCUSED);
+        edge.setAttribute('stroke-opacity', EDGE_OPACITY_FOCUSED);
     }
 
     _displayPreFocusOnEdge(edge) {
-        edge.setAttribute('stroke', LINK_COLOR_PREFOCUSED);
-        edge.setAttribute('stroke-opacity', LINK_OPACITY_PREFOCUSED);
+        edge.setAttribute('stroke', EDGE_COLOR_PREFOCUSED);
+        edge.setAttribute('stroke-opacity', EDGE_OPACITY_PREFOCUSED);
     }
 
     _displayUnFocusOnEdge(edge) {
-        edge.setAttribute('stroke', LINK_COLOR_UNFOCUSED);
-        edge.setAttribute('stroke-opacity', LINK_OPACITY_UNFOCUSED);
+        edge.setAttribute('stroke', EDGE_COLOR_UNFOCUSED);
+        edge.setAttribute('stroke-opacity', EDGE_OPACITY_UNFOCUSED);
     }
 
     // Selection methods -------------------------------------------------------
