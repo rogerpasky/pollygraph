@@ -1,13 +1,8 @@
-import { Model } from './model.js';
+import { Model, normalizeSize } from './model.js';
 import { View } from './view.js';
 import { Controller } from './controller.js';
 
 import { countries } from './countries.js';
-
-
-function directedEdgeTextFormatter(_fromText, toText) {
-    return `to ${toText}`;
-}
 
 
 const model = new Model();
@@ -15,13 +10,19 @@ const view = new View(null, directedEdgeTextFormatter);
 const controler = new Controller(model, view);
 
 
+model.setDataSource(processCountries(countries));
+
+
+function directedEdgeTextFormatter(_fromText, toText) {
+    return `to ${toText}`;
+}
+
+
 function processCountries(countries) {
     const regions = ["Asia", "Europe", "Africa", "Americas", "Oceania", "Antarctic"];
     const maxSize = countries.reduce((max, country) => Math.max(max, country.area), 0);
     const minSize = countries.reduce((min, country) => Math.min(min, country.area), maxSize);
-    const nodes = countries.map(country => {
-        return {id: country.cca3, type: regions.indexOf(country.region), size: (country.area - minSize) / (maxSize - minSize), label: country.name.common}; // bounded to [0, 1]
-    });
+    const nodes = countries.map(country => processCountryNode(country, regions, minSize, maxSize));
     const edges = [];
     for (const country of countries) {
         const borders = country.borders;
@@ -35,10 +36,30 @@ function processCountries(countries) {
     return {nodes, edges};
 }
 
-model.setDataSource(processCountries(countries));
+
+function processCountryNode(country, regions, minSize, maxSize) {
+    const id = country.cca3;
+    const type = regions.indexOf(country.region);
+    const size = normalizeSize(country.area, minSize, maxSize);
+    const label = country.name.common;
+    const info = `
+    <h2>${country.name.common}</h2>
+    <p>Also known as <b>${country.name.official}.</b></p>
+    <h3>Detailed Information:</h3>
+    <ul>
+        <li><b>Capital:</b> ${country.capital}.</li>
+        <li><b>Region:</b> ${country.region}.</li>
+        <li><b>Subregion:</b> ${country.subregion}.</li>
+        <li><b>Calling Code${country.callingCodes.length > 1 ? "s" : ""}:</b> ${country.callingCodes.join(", ")}.</li>
+        <li><b>Area:</b> ${country.area} squared Kilometers.</li>
+        <li><b>Borders:</b> ${country.borders.join(", ")}</li>
+    </ul>`;
+
+    return {id, type, size, label, info};
+}
 
 
-const a = {
+const _contryExample = {
     "name":{
         "common":"Andorra",
         "official":"Principality of Andorra",
