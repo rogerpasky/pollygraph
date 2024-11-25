@@ -1,0 +1,12 @@
+{
+  "name": "pollygraph",
+  "version": "0.1.0",
+  "description": "This is a javascript code to enable an accesible way to keyboard traverse a non-directed graph, this is, a bidimendional diagram made up of nodes and connecting edges among pairs of nodes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Pascual de Juan <pascual.dejuan@gmail.com>",
+  "license": "Apache 2.0"
+}
