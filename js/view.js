@@ -100,7 +100,7 @@ export class View {
 
     displayPreFocusOnConnectedEdgesToNodeId(nodeId) {
         const connectedEdges = this._selectConnectedEdges(nodeId);
-        const classThis = this;
+        const classThis = this;  // to avoid DOM `this` confusion
         this.edgesGroup
             .selectAll(function(d) {
                 const title = this.getElementsByTagName('title')[0];
@@ -233,12 +233,22 @@ export class View {
         const height = this._getHeight(this.svg.node());
 
         var classThis = this;  // to avoid DOM `this` confusion
-        this.simulation = d3.forceSimulation(nodesData)
-            .force("edge", d3.forceLink(edgesData).id(d => d.id).strength(0.9))
-            .force("charge", d3.forceManyBody().strength(-4))
-            // .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
-            .on("tick", () => classThis._onTicked());
+        if (edgesData.length === nodesData.length * (nodesData.length - 1) / 2) {  // fully connected graph
+            const sumOfAllRadius = nodesData.reduce((acc, d) => acc + _getRadius(d), 0);
+            const radius = 2 * sumOfAllRadius / Math.PI;
+            this.simulation = d3.forceSimulation(nodesData)
+                .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0))
+                .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
+                .force("r", d3.forceRadial(radius))
+                .on("tick", () => classThis._onTicked());
+        }
+        else {
+            this.simulation = d3.forceSimulation(nodesData)
+                .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0.9))
+                .force("charge", d3.forceManyBody().strength(-5))
+                .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
+                .on("tick", () => classThis._onTicked());
+        }
     }
 
     // DOM Event handlers ------------------------------------------------------
