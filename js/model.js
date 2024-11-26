@@ -148,6 +148,9 @@ export class Model {
 
 
 function _getNewGraph(nodes, edges, outer = "") {
+    const maxSize = nodes.reduce((max, node) => Math.max(max, node.size), 0);
+    const minSize = nodes.reduce((min, node) => Math.min(min, node.size), maxSize);
+    nodes.forEach(node => node.size = normalizeSize(node.size, minSize, maxSize));
     return {
         // id, 
         nodes, 
