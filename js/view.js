@@ -44,6 +44,9 @@ export class View {
         this._setKeyCallbacks();
         this.edgeTextFormatter = edgeTextFormatter || _defaultEdgeTextFormatter;
         this.directedEdgeTextFormatter = directedEdgeTextFormatter || _defaultDirectedEdgeTextFormatter;
+        this.toFormater = _defaultTo;
+        this.fromFormater = _defaultFrom;
+        this.nFormater = _defaultN;
         this._restart()
     }
 
@@ -103,11 +106,11 @@ export class View {
                 const title = this.getElementsByTagName('title')[0];
                 if (connectedEdges.nodes().includes(this)) {
                     classThis._displayPreFocusOnEdge(this);
-                    title.textContent = classThis._formatEdgeLabelStartingFromNodeId(d, nodeId);
+                    title.textContent = classThis._formatEdgeLabelStartingFromNodeId(d, nodeId, connectedEdges.nodes().indexOf(this)+1, connectedEdges.size());
                 }
                 else {
                     classThis._displayUnFocusOnEdge(this);
-                    title.textContent = classThis._formatEdgeLabelbetweenTwoNodeId(d.source.id, d.target.id);
+                    title.textContent = classThis._formatEdgeLabelbetweenTwoNodeId(d);
                 }
             });
     }
@@ -217,12 +220,12 @@ export class View {
                 .attr('tabindex', 0)  // needed for Safari and Firefox
                 .attr("stroke", EDGE_COLOR_UNFOCUSED)
                 .attr("stroke-opacity", EDGE_OPACITY_UNFOCUSED)
-                .attr("stroke-width", d => Math.sqrt(d.size))
+                .attr("stroke-width", d => d.size)
                 .on('focus', (event) => classThis._onFocusEdge(event.target))
                 .on('blur', (event) => classThis._onBlurEdge(event.target));
         this.edgesGroup
             .append("title")
-            .text(d => this._formatEdgeLabelbetweenTwoNodeId(d.source, d.target));
+            .text(d => this._formatEdgeLabelbetweenTwoNodeId(d));
         }
 
     _createSimulation(edgesData, nodesData) {
@@ -416,7 +419,7 @@ export class View {
 
     // Formatting methods ------------------------------------------------------
 
-    _formatEdgeLabelStartingFromNodeId(edgeData, fromNodeId) {
+    _formatEdgeLabelStartingFromNodeId(edgeData, fromNodeId, i, n) {
         if (edgeData.source.id === fromNodeId) {
             var toNodeId = edgeData.target.id;
         }
@@ -425,11 +428,15 @@ export class View {
         }
         const fromText = document.getElementById(fromNodeId).getElementsByTagName('title')[0].textContent;
         const toText = document.getElementById(toNodeId).getElementsByTagName('title')[0].textContent;
-        return this.directedEdgeTextFormatter(fromText, toText);
-    
+        return `${this.toFormater(toText)}, ${this.nFormater(i, n)}, ${this.fromFormater(fromText)}`;
     }
 
-    _formatEdgeLabelbetweenTwoNodeId(sourceId, targetId) {
+    _formatEdgeLabelbetweenTwoNodeId(edgeData) {
+        if (edgeData.label) {
+            return edgeData.label;
+        }
+        const sourceId = edgeData.source.id;
+        const targetId = edgeData.target.id;
         const sourceElement = document.getElementById(sourceId)
         const sourceText = sourceElement ? sourceElement.getElementsByTagName('title')[0].textContent : sourceId;
         const targetElement = document.getElementById(targetId)
@@ -446,6 +453,18 @@ function _defaultEdgeTextFormatter(sourceText, targetText) {
 
 function _defaultDirectedEdgeTextFormatter(fromText, toText) {
     return `from ${fromText} to ${toText}`;
+}
+
+function _defaultFrom(fromText) {
+    return `from ${fromText}`;
+}
+
+function _defaultTo(toText) {
+    return `to ${toText}`;
+}
+
+function _defaultN(i, n) {
+    return `${i} of ${n}`;
 }
 
 function _getRadius(d) {
