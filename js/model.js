@@ -252,6 +252,7 @@ function _getClusteredGraph(nodesClusters, allEdges, outerGraph, label) {
 
     var i = 0;
     const clusteredGraph = _getNewGraph([], [], outerGraph);
+    nodesClusters.sort((a, b) => b.length - a.length);
     for (const innerNodes of nodesClusters) {
         innerNodes.sort((a, b) => a.label.localeCompare(b.label));
         const innerNodesIds = innerNodes.map(node => node.id);
