@@ -139,7 +139,7 @@ export class Model {
     }
 
     _normalizeData(rawData) {
-        rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.type, node.size, node.info, node.inner));
+        rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.type, node.size, node.level, node.info, node.inner));
         rawData.edges = rawData.edges.map(edge => _getNewEdge(edge.source, edge.target, edge.id, edge.label, edge.size, edge.info));  // TODO: check redundancies
         const nestedGraph = _getNestedGraph(rawData);
         return nestedGraph;
@@ -167,10 +167,11 @@ export function normalizeSize(size, minSize, maxSize) {
 }
 
 
-function _getNewNode(id, label, type, size, info, inner) {
+function _getNewNode(id, label, type, size, level, info, inner) {
     label = label ? label : id;
     type = type !== undefined ? type : 0;
     size = size !== undefined ? size : 0.5;
+    level = level !== undefined ? level : 0;
     info = info ? info : "";
     inner = inner ? inner : "";
     return {
@@ -178,6 +179,7 @@ function _getNewNode(id, label, type, size, info, inner) {
         label, 
         type, 
         size, 
+        level,
         info, 
         inner
     };
@@ -261,7 +263,7 @@ function _getClusteredGraph(nodesClusters, allEdges, outerGraph, label) {
 
         const clusterNodeSize = normalizeSize(innerNodes.length, minSizeCluster, maxSizeCluster);
 
-        const clusterNode = _getNewNode(`${label}_${i}`, `${label} ${i}, ${innerNodes.length} nodes, from ${innerNodes[0].label} to ${innerNodes[innerNodes.length - 1].label}`, i, clusterNodeSize, "", innerGraph);
+        const clusterNode = _getNewNode(`${label}_${i}`, `${label} ${i}, ${innerNodes.length} nodes, from ${innerNodes[0].label} to ${innerNodes[innerNodes.length - 1].label}`, i, clusterNodeSize, 1, "", innerGraph);
 
         const clusterNodeEdges = _getNewEdgesFromSourceNode(clusterNode, clusteredGraph.nodes);
         if (clusterNodeEdges.length > 0) {
