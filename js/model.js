@@ -232,7 +232,7 @@ function _getNestedGraph(rawData, outerGraph="") {
         return _getNewGraph(rawData.nodes, rawData.edges, rawData.outer ? rawData.outer : outerGraph);
     }
 
-    const unitaryClustersGraph = _getClusteredGraph(unitaryClusters, rawData.edges, outerGraph, "Unitary_Cluster");
+    const unitaryClustersGraph = _getClusteredGraph(unitaryClusters, rawData.edges, rawData.outer ? rawData.outer : outerGraph, "Unitary_Cluster");
     if (nonUnitaryClusters.length === 0) {  // All nodes are unitary
         return unitaryClustersGraph;
     }
@@ -240,7 +240,7 @@ function _getNestedGraph(rawData, outerGraph="") {
     const allClusters = nonUnitaryClusters.concat([unitaryClustersGraph.nodes]);
     const allEdges = rawData.edges.concat(unitaryClustersGraph.edges);
 
-    const clusteredGraph = _getClusteredGraph(allClusters, allEdges, outerGraph, "Cluster");
+    const clusteredGraph = _getClusteredGraph(allClusters, allEdges, rawData.outer ? rawData.outer : outerGraph, "Cluster");
     unitaryClustersGraph.outer = clusteredGraph;
     return clusteredGraph;
 }
