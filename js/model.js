@@ -26,7 +26,7 @@ export class Model {
                 fetch(dataSource)
                     .then(response => response.json())
                     .then(data => this._setNewData(this._normalizeData(data)))
-                    .catch(error => console.error('Error fetching data:', error));
+                    .catch(error => console.error(`Error fetching data from "${dataSource}":`, error));
                 return;
             }
             // Otherwise, if the string is a JSON object, parse it
@@ -237,7 +237,7 @@ function _getNestedGraph(rawData, outerGraph="") {
         return unitaryClustersGraph;
     }
     
-    const allClusters = nonUnitaryClusters.concat([unitaryClustersGraph.nodes]);
+    const allClusters = unitaryClustersGraph.length ? nonUnitaryClusters.concat([unitaryClustersGraph.nodes]) : nonUnitaryClusters;
     const allEdges = rawData.edges.concat(unitaryClustersGraph.edges);
 
     const clusteredGraph = _getClusteredGraph(allClusters, allEdges, rawData.outer ? rawData.outer : outerGraph, "Cluster");
