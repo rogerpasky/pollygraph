@@ -56,14 +56,15 @@ export class View {
         this.controller = controller;
     }
 
-    onDataChange(edgesData, nodesData) {
+    onDataChange(data) {
         this._restart();
+        const edgesData = data.edges.map(edge => ({...edge}));  // TODO: review the need for a copy, because view simulation appears to change source and target to the pointed objects instead its ids
         this._createEdges(edgesData);
-        this._createNodes(nodesData);
-        this._createSimulation(edgesData, nodesData);
 
-        this.currentFocusedNode = this.nodesGroup.nodes()[0];
-        this.currentFocusedEdge = this._selectConnectedEdges(this.currentFocusedNode).nodes()[0];    
+        const nodesData = data.nodes;  // Nodes are created after edges to be painted on top
+        this._createNodes(nodesData);
+
+        this._createSimulation(edgesData, nodesData);
     }
 
     // Displaying methods ------------------------------------------------------

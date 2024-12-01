@@ -1,3 +1,6 @@
+import { Controller } from "./controller.js";
+
+
 const HELP_DATA_SOURCE = './graphs/help-1';
 
 
@@ -7,13 +10,40 @@ export class Model {
         this._data = null;
 
         if (dataSource) {
-            this.setDataSource(dataSource);
+            this.setDataFromSource(dataSource);
         }
     }
 
     // Public methods ----------------------------------------------------------
 
-    setDataSource(dataSource = null) {
+    _setNewData(data) {
+        console.log('New data:', data);  // TODO: remove
+        this._data = data;
+        this._notifyDataChange();
+    }
+
+    _notifyDataChange() {
+        if (! this._controller || ! this._data) {
+            return;
+        }
+
+        this._controller.onDataChange(this._data, this._data.nodes[0].id);  // TODO: initial focused could be a graph field
+    }
+
+    async setDataFromOuterData() {
+        if (this._data.outer) {
+            this.setDataFromSource(this._data.outer);
+        }
+    }
+
+    async setDataFromInnerData(nodeId) {
+        const node = this._data.nodes.find(n => n.id === nodeId);
+        if (node && node.inner) {
+            this.setDataFromSource(node.inner);
+        }
+    }
+
+    async setDataFromSource(dataSource) {
         if (! dataSource) {
             throw new Error('Data source is required');
         }
@@ -56,19 +86,6 @@ export class Model {
 
         this._controller = controller;
         this._notifyDataChange()
-    }
-
-    setDataFromOuterData() {
-        if (this._data.outer) {
-            this.setDataSource(this._data.outer);
-        }
-    }
-
-    setDataFromInnerData(nodeId) {
-        const node = this._data.nodes.find(n => n.id === nodeId);
-        if (node && node.inner) {
-            this.setDataSource(node.inner);
-        }
     }
 
     getFirstNonVisitedEdgeId(focusedNodeId, history) {
@@ -120,23 +137,6 @@ export class Model {
     }
 
     // Internal methods --------------------------------------------------------
-
-    _setNewData(data) {
-        console.log('New data:', data);
-        this._data = data;
-        this._notifyDataChange();
-    }
-
-    _notifyDataChange() {
-        if (! this._controller || ! this._data) {
-            return;
-        }
-
-        this._controller.onDataChange(  // TODO: review the need for a copy, because view simulation appears to change source and target to the pointed objects instead its ids
-            this._data.edges.map(edge => ({...edge})), 
-            this._data.nodes.map(node => ({...node}))
-        );
-    }
 
     _normalizeData(rawData) {
         rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.type, node.size, node.level, node.info, node.inner));

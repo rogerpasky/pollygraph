@@ -9,5 +9,5 @@ const controller = new Controller(model, view);
 
 
 export function pollygraph(datasource) {
-    model.setDataSource(datasource);
+    controller.setDataFromSource(datasource);
 }

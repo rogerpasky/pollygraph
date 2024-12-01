@@ -1,11 +1,15 @@
+import { Model } from './model.js';
+import { View } from './view.js';
+
+
 export class Controller {
     constructor(model, view) {
-        if (!model) {
+        if (!model || model.constructor !== Model) {
             throw new Error('Model is required');
         }
         this.model = model;
 
-        if (!view) {
+        if (!view || view.constructor !== View) {
             throw new Error('View is required');
         }
         this.view = view;
@@ -68,6 +72,10 @@ export class Controller {
     }
 
     // Actions -----------------------------------------------------------------
+
+    setDataFromSource(datasource) {
+        this.model.setDataFromSource(datasource);
+    }
 
     focusForward() {
         if (this.focusedEdgeId) {
@@ -140,13 +148,13 @@ export class Controller {
 
     // Event handlers ----------------------------------------------------------
 
-    onDataChange(edgesData, nodesData) {
-        this.focusedNodeId = nodesData[0].id;
-        this.preFocusedNodeId = this.focusedNodeId;
+    onDataChange(data, focusedNodeId) {
+        this.view.onDataChange(data);
+
+        this.preFocusedNodeId = this.focusedNodeId = focusedNodeId;
         this.focusedEdgeId = null;
         this.traversingNearby = false;
 
-        this.view.onDataChange(edgesData, nodesData);
         this.view.findAndFocusElement(this.focusedNodeId);
     }
 
