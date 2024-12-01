@@ -16,18 +16,18 @@ export class Model {
 
     // Public methods ----------------------------------------------------------
 
-    _setNewData(data) {
+    _setNewData(data, path="") {
         console.log('New data:', data);  // TODO: remove
         this._data = data;
-        this._notifyDataChange();
+        this._notifyDataChange(path);
     }
 
-    _notifyDataChange() {
+    _notifyDataChange(path="") {
         if (! this._controller || ! this._data) {
             return;
         }
 
-        this._controller.onDataChange(this._data, this._data.nodes[0].id);  // TODO: initial focused could be a graph field
+        this._controller.onDataChange(this._data, this._data.nodes[0].id, path);  // TODO: initial focused could be a graph field
     }
 
     async setDataFromOuterData() {
@@ -54,9 +54,9 @@ export class Model {
         if (dataSource.constructor === String) {
             if (dataSource.startsWith('http') || dataSource.startsWith('./') || dataSource.startsWith('/')) {
                 fetch(dataSource)
-                    .then(response => response.json())
-                    .then(data => this._setNewData(this._normalizeData(data)))
-                    .catch(error => console.error(`Error fetching data from "${dataSource}":`, error));
+                .then(response => response.json().then(data => ({ data, path: new URL(response.url).pathname })))
+                .then(({ data, path }) => this._setNewData(this._normalizeData(data), path))
+                .catch(error => console.error(`Error fetching data from "${dataSource}":`, error));
                 return;
             }
             // Otherwise, if the string is a JSON object, parse it

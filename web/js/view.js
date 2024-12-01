@@ -34,6 +34,7 @@ export class View {
         this.edgesGroup = null;
         this.nodesGroup = null;
         this.simulation = null;
+        this.rootPath = window.location.pathname;
         this.svg = this._getDomSvg();
         this.infoDiv = this._getInfoDiv();
         this.shiftPressed = false;
@@ -56,8 +57,9 @@ export class View {
         this.controller = controller;
     }
 
-    onDataChange(data) {
+    onDataChange(data, dataSourcePath) {
         this._restart();
+        this._add_history(dataSourcePath);
         const edgesData = data.edges.map(edge => ({...edge}));  // TODO: review the need for a copy, because view simulation appears to change source and target to the pointed objects instead its ids
         this._createEdges(edgesData);
 
@@ -152,6 +154,22 @@ export class View {
         }
         if (this.nodesGroup) {
             this.svg.select("#nodes").remove();
+        }
+    }
+
+    _add_history(dataSourcePath) {
+        // modify the window history considering `this.roothpath` and `dataSourcePath` to reflect the current state. `dataSourcePath` can be a relative path or an absolute path, and it usually starts with the value of `this.rootPath`.
+        if (dataSourcePath.startsWith(this.rootPath)) {
+            const currentPath = window.location.pathname;
+            if (currentPath === this.rootPath) { // remove current history state and replace current path with the new one
+                window.history.replaceState({}, '', dataSourcePath);
+            }
+            else {
+                window.history.pushState({}, '', dataSourcePath);
+            }
+        }
+        else {  // TODO: handle the case when dataSourcePath is a relative path or an absolute path that does not start with this.rootPath
+            console.error(`The dataSourcePath ${dataSourcePath} is not a valid path`);
         }
     }
 

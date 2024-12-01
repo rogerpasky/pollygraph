@@ -148,8 +148,8 @@ export class Controller {
 
     // Event handlers ----------------------------------------------------------
 
-    onDataChange(data, focusedNodeId) {
-        this.view.onDataChange(data);
+    onDataChange(data, focusedNodeId, dataSourcePath) {
+        this.view.onDataChange(data, dataSourcePath);
 
         this.preFocusedNodeId = this.focusedNodeId = focusedNodeId;
         this.focusedEdgeId = null;

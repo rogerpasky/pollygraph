@@ -8,6 +8,6 @@ const view = new View();
 const controller = new Controller(model, view);
 
 
-export function pollygraph(datasource) {
-    controller.setDataFromSource(datasource);
+export function pollygraph(datasource) {    
+    model.setDataFromSource(datasource);
 }
