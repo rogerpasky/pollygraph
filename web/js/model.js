@@ -22,7 +22,7 @@ export class Model {
 
         // if dataSource is a string, check if it is an URL and get a JSON object from it
         if (dataSource.constructor === String) {
-            if (dataSource.startsWith('http') || dataSource.startsWith('./')) {
+            if (dataSource.startsWith('http') || dataSource.startsWith('./') || dataSource.startsWith('/')) {
                 fetch(dataSource)
                     .then(response => response.json())
                     .then(data => this._setNewData(this._normalizeData(data)))

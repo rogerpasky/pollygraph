@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polly Graph: Les Miserables Relationships</title>
+
+  <script src="https://d3js.org/d3.v7.min.js" defer></script>
+  <script type="module" defer>
+    import { pollygraph } from '/js/pollygraph.js';
+    import { lesMiserablesGraph } from './les-miserables-graph.js';
+    pollygraph(lesMiserablesGraph);
+  </script>
+  
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<h1>Les Miserables Relationships Graph</h1>
+
+<div class="graph-container">
+  <div id="graph" class="graph">
+    <svg id="the-graph", style="width:100%; height:100%"></svg>
+  </div>
+  <div id="info" class="resizable"></div>
+</div>
+
+</body>
+</html>

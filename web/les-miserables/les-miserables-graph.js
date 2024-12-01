@@ -1,4 +1,4 @@
-export const defaultData = {
+export const lesMiserablesGraph = {
     nodes: [
         {id: "Myriel", type: 1},
         {id: "Napoleon", type: 1},

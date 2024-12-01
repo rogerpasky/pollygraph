@@ -7,7 +7,7 @@
             "size": 0.5,
             "label": "Start", 
             "info": "<H1>Help</H1>This is a node.",
-            "inner": "./graphs/help-2"
+            "inner": "./help-contents/help-content-2"
         }
     ],
     "edges": [], 

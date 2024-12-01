@@ -1,24 +1,8 @@
-import { Model, normalizeSize } from './model.js';
-import { View } from './view.js';
-import { Controller } from './controller.js';
-
 import { countries } from './countries.js';
+import { normalizeSize } from '/js/model.js';
 
 
-const model = new Model();
-const view = new View(null, directedEdgeTextFormatter);
-const controler = new Controller(model, view);
-
-
-model.setDataSource(processCountries(countries));
-
-
-function directedEdgeTextFormatter(_fromText, toText) {
-    return `to ${toText}`;
-}
-
-
-function processCountries(countries) {
+export function getWorldCountries() {
     const regions = ["Asia", "Europe", "Africa", "Americas", "Oceania", "Antarctic"];
     const maxSize = countries.reduce((max, country) => Math.max(max, country.area), 0);
     const minSize = countries.reduce((min, country) => Math.min(min, country.area), maxSize);
@@ -59,7 +43,12 @@ function processCountryNode(country, regions, minSize, maxSize) {
 }
 
 
-const _contryExample = {
+function directedEdgeTextFormatter(_fromText, toText) {  // eslint-disable-line no-unused-vars
+    return `to ${toText}`;  // TODO: pending to use this function
+}
+
+
+const _formattedContryExample = {  // eslint-disable-line no-unused-vars
     "name":{
         "common":"Andorra",
         "official":"Principality of Andorra",
