@@ -34,7 +34,6 @@ export class View {
         this.edgesGroup = null;
         this.nodesGroup = null;
         this.simulation = null;
-        this.rootPath = window.location.pathname;
         this.svg = this._getDomSvg();
         this.infoDiv = this._getInfoDiv();
         this.shiftPressed = false;
@@ -59,7 +58,6 @@ export class View {
 
     onDataChange(data, dataSourcePath) {
         this._restart();
-        this._add_history(dataSourcePath);
         const edgesData = data.edges.map(edge => ({...edge}));  // TODO: review the need for a copy, because view simulation appears to change source and target to the pointed objects instead its ids
         this._createEdges(edgesData);
 
@@ -154,22 +152,6 @@ export class View {
         }
         if (this.nodesGroup) {
             this.svg.select("#nodes").remove();
-        }
-    }
-
-    _add_history(dataSourcePath) {
-        // modify the window history considering `this.roothpath` and `dataSourcePath` to reflect the current state. `dataSourcePath` can be a relative path or an absolute path, and it usually starts with the value of `this.rootPath`.
-        if (dataSourcePath.startsWith(this.rootPath)) {
-            const currentPath = window.location.pathname;
-            if (currentPath === this.rootPath) { // remove current history state and replace current path with the new one
-                window.history.replaceState({}, '', dataSourcePath);
-            }
-            else {
-                window.history.pushState({}, '', dataSourcePath);
-            }
-        }
-        else {  // TODO: handle the case when dataSourcePath is a relative path or an absolute path that does not start with this.rootPath
-            console.error(`The dataSourcePath ${dataSourcePath} is not a valid path`);
         }
     }
 
@@ -499,3 +481,35 @@ function _defaultN(i, n) {
 function _getRadius(d) {
     return Math.sqrt(d.size) * (MAX_RADIUS - MIN_RADIUS) + MIN_RADIUS;
 }
+
+// _createSimulation(edgesData, nodesData) {
+//     const width = this._getWidth(this.svg.node());
+//     const height = this._getHeight(this.svg.node());
+
+//     var classThis = this;  // to avoid DOM `this` confusion
+//     // if (edgesData.length === nodesData.length * (nodesData.length - 1) / 2) {  // fully connected graph
+//     //     const sumOfAllRadius = nodesData.reduce((acc, d) => acc + _getRadius(d), 0);
+//     //     const radius = 2 * sumOfAllRadius / Math.PI;
+//         this.simulation = d3.forceSimulation(nodesData)
+//             .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0.5))
+//             .force("charge", d3.forceManyBody().strength(-30))
+//             .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
+//             .force("r", d3.forceRadial(d => _getLevelRadius(d, nodesData)))
+//             // .force("r", d3.forceRadial(radius))
+//             .on("tick", () => classThis._onTicked());
+//     // }
+//     // else {
+//     //     this.simulation = d3.forceSimulation(nodesData)
+//     //         .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0.9))
+//     //         .force("charge", d3.forceManyBody().strength(-5))
+//     //         .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
+//     //         .on("tick", () => classThis._onTicked());
+//     // }
+// }
+
+// function _getLevelRadius(node, nodesData) {
+//     if ( ! node.level ) {
+//         return 0;
+//     }
+//     return 100 * node.level;
+// }

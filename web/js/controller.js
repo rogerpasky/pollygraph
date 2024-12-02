@@ -17,11 +17,25 @@ export class Controller {
         this.view.setController(this);
         this.model.setController(this);
 
+        this.rootPath = null;
         this.focusedNodeId = null;
         this.preFocusedNodeId = null;
         this.focusedEdgeId = null;
         this.traversingNearby = false;
         this.history = [];
+    }
+
+    init(rootPath, datasource) {
+        this.rootPath = rootPath;
+        if (removeTrailingSlash(window.location.pathname) === rootPath) {
+            this.model.setDataFromSource(datasource);
+        }
+        else {
+            this.onUrlChange();
+        }
+
+        this.onUrlChange = this.onUrlChange.bind(this); // Bind the method to the class instance to avoid `this` confusion
+        window.addEventListener('popstate', this.onUrlChange)
     }
 
     // Focus methods -----------------------------------------------------------
@@ -72,10 +86,6 @@ export class Controller {
     }
 
     // Actions -----------------------------------------------------------------
-
-    setDataFromSource(datasource) {
-        this.model.setDataFromSource(datasource);
-    }
 
     focusForward() {
         if (this.focusedEdgeId) {
@@ -149,6 +159,8 @@ export class Controller {
     // Event handlers ----------------------------------------------------------
 
     onDataChange(data, focusedNodeId, dataSourcePath) {
+        this._add_history(dataSourcePath);
+
         this.view.onDataChange(data, dataSourcePath);
 
         this.preFocusedNodeId = this.focusedNodeId = focusedNodeId;
@@ -158,7 +170,35 @@ export class Controller {
         this.view.findAndFocusElement(this.focusedNodeId);
     }
 
+    onUrlChange() {
+        const path = window.location.pathname.replace(/\/$/, '', '');
+        if (path.startsWith(this.rootPath)) {
+            const datasource = "/srv" + path.replace(/\/$/, '', '');  // TODO: REVIEW!!!
+            this.model.setDataFromSource(datasource);
+        }
+    }
+    
     // Internal methods --------------------------------------------------------
+
+    _add_history(dataSourcePath) {
+        // modify the window history considering `this.roothPath` and `dataSourcePath` to reflect the current state. `dataSourcePath` can be a relative path or an absolute path, and it usually starts with the value of `this.rootPath`.
+        if (dataSourcePath.startsWith("/srv" + this.rootPath)) {
+            const currentPath = window.location.pathname;
+            this._update_history(dataSourcePath.replace("/srv", ""), currentPath);
+        }
+        else {  // TODO: handle the case when dataSourcePath is a relative path or an absolute path that does not start with this.rootPath
+            console.error(`The dataSourcePath ${dataSourcePath} is not a valid path`);
+        }
+    }
+
+    _update_history(dataSourcePath, current_path) {
+        if (current_path === this.rootPath) { // remove current history state and replace current path with the new one
+            window.history.replaceState({}, '', dataSourcePath);
+        }
+        else {
+            window.history.pushState({}, '', dataSourcePath);
+        }
+    }
 
     _focusOnOtherSideToPrefocusedNode() {
         // this.traversingNearby = false;
@@ -189,4 +229,9 @@ export class Controller {
         this.view.displayPreFocusOnConnectedEdgesToNodeId(this.preFocusedNodeId);
         this.focusedNodeId = null;
     }
+}
+
+
+function removeTrailingSlash(path) {
+    return path.replace(/\/$/, '');
 }
