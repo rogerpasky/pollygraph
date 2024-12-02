@@ -230,11 +230,19 @@ export class View {
         }
 
     _createSimulation(edgesData, nodesData) {
-        const width = this._getWidth(this.svg.node());
-        const height = this._getHeight(this.svg.node());
+        // get a list of all node levels
+        const levels = nodesData.map(d => d.level).filter((v, i, a) => a.indexOf(v) === i);
 
         var classThis = this;  // to avoid DOM `this` confusion
-        if (edgesData.length === nodesData.length * (nodesData.length - 1) / 2) {  // fully connected graph
+        // if (edgesData.length === nodesData.length * (nodesData.length - 1) / 2) {
+        if (levels.length === 1 && levels[0] === 0) {  // cloudy graph
+            this.simulation = d3.forceSimulation(nodesData)
+                .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0.9))
+                .force("charge", d3.forceManyBody().strength(-5))
+                .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
+                .on("tick", () => classThis._onTicked());
+        }
+        else if (levels.length === 1 && levels[0] > 0) {  // fully connected graph
             const sumOfAllRadius = nodesData.reduce((acc, d) => acc + _getRadius(d), 0);
             const radius = 2 * sumOfAllRadius / Math.PI;
             this.simulation = d3.forceSimulation(nodesData)
@@ -243,13 +251,19 @@ export class View {
                 .force("r", d3.forceRadial(radius))
                 .on("tick", () => classThis._onTicked());
         }
-        else {
+        else {  // layered graph, probably a tree
             this.simulation = d3.forceSimulation(nodesData)
-                .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0.9))
-                .force("charge", d3.forceManyBody().strength(-5))
+                .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0))
+                .force("charge", d3.forceManyBody().strength(-50))
                 .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
+                .force("y", d3.forceY(d => d.level * 300))
                 .on("tick", () => classThis._onTicked());
-        }
+            // FIXME: following code doesn't work
+            const maxX = levels.map(() => 0);
+            this.nodesGroup
+                .attr("cx", d => 100 * (maxX[d.level]++))
+                .attr("cy", d => d.level * 30);
+            }
     }
 
     // DOM Event handlers ------------------------------------------------------
@@ -481,35 +495,3 @@ function _defaultN(i, n) {
 function _getRadius(d) {
     return Math.sqrt(d.size) * (MAX_RADIUS - MIN_RADIUS) + MIN_RADIUS;
 }
-
-// _createSimulation(edgesData, nodesData) {
-//     const width = this._getWidth(this.svg.node());
-//     const height = this._getHeight(this.svg.node());
-
-//     var classThis = this;  // to avoid DOM `this` confusion
-//     // if (edgesData.length === nodesData.length * (nodesData.length - 1) / 2) {  // fully connected graph
-//     //     const sumOfAllRadius = nodesData.reduce((acc, d) => acc + _getRadius(d), 0);
-//     //     const radius = 2 * sumOfAllRadius / Math.PI;
-//         this.simulation = d3.forceSimulation(nodesData)
-//             .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0.5))
-//             .force("charge", d3.forceManyBody().strength(-30))
-//             .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
-//             .force("r", d3.forceRadial(d => _getLevelRadius(d, nodesData)))
-//             // .force("r", d3.forceRadial(radius))
-//             .on("tick", () => classThis._onTicked());
-//     // }
-//     // else {
-//     //     this.simulation = d3.forceSimulation(nodesData)
-//     //         .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0.9))
-//     //         .force("charge", d3.forceManyBody().strength(-5))
-//     //         .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
-//     //         .on("tick", () => classThis._onTicked());
-//     // }
-// }
-
-// function _getLevelRadius(node, nodesData) {
-//     if ( ! node.level ) {
-//         return 0;
-//     }
-//     return 100 * node.level;
-// }
