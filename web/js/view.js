@@ -252,18 +252,19 @@ export class View {
                 .on("tick", () => classThis._onTicked());
         }
         else {  // layered graph, probably a tree
-            this.simulation = d3.forceSimulation(nodesData)
-                .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0))
-                .force("charge", d3.forceManyBody().strength(-50))
-                .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
-                .force("y", d3.forceY(d => d.level * 300))
-                .on("tick", () => classThis._onTicked());
             // FIXME: following code doesn't work
             const maxX = levels.map(() => 0);
-            this.nodesGroup
-                .attr("cx", d => 100 * (maxX[d.level]++))
-                .attr("cy", d => d.level * 30);
-            }
+            nodesData.forEach((node) => {
+                node.x = 100 * (maxX[node.level]++);
+                node.y = node.level * 30;
+            });
+            this.simulation = d3.forceSimulation(nodesData)
+                .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0.1))
+                .force("charge", d3.forceManyBody().strength(-50))
+                .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
+                .force("y", d3.forceY(d => d.level * 100))
+                .on("tick", () => classThis._onTicked());
+        }
     }
 
     // DOM Event handlers ------------------------------------------------------
