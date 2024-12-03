@@ -7,6 +7,7 @@
 * use `#` values as focus indicators
 * better content on cluster's info
 * fix default functions on View constructor
+* Legend and legend accesibility (including each node)
 * keystrokes to voiceover from, to, label, n/m, graph
 * markdown to html info parser
 
