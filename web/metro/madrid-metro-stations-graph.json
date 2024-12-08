@@ -1,0 +1,4962 @@
+{
+  "nodes": [
+    {
+      "id": "MAD-S-194",
+      "label": "Pinar de Chamartín",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Pinar de Chamartín\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-035",
+      "label": "Bambú",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Bambú\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-063",
+      "label": "Chamartín",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Chamartín\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-199",
+      "label": "Plaza de Castilla",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Plaza de Castilla\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-259",
+      "label": "Valdeacederas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Valdeacederas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-251",
+      "label": "Tetuán",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Tetuán\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-099",
+      "label": "Estrecho",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Estrecho\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-015",
+      "label": "Alvarado",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Alvarado\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-081",
+      "label": "Cuatro Caminos",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Cuatro Caminos\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-224",
+      "label": "Ríos Rosas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ríos Rosas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-124",
+      "label": "Iglesia",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Iglesia\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-046",
+      "label": "Bilbao",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Bilbao\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-255",
+      "label": "Tribunal",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Tribunal\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-111",
+      "label": "Gran Vía",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Gran Vía\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-247",
+      "label": "Sol",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Sol\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-252",
+      "label": "Tirso de Molina",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Tirso de Molina\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-017",
+      "label": "Antón Martín",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Antón Martín\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-097",
+      "label": "Estación del Arte",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Estación del Arte\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-028",
+      "label": "Atocha RENFE",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Atocha RENFE\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-165",
+      "label": "Menéndez Pelayo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Menéndez Pelayo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-181",
+      "label": "Pacífico",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Pacífico\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-212",
+      "label": "Puente de Vallecas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Puente de Vallecas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-173",
+      "label": "Nueva Numancia",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Nueva Numancia\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-202",
+      "label": "Portazgo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Portazgo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-049",
+      "label": "Buenos Aires",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Buenos Aires\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-013",
+      "label": "Alto del Arenal",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Alto del Arenal\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-166",
+      "label": "Miguel Hernández",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Miguel Hernández\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-244",
+      "label": "Sierra de Guadalupe",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Sierra de Guadalupe\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-270",
+      "label": "Villa de Vallecas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Villa de Vallecas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-077",
+      "label": "Congosto",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Congosto\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-135",
+      "label": "La Gavia",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación La Gavia\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-147",
+      "label": "Las Suertes",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Las Suertes\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-261",
+      "label": "Valdecarros",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Valdecarros\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-053",
+      "label": "Canal",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Canal\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-218",
+      "label": "Quevedo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Quevedo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-231",
+      "label": "San Bernardo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación San Bernardo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-172",
+      "label": "Noviciado",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Noviciado\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-241",
+      "label": "Santo Domingo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Santo Domingo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-179",
+      "label": "Ópera",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ópera\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-243",
+      "label": "Sevilla",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Sevilla\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-036",
+      "label": "Banco de España",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Banco de España\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-222",
+      "label": "Retiro",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Retiro\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-208",
+      "label": "Príncipe de Vergara",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Príncipe de Vergara\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-110",
+      "label": "Goya",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Goya\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-157",
+      "label": "Manuel Becerra",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Manuel Becerra\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-264",
+      "label": "Ventas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ventas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-133",
+      "label": "La Elipa",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación La Elipa\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-132",
+      "label": "La Almudena",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación La Almudena\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-011",
+      "label": "Alsacia",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Alsacia\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-031",
+      "label": "Avenida de Guadalajara",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Avenida de Guadalajara\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-146",
+      "label": "Las Rosas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Las Rosas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-168",
+      "label": "Moncloa",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Moncloa\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-022",
+      "label": "Argüelles",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Argüelles\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-267",
+      "label": "Ventura Rodríguez",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ventura Rodríguez\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-200",
+      "label": "Plaza de España",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Plaza de España\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-050",
+      "label": "Callao",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Callao\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-149",
+      "label": "Lavapiés",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Lavapiés\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-093",
+      "label": "Embajadores",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Embajadores\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-184",
+      "label": "Palos de la Frontera",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Palos de la Frontera\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-084",
+      "label": "Delicias",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Delicias\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-151",
+      "label": "Legazpi",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Legazpi\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-007",
+      "label": "Almendrales",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Almendrales\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-117",
+      "label": "Hospital 12 de Octubre",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Hospital 12 de Octubre\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-235",
+      "label": "San Fermín - Orcasur",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación San Fermín - Orcasur\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-066",
+      "label": "Ciudad de los Ángeles",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ciudad de los Ángeles\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-272",
+      "label": "Villaverde Bajo - Cruce",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Villaverde Bajo - Cruce\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-234",
+      "label": "San Cristóbal",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación San Cristóbal\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-271",
+      "label": "Villaverde Alto",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Villaverde Alto\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-010",
+      "label": "Alonso Martínez",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Alonso Martínez\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-072",
+      "label": "Colón",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Colón\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-242",
+      "label": "Serrano",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Serrano\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-263",
+      "label": "Velázquez",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Velázquez\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-152",
+      "label": "Lista",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Lista\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-085",
+      "label": "Diego de León",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Diego de León\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-029",
+      "label": "Avenida de América",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Avenida de América\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-210",
+      "label": "Prosperidad",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Prosperidad\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-006",
+      "label": "Alfonso XIII",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Alfonso XIII\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-033",
+      "label": "Avenida de la Paz",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Avenida de la Paz\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-026",
+      "label": "Arturo Soria",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Arturo Soria\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-095",
+      "label": "Esperanza",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Esperanza\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-054",
+      "label": "Canillas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Canillas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-160",
+      "label": "Mar de Cristal",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Mar de Cristal\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-238",
+      "label": "San Lorenzo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación San Lorenzo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-189",
+      "label": "Parque de Santa María",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Parque de Santa María\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-116",
+      "label": "Hortaleza",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Hortaleza\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-156",
+      "label": "Manoteras",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Manoteras\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-061",
+      "label": "Casa de Campo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Casa de Campo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-051",
+      "label": "Campamento",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Campamento\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-094",
+      "label": "Empalme",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Empalme\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-014",
+      "label": "Aluche",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Aluche\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-101",
+      "label": "Eugenia de Montijo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Eugenia de Montijo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-057",
+      "label": "Carabanchel",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Carabanchel\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-275",
+      "label": "Vista Alegre",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Vista Alegre\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-180",
+      "label": "Oporto",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Oporto\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-257",
+      "label": "Urgel",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Urgel\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-163",
+      "label": "Marqués de Vadillo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Marqués de Vadillo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-197",
+      "label": "Pirámides",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Pirámides\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-001",
+      "label": "Acacias",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Acacias\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-215",
+      "label": "Puerta de Toledo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Puerta de Toledo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-137",
+      "label": "La Latina",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación La Latina\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-064",
+      "label": "Chueca",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Chueca\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-229",
+      "label": "Rubén Darío",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Rubén Darío\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-176",
+      "label": "Núñez de Balboa",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Núñez de Balboa\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-090",
+      "label": "El Carmen",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación El Carmen\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-219",
+      "label": "Quintana",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Quintana\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-211",
+      "label": "Pueblo Nuevo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Pueblo Nuevo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-068",
+      "label": "Ciudad Lineal",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ciudad Lineal\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-250",
+      "label": "Suanzes",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Suanzes\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-253",
+      "label": "Torre Arias",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Torre Arias\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-055",
+      "label": "Canillejas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Canillejas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-089",
+      "label": "El Capricho",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación El Capricho\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-004",
+      "label": "Alameda de Osuna",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Alameda de Osuna\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-144",
+      "label": "Laguna",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Laguna\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-059",
+      "label": "Carpetana",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Carpetana\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-178",
+      "label": "Opañel",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Opañel\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-201",
+      "label": "Plaza Elíptica",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Plaza Elíptica\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-258",
+      "label": "Usera",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Usera\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-021",
+      "label": "Arganzuela-Planetario",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Arganzuela-Planetario\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-164",
+      "label": "Méndez Álvaro",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Méndez Álvaro\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-076",
+      "label": "Conde de Casal",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Conde de Casal\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-230",
+      "label": "Sainz de Baranda",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Sainz de Baranda\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-177",
+      "label": "O'Donnell",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación O'Donnell\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-220",
+      "label": "República Argentina",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación República Argentina\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-175",
+      "label": "Nuevos Ministerios",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Nuevos Ministerios\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-113",
+      "label": "Guzmán el Bueno",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Guzmán el Bueno\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-269",
+      "label": "Vicente Aleixandre",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Vicente Aleixandre\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-069",
+      "label": "Ciudad Universitaria",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ciudad Universitaria\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-209",
+      "label": "Príncipe Pío",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Príncipe Pío\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-216",
+      "label": "Puerta del Ángel",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Puerta del Ángel\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-012",
+      "label": "Alto de Extremadura",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Alto de Extremadura\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-155",
+      "label": "Lucero",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Lucero\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-198",
+      "label": "Pitis",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Pitis\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-024",
+      "label": "Arroyofresno",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Arroyofresno\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-142",
+      "label": "Lacoma",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Lacoma\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-032",
+      "label": "Avenida de la Ilustración",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Avenida de la Ilustración\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-193",
+      "label": "Peñagrande",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Peñagrande\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-018",
+      "label": "Antonio Machado",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Antonio Machado\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-262",
+      "label": "Valdezarza",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Valdezarza\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-104",
+      "label": "Francos Rodríguez",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Francos Rodríguez\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-126",
+      "label": "Islas Filipinas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Islas Filipinas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-008",
+      "label": "Alonso Cano",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Alonso Cano\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-112",
+      "label": "Gregorio Marañón",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Gregorio Marañón\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-060",
+      "label": "Cartagena",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Cartagena\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-186",
+      "label": "Parque de las Avenidas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Parque de las Avenidas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-038",
+      "label": "Barrio de la Concepción",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Barrio de la Concepción\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-027",
+      "label": "Ascao",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ascao\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-108",
+      "label": "García Noblejas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación García Noblejas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-246",
+      "label": "Simancas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Simancas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-232",
+      "label": "San Blas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación San Blas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-145",
+      "label": "Las Musas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Las Musas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-098",
+      "label": "Estadio Metropolitano",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Estadio Metropolitano\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-040",
+      "label": "Barrio del Puerto",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Barrio del Puerto\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-079",
+      "label": "Coslada Central",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Coslada Central\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-141",
+      "label": "La Rambla",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación La Rambla\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-236",
+      "label": "San Fernando",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación San Fernando\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-127",
+      "label": "Jarama",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Jarama\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-114",
+      "label": "Henares",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Henares\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-120",
+      "label": "Hospital del Henares",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Hospital del Henares\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-071",
+      "label": "Colombia",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Colombia\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-195",
+      "label": "Pinar del Rey",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Pinar del Rey\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-102",
+      "label": "Feria de Madrid",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Feria de Madrid\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-002",
+      "label": "Aeropuerto T1 T2 T3",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Aeropuerto T1 T2 T3\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-037",
+      "label": "Barajas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Barajas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-003",
+      "label": "Aeropuerto T4",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Aeropuerto T4\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-182",
+      "label": "Paco de Lucía",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Paco de Lucía\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-167",
+      "label": "Mirasierra",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Mirasierra\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-115",
+      "label": "Herrera Oria",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Herrera Oria\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-039",
+      "label": "Barrio del Pilar",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Barrio del Pilar\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-265",
+      "label": "Ventilla",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ventilla\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-087",
+      "label": "Duque de Pastrana",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Duque de Pastrana\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-196",
+      "label": "Pío XII",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Pío XII\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-075",
+      "label": "Concha Espina",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Concha Espina\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-080",
+      "label": "Cruz del Rayo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Cruz del Rayo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-123",
+      "label": "Ibiza",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ibiza\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-100",
+      "label": "Estrella",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Estrella\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-273",
+      "label": "Vinateros",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Vinateros\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-025",
+      "label": "Artilleros",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Artilleros\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-192",
+      "label": "Pavones",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Pavones\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-260",
+      "label": "Valdebernardo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Valdebernardo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-268",
+      "label": "Vicálvaro",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Vicálvaro\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-233",
+      "label": "San Cipriano",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación San Cipriano\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-213",
+      "label": "Puerta de Arganda",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Puerta de Arganda\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-226",
+      "label": "Rivas Urbanizaciones",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Rivas Urbanizaciones\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-225",
+      "label": "Rivas Futura",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Rivas Futura\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-227",
+      "label": "Rivas Vaciamadrid",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Rivas Vaciamadrid\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-140",
+      "label": "La Poveda",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación La Poveda\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-020",
+      "label": "Arganda del Rey",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Arganda del Rey\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-121",
+      "label": "Hospital Infanta Sofía",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Hospital Infanta Sofía\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-223",
+      "label": "Reyes Católicos",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Reyes Católicos\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-042",
+      "label": "Baunatal",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Baunatal\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-158",
+      "label": "Manuel de Falla",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Manuel de Falla\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-162",
+      "label": "Marqués de la Valdavia",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Marqués de la Valdavia\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-138",
+      "label": "La Moraleja",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación La Moraleja\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-136",
+      "label": "La Granja",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación La Granja\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-228",
+      "label": "Ronda de la Comunicación",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ronda de la Comunicación\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-148",
+      "label": "Las Tablas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Las Tablas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-169",
+      "label": "Montecarmelo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Montecarmelo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-254",
+      "label": "Tres Olivos",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Tres Olivos\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-105",
+      "label": "Fuencarral",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Fuencarral\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-043",
+      "label": "Begoña",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Begoña\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-083",
+      "label": "Cuzco",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Cuzco\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-240",
+      "label": "Santiago Bernabéu",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Santiago Bernabéu\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-143",
+      "label": "Lago",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Lago\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-041",
+      "label": "Batán",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Batán\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-074",
+      "label": "Colonia Jardín",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Colonia Jardín\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-034",
+      "label": "Aviación Española",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Aviación Española\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-082",
+      "label": "Cuatro Vientos",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Cuatro Vientos\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-128",
+      "label": "Joaquín Vilumbrales",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Joaquín Vilumbrales\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-217",
+      "label": "Puerta del Sur",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Puerta del Sur\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-000",
+      "label": "Abrantes",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Abrantes\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-185",
+      "label": "Pan Bendito",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Pan Bendito\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-237",
+      "label": "San Francisco",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación San Francisco\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-058",
+      "label": "Carabanchel Alto",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Carabanchel Alto\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-139",
+      "label": "La Peseta",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación La Peseta\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-134",
+      "label": "La Fortuna",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación La Fortuna\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-187",
+      "label": "Parque de Lisboa",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Parque de Lisboa\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-005",
+      "label": "Alcorcón Central",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Alcorcón Central\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-191",
+      "label": "Parque Oeste",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Parque Oeste\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-256",
+      "label": "Universidad Rey Juan Carlos",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Universidad Rey Juan Carlos\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-171",
+      "label": "Móstoles Central",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Móstoles Central\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-204",
+      "label": "Pradillo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Pradillo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-119",
+      "label": "Hospital de Móstoles",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Hospital de Móstoles\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-159",
+      "label": "Manuela Malasaña",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Manuela Malasaña\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-153",
+      "label": "Loranca",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Loranca\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-118",
+      "label": "Hospital de Fuenlabrada",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Hospital de Fuenlabrada\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-190",
+      "label": "Parque Europa",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Parque Europa\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-106",
+      "label": "Fuenlabrada Central",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Fuenlabrada Central\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-188",
+      "label": "Parque de los Estados",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Parque de los Estados\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-023",
+      "label": "Arroyo Culebro",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Arroyo Culebro\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-078",
+      "label": "Conservatorio",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Conservatorio\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-009",
+      "label": "Alonso de Mendoza",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Alonso de Mendoza\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-109",
+      "label": "Getafe Central",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Getafe Central\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-130",
+      "label": "Juan de la Cierva",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Juan de la Cierva\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-092",
+      "label": "El Casar",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación El Casar\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-154",
+      "label": "Los Espartales",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Los Espartales\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-088",
+      "label": "El Bercial",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación El Bercial\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-091",
+      "label": "El Carrascal",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación El Carrascal\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-131",
+      "label": "Julián Besteiro",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Julián Besteiro\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-062",
+      "label": "Casa del Reloj",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Casa del Reloj\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-122",
+      "label": "Hospital Severo Ochoa",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Hospital Severo Ochoa\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-150",
+      "label": "Leganés Central",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Leganés Central\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-239",
+      "label": "San Nicasio",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación San Nicasio\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-107",
+      "label": "Fuente de la Mora",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Fuente de la Mora\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-274",
+      "label": "Virgen del Cortijo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Virgen del Cortijo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-019",
+      "label": "Antonio Saura",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Antonio Saura\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-016",
+      "label": "Álvarez de Villaamil",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Álvarez de Villaamil\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-047",
+      "label": "Blasco Ibáñez",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Blasco Ibáñez\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-161",
+      "label": "María Tudor",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación María Tudor\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-183",
+      "label": "Palas del Rey",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Palas del Rey\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-205",
+      "label": "Prado de la Vega",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Prado de la Vega\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-073",
+      "label": "Colonia de los Ángeles",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Colonia de los Ángeles\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-207",
+      "label": "Prado del Rey",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Prado del Rey\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-249",
+      "label": "Somosaguas Sur",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Somosaguas Sur\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-248",
+      "label": "Somosaguas Centro",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Somosaguas Centro\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-203",
+      "label": "Pozuelo Oeste",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Pozuelo Oeste\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-044",
+      "label": "Bélgica",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Bélgica\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-086",
+      "label": "Dos Castillas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Dos Castillas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-052",
+      "label": "Campus de Somosaguas",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Campus de Somosaguas\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-030",
+      "label": "Avenida de Europa",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Avenida de Europa\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-045",
+      "label": "Berna",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Berna\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-096",
+      "label": "Estación de Aravaca",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Estación de Aravaca\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-065",
+      "label": "Ciudad de la Imagen",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ciudad de la Imagen\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-129",
+      "label": "José Isbert",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación José Isbert\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-067",
+      "label": "Ciudad del Cine",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ciudad del Cine\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-070",
+      "label": "Cocheras",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Cocheras\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-221",
+      "label": "Retamares",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Retamares\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-170",
+      "label": "Montepríncipe",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Montepríncipe\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-266",
+      "label": "Ventorro del Cano",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ventorro del Cano\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-206",
+      "label": "Prado del Espino",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Prado del Espino\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-056",
+      "label": "Cantabria",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Cantabria\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-103",
+      "label": "Ferial de Boadilla",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Ferial de Boadilla\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-048",
+      "label": "Boadilla Centro",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Boadilla Centro\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-174",
+      "label": "Nuevo Mundo",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Nuevo Mundo\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-245",
+      "label": "Siglo XXI",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Siglo XXI\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-125",
+      "label": "Infante Don Luís",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Infante Don Luís\u003C/h1\u003E"
+    },
+    {
+      "id": "MAD-S-214",
+      "label": "Puerta de Boadilla",
+      "type": 0,
+      "size": 1,
+      "info": "\u003Ch1\u003EEstación Puerta de Boadilla\u003C/h1\u003E"
+    }
+  ],
+  "edges": [
+    {
+      "source": "MAD-S-194",
+      "target": "MAD-S-035",
+      "label": "Pinar de Chamartín-Bambú through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-194",
+      "target": "MAD-S-194",
+      "label": "transfer in Pinar de Chamartín from line 1 to line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-194",
+      "target": "MAD-S-194",
+      "label": "transfer in Pinar de Chamartín from line 1 to line 14",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-035",
+      "target": "MAD-S-063",
+      "label": "Bambú-Chamartín through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-063",
+      "target": "MAD-S-199",
+      "label": "Chamartín-Plaza de Castilla through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-063",
+      "target": "MAD-S-063",
+      "label": "transfer in Chamartín from line 1 to line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-199",
+      "target": "MAD-S-259",
+      "label": "Plaza de Castilla-Valdeacederas through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-199",
+      "target": "MAD-S-199",
+      "label": "transfer in Plaza de Castilla from line 1 to line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-199",
+      "target": "MAD-S-199",
+      "label": "transfer in Plaza de Castilla from line 1 to line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-259",
+      "target": "MAD-S-251",
+      "label": "Valdeacederas-Tetuán through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-251",
+      "target": "MAD-S-099",
+      "label": "Tetuán-Estrecho through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-099",
+      "target": "MAD-S-015",
+      "label": "Estrecho-Alvarado through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-015",
+      "target": "MAD-S-081",
+      "label": "Alvarado-Cuatro Caminos through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-081",
+      "target": "MAD-S-224",
+      "label": "Cuatro Caminos-Ríos Rosas through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-081",
+      "target": "MAD-S-081",
+      "label": "transfer in Cuatro Caminos from line 1 to line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-081",
+      "target": "MAD-S-081",
+      "label": "transfer in Cuatro Caminos from line 1 to line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-224",
+      "target": "MAD-S-124",
+      "label": "Ríos Rosas-Iglesia through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-124",
+      "target": "MAD-S-046",
+      "label": "Iglesia-Bilbao through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-046",
+      "target": "MAD-S-255",
+      "label": "Bilbao-Tribunal through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-046",
+      "target": "MAD-S-046",
+      "label": "transfer in Bilbao from line 1 to line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-255",
+      "target": "MAD-S-111",
+      "label": "Tribunal-Gran Vía through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-255",
+      "target": "MAD-S-255",
+      "label": "transfer in Tribunal from line 1 to line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-111",
+      "target": "MAD-S-247",
+      "label": "Gran Vía-Sol through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-111",
+      "target": "MAD-S-111",
+      "label": "transfer in Gran Vía from line 1 to line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-247",
+      "target": "MAD-S-252",
+      "label": "Sol-Tirso de Molina through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-247",
+      "target": "MAD-S-247",
+      "label": "transfer in Sol from line 1 to line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-247",
+      "target": "MAD-S-247",
+      "label": "transfer in Sol from line 1 to line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-252",
+      "target": "MAD-S-017",
+      "label": "Tirso de Molina-Antón Martín through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-017",
+      "target": "MAD-S-097",
+      "label": "Antón Martín-Estación del Arte through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-097",
+      "target": "MAD-S-028",
+      "label": "Estación del Arte-Atocha RENFE through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-028",
+      "target": "MAD-S-165",
+      "label": "Atocha RENFE-Menéndez Pelayo through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-165",
+      "target": "MAD-S-181",
+      "label": "Menéndez Pelayo-Pacífico through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-181",
+      "target": "MAD-S-212",
+      "label": "Pacífico-Puente de Vallecas through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-181",
+      "target": "MAD-S-181",
+      "label": "transfer in Pacífico from line 1 to line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-212",
+      "target": "MAD-S-173",
+      "label": "Puente de Vallecas-Nueva Numancia through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-173",
+      "target": "MAD-S-202",
+      "label": "Nueva Numancia-Portazgo through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-202",
+      "target": "MAD-S-049",
+      "label": "Portazgo-Buenos Aires through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-049",
+      "target": "MAD-S-013",
+      "label": "Buenos Aires-Alto del Arenal through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-013",
+      "target": "MAD-S-166",
+      "label": "Alto del Arenal-Miguel Hernández through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-166",
+      "target": "MAD-S-244",
+      "label": "Miguel Hernández-Sierra de Guadalupe through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-244",
+      "target": "MAD-S-270",
+      "label": "Sierra de Guadalupe-Villa de Vallecas through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-270",
+      "target": "MAD-S-077",
+      "label": "Villa de Vallecas-Congosto through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-077",
+      "target": "MAD-S-135",
+      "label": "Congosto-La Gavia through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-135",
+      "target": "MAD-S-147",
+      "label": "La Gavia-Las Suertes through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-147",
+      "target": "MAD-S-261",
+      "label": "Las Suertes-Valdecarros through line 1",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-081",
+      "target": "MAD-S-053",
+      "label": "Cuatro Caminos-Canal through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-081",
+      "target": "MAD-S-081",
+      "label": "transfer in Cuatro Caminos from line 2 to line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-053",
+      "target": "MAD-S-218",
+      "label": "Canal-Quevedo through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-053",
+      "target": "MAD-S-053",
+      "label": "transfer in Canal from line 2 to line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-218",
+      "target": "MAD-S-231",
+      "label": "Quevedo-San Bernardo through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-231",
+      "target": "MAD-S-172",
+      "label": "San Bernardo-Noviciado through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-231",
+      "target": "MAD-S-231",
+      "label": "transfer in San Bernardo from line 2 to line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-172",
+      "target": "MAD-S-241",
+      "label": "Noviciado-Santo Domingo through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-241",
+      "target": "MAD-S-179",
+      "label": "Santo Domingo-Ópera through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-179",
+      "target": "MAD-S-247",
+      "label": "Ópera-Sol through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-179",
+      "target": "MAD-S-179",
+      "label": "transfer in Ópera from line 2 to line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-179",
+      "target": "MAD-S-179",
+      "label": "transfer in Ópera from line 2 to line 13",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-247",
+      "target": "MAD-S-243",
+      "label": "Sol-Sevilla through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-247",
+      "target": "MAD-S-247",
+      "label": "transfer in Sol from line 2 to line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-243",
+      "target": "MAD-S-036",
+      "label": "Sevilla-Banco de España through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-036",
+      "target": "MAD-S-222",
+      "label": "Banco de España-Retiro through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-222",
+      "target": "MAD-S-208",
+      "label": "Retiro-Príncipe de Vergara through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-208",
+      "target": "MAD-S-110",
+      "label": "Príncipe de Vergara-Goya through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-208",
+      "target": "MAD-S-208",
+      "label": "transfer in Príncipe de Vergara from line 2 to line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-110",
+      "target": "MAD-S-157",
+      "label": "Goya-Manuel Becerra through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-110",
+      "target": "MAD-S-110",
+      "label": "transfer in Goya from line 2 to line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-157",
+      "target": "MAD-S-264",
+      "label": "Manuel Becerra-Ventas through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-157",
+      "target": "MAD-S-157",
+      "label": "transfer in Manuel Becerra from line 2 to line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-264",
+      "target": "MAD-S-133",
+      "label": "Ventas-La Elipa through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-264",
+      "target": "MAD-S-264",
+      "label": "transfer in Ventas from line 2 to line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-133",
+      "target": "MAD-S-132",
+      "label": "La Elipa-La Almudena through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-132",
+      "target": "MAD-S-011",
+      "label": "La Almudena-Alsacia through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-011",
+      "target": "MAD-S-031",
+      "label": "Alsacia-Avenida de Guadalajara through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-031",
+      "target": "MAD-S-146",
+      "label": "Avenida de Guadalajara-Las Rosas through line 2",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-168",
+      "target": "MAD-S-022",
+      "label": "Moncloa-Argüelles through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-168",
+      "target": "MAD-S-168",
+      "label": "transfer in Moncloa from line 3 to line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-022",
+      "target": "MAD-S-267",
+      "label": "Argüelles-Ventura Rodríguez through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-022",
+      "target": "MAD-S-022",
+      "label": "transfer in Argüelles from line 3 to line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-022",
+      "target": "MAD-S-022",
+      "label": "transfer in Argüelles from line 3 to line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-267",
+      "target": "MAD-S-200",
+      "label": "Ventura Rodríguez-Plaza de España through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-200",
+      "target": "MAD-S-050",
+      "label": "Plaza de España-Callao through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-200",
+      "target": "MAD-S-200",
+      "label": "transfer in Plaza de España from line 3 to line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-050",
+      "target": "MAD-S-247",
+      "label": "Callao-Sol through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-050",
+      "target": "MAD-S-050",
+      "label": "transfer in Callao from line 3 to line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-247",
+      "target": "MAD-S-149",
+      "label": "Sol-Lavapiés through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-149",
+      "target": "MAD-S-093",
+      "label": "Lavapiés-Embajadores through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-093",
+      "target": "MAD-S-184",
+      "label": "Embajadores-Palos de la Frontera through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-184",
+      "target": "MAD-S-084",
+      "label": "Palos de la Frontera-Delicias through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-084",
+      "target": "MAD-S-151",
+      "label": "Delicias-Legazpi through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-151",
+      "target": "MAD-S-007",
+      "label": "Legazpi-Almendrales through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-151",
+      "target": "MAD-S-151",
+      "label": "transfer in Legazpi from line 3 to line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-007",
+      "target": "MAD-S-117",
+      "label": "Almendrales-Hospital 12 de Octubre through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-117",
+      "target": "MAD-S-235",
+      "label": "Hospital 12 de Octubre-San Fermín - Orcasur through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-235",
+      "target": "MAD-S-066",
+      "label": "San Fermín - Orcasur-Ciudad de los Ángeles through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-066",
+      "target": "MAD-S-272",
+      "label": "Ciudad de los Ángeles-Villaverde Bajo - Cruce through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-272",
+      "target": "MAD-S-234",
+      "label": "Villaverde Bajo - Cruce-San Cristóbal through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-234",
+      "target": "MAD-S-271",
+      "label": "San Cristóbal-Villaverde Alto through line 3",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-022",
+      "target": "MAD-S-231",
+      "label": "Argüelles-San Bernardo through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-022",
+      "target": "MAD-S-022",
+      "label": "transfer in Argüelles from line 4 to line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-231",
+      "target": "MAD-S-046",
+      "label": "San Bernardo-Bilbao through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-046",
+      "target": "MAD-S-010",
+      "label": "Bilbao-Alonso Martínez through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-010",
+      "target": "MAD-S-072",
+      "label": "Alonso Martínez-Colón through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-010",
+      "target": "MAD-S-010",
+      "label": "transfer in Alonso Martínez from line 4 to line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-010",
+      "target": "MAD-S-010",
+      "label": "transfer in Alonso Martínez from line 4 to line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-072",
+      "target": "MAD-S-242",
+      "label": "Colón-Serrano through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-242",
+      "target": "MAD-S-263",
+      "label": "Serrano-Velázquez through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-263",
+      "target": "MAD-S-110",
+      "label": "Velázquez-Goya through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-110",
+      "target": "MAD-S-152",
+      "label": "Goya-Lista through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-152",
+      "target": "MAD-S-085",
+      "label": "Lista-Diego de León through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-085",
+      "target": "MAD-S-029",
+      "label": "Diego de León-Avenida de América through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-085",
+      "target": "MAD-S-085",
+      "label": "transfer in Diego de León from line 4 to line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-085",
+      "target": "MAD-S-085",
+      "label": "transfer in Diego de León from line 4 to line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-029",
+      "target": "MAD-S-210",
+      "label": "Avenida de América-Prosperidad through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-029",
+      "target": "MAD-S-029",
+      "label": "transfer in Avenida de América from line 4 to line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-029",
+      "target": "MAD-S-029",
+      "label": "transfer in Avenida de América from line 4 to line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-029",
+      "target": "MAD-S-029",
+      "label": "transfer in Avenida de América from line 4 to line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-210",
+      "target": "MAD-S-006",
+      "label": "Prosperidad-Alfonso XIII through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-006",
+      "target": "MAD-S-033",
+      "label": "Alfonso XIII-Avenida de la Paz through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-033",
+      "target": "MAD-S-026",
+      "label": "Avenida de la Paz-Arturo Soria through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-026",
+      "target": "MAD-S-095",
+      "label": "Arturo Soria-Esperanza through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-095",
+      "target": "MAD-S-054",
+      "label": "Esperanza-Canillas through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-054",
+      "target": "MAD-S-160",
+      "label": "Canillas-Mar de Cristal through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-160",
+      "target": "MAD-S-238",
+      "label": "Mar de Cristal-San Lorenzo through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-160",
+      "target": "MAD-S-160",
+      "label": "transfer in Mar de Cristal from line 4 to line 8",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-238",
+      "target": "MAD-S-189",
+      "label": "San Lorenzo-Parque de Santa María through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-189",
+      "target": "MAD-S-116",
+      "label": "Parque de Santa María-Hortaleza through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-116",
+      "target": "MAD-S-156",
+      "label": "Hortaleza-Manoteras through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-156",
+      "target": "MAD-S-194",
+      "label": "Manoteras-Pinar de Chamartín through line 4",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-194",
+      "target": "MAD-S-194",
+      "label": "transfer in Pinar de Chamartín from line 4 to line 14",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-061",
+      "target": "MAD-S-051",
+      "label": "Casa de Campo-Campamento through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-061",
+      "target": "MAD-S-061",
+      "label": "transfer in Casa de Campo from line 5 to line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-051",
+      "target": "MAD-S-094",
+      "label": "Campamento-Empalme through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-094",
+      "target": "MAD-S-014",
+      "label": "Empalme-Aluche through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-014",
+      "target": "MAD-S-101",
+      "label": "Aluche-Eugenia de Montijo through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-101",
+      "target": "MAD-S-057",
+      "label": "Eugenia de Montijo-Carabanchel through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-057",
+      "target": "MAD-S-275",
+      "label": "Carabanchel-Vista Alegre through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-275",
+      "target": "MAD-S-180",
+      "label": "Vista Alegre-Oporto through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-180",
+      "target": "MAD-S-257",
+      "label": "Oporto-Urgel through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-180",
+      "target": "MAD-S-180",
+      "label": "transfer in Oporto from line 5 to line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-257",
+      "target": "MAD-S-163",
+      "label": "Urgel-Marqués de Vadillo through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-163",
+      "target": "MAD-S-197",
+      "label": "Marqués de Vadillo-Pirámides through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-197",
+      "target": "MAD-S-001",
+      "label": "Pirámides-Acacias through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-001",
+      "target": "MAD-S-215",
+      "label": "Acacias-Puerta de Toledo through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-215",
+      "target": "MAD-S-137",
+      "label": "Puerta de Toledo-La Latina through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-137",
+      "target": "MAD-S-179",
+      "label": "La Latina-Ópera through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-179",
+      "target": "MAD-S-050",
+      "label": "Ópera-Callao through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-179",
+      "target": "MAD-S-179",
+      "label": "transfer in Ópera from line 5 to line 13",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-050",
+      "target": "MAD-S-111",
+      "label": "Callao-Gran Vía through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-111",
+      "target": "MAD-S-064",
+      "label": "Gran Vía-Chueca through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-064",
+      "target": "MAD-S-010",
+      "label": "Chueca-Alonso Martínez through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-010",
+      "target": "MAD-S-229",
+      "label": "Alonso Martínez-Rubén Darío through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-010",
+      "target": "MAD-S-010",
+      "label": "transfer in Alonso Martínez from line 5 to line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-229",
+      "target": "MAD-S-176",
+      "label": "Rubén Darío-Núñez de Balboa through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-176",
+      "target": "MAD-S-085",
+      "label": "Núñez de Balboa-Diego de León through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-176",
+      "target": "MAD-S-176",
+      "label": "transfer in Núñez de Balboa from line 5 to line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-085",
+      "target": "MAD-S-264",
+      "label": "Diego de León-Ventas through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-085",
+      "target": "MAD-S-085",
+      "label": "transfer in Diego de León from line 5 to line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-264",
+      "target": "MAD-S-090",
+      "label": "Ventas-El Carmen through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-090",
+      "target": "MAD-S-219",
+      "label": "El Carmen-Quintana through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-219",
+      "target": "MAD-S-211",
+      "label": "Quintana-Pueblo Nuevo through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-211",
+      "target": "MAD-S-068",
+      "label": "Pueblo Nuevo-Ciudad Lineal through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-211",
+      "target": "MAD-S-211",
+      "label": "transfer in Pueblo Nuevo from line 5 to line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-068",
+      "target": "MAD-S-250",
+      "label": "Ciudad Lineal-Suanzes through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-250",
+      "target": "MAD-S-253",
+      "label": "Suanzes-Torre Arias through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-253",
+      "target": "MAD-S-055",
+      "label": "Torre Arias-Canillejas through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-055",
+      "target": "MAD-S-089",
+      "label": "Canillejas-El Capricho through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-089",
+      "target": "MAD-S-004",
+      "label": "El Capricho-Alameda de Osuna through line 5",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-144",
+      "target": "MAD-S-059",
+      "label": "Laguna-Carpetana through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-059",
+      "target": "MAD-S-180",
+      "label": "Carpetana-Oporto through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-180",
+      "target": "MAD-S-178",
+      "label": "Oporto-Opañel through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-178",
+      "target": "MAD-S-201",
+      "label": "Opañel-Plaza Elíptica through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-201",
+      "target": "MAD-S-258",
+      "label": "Plaza Elíptica-Usera through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-201",
+      "target": "MAD-S-201",
+      "label": "transfer in Plaza Elíptica from line 6 to line 11",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-258",
+      "target": "MAD-S-151",
+      "label": "Usera-Legazpi through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-151",
+      "target": "MAD-S-021",
+      "label": "Legazpi-Arganzuela-Planetario through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-021",
+      "target": "MAD-S-164",
+      "label": "Arganzuela-Planetario-Méndez Álvaro through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-164",
+      "target": "MAD-S-181",
+      "label": "Méndez Álvaro-Pacífico through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-181",
+      "target": "MAD-S-076",
+      "label": "Pacífico-Conde de Casal through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-076",
+      "target": "MAD-S-230",
+      "label": "Conde de Casal-Sainz de Baranda through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-230",
+      "target": "MAD-S-177",
+      "label": "Sainz de Baranda-O'Donnell through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-230",
+      "target": "MAD-S-230",
+      "label": "transfer in Sainz de Baranda from line 6 to line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-177",
+      "target": "MAD-S-157",
+      "label": "O'Donnell-Manuel Becerra through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-157",
+      "target": "MAD-S-085",
+      "label": "Manuel Becerra-Diego de León through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-085",
+      "target": "MAD-S-029",
+      "label": "Diego de León-Avenida de América through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-029",
+      "target": "MAD-S-220",
+      "label": "Avenida de América-República Argentina through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-029",
+      "target": "MAD-S-029",
+      "label": "transfer in Avenida de América from line 6 to line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-029",
+      "target": "MAD-S-029",
+      "label": "transfer in Avenida de América from line 6 to line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-220",
+      "target": "MAD-S-175",
+      "label": "República Argentina-Nuevos Ministerios through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-175",
+      "target": "MAD-S-081",
+      "label": "Nuevos Ministerios-Cuatro Caminos through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-175",
+      "target": "MAD-S-175",
+      "label": "transfer in Nuevos Ministerios from line 6 to line 8",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-175",
+      "target": "MAD-S-175",
+      "label": "transfer in Nuevos Ministerios from line 6 to line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-081",
+      "target": "MAD-S-113",
+      "label": "Cuatro Caminos-Guzmán el Bueno through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-113",
+      "target": "MAD-S-269",
+      "label": "Guzmán el Bueno-Vicente Aleixandre through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-113",
+      "target": "MAD-S-113",
+      "label": "transfer in Guzmán el Bueno from line 6 to line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-269",
+      "target": "MAD-S-069",
+      "label": "Vicente Aleixandre-Ciudad Universitaria through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-069",
+      "target": "MAD-S-168",
+      "label": "Ciudad Universitaria-Moncloa through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-168",
+      "target": "MAD-S-022",
+      "label": "Moncloa-Argüelles through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-022",
+      "target": "MAD-S-209",
+      "label": "Argüelles-Príncipe Pío through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-209",
+      "target": "MAD-S-216",
+      "label": "Príncipe Pío-Puerta del Ángel through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-209",
+      "target": "MAD-S-209",
+      "label": "transfer in Príncipe Pío from line 6 to line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-209",
+      "target": "MAD-S-209",
+      "label": "transfer in Príncipe Pío from line 6 to line 13",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-216",
+      "target": "MAD-S-012",
+      "label": "Puerta del Ángel-Alto de Extremadura through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-012",
+      "target": "MAD-S-155",
+      "label": "Alto de Extremadura-Lucero through line 6",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-198",
+      "target": "MAD-S-024",
+      "label": "Pitis-Arroyofresno through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-024",
+      "target": "MAD-S-142",
+      "label": "Arroyofresno-Lacoma through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-142",
+      "target": "MAD-S-032",
+      "label": "Lacoma-Avenida de la Ilustración through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-032",
+      "target": "MAD-S-193",
+      "label": "Avenida de la Ilustración-Peñagrande through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-193",
+      "target": "MAD-S-018",
+      "label": "Peñagrande-Antonio Machado through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-018",
+      "target": "MAD-S-262",
+      "label": "Antonio Machado-Valdezarza through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-262",
+      "target": "MAD-S-104",
+      "label": "Valdezarza-Francos Rodríguez through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-104",
+      "target": "MAD-S-113",
+      "label": "Francos Rodríguez-Guzmán el Bueno through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-113",
+      "target": "MAD-S-126",
+      "label": "Guzmán el Bueno-Islas Filipinas through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-126",
+      "target": "MAD-S-053",
+      "label": "Islas Filipinas-Canal through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-053",
+      "target": "MAD-S-008",
+      "label": "Canal-Alonso Cano through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-008",
+      "target": "MAD-S-112",
+      "label": "Alonso Cano-Gregorio Marañón through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-112",
+      "target": "MAD-S-029",
+      "label": "Gregorio Marañón-Avenida de América through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-112",
+      "target": "MAD-S-112",
+      "label": "transfer in Gregorio Marañón from line 7 to line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-029",
+      "target": "MAD-S-060",
+      "label": "Avenida de América-Cartagena through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-029",
+      "target": "MAD-S-029",
+      "label": "transfer in Avenida de América from line 7 to line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-060",
+      "target": "MAD-S-186",
+      "label": "Cartagena-Parque de las Avenidas through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-186",
+      "target": "MAD-S-038",
+      "label": "Parque de las Avenidas-Barrio de la Concepción through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-038",
+      "target": "MAD-S-211",
+      "label": "Barrio de la Concepción-Pueblo Nuevo through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-211",
+      "target": "MAD-S-027",
+      "label": "Pueblo Nuevo-Ascao through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-027",
+      "target": "MAD-S-108",
+      "label": "Ascao-García Noblejas through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-108",
+      "target": "MAD-S-246",
+      "label": "García Noblejas-Simancas through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-246",
+      "target": "MAD-S-232",
+      "label": "Simancas-San Blas through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-232",
+      "target": "MAD-S-145",
+      "label": "San Blas-Las Musas through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-145",
+      "target": "MAD-S-098",
+      "label": "Las Musas-Estadio Metropolitano through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-098",
+      "target": "MAD-S-040",
+      "label": "Estadio Metropolitano-Barrio del Puerto through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-040",
+      "target": "MAD-S-079",
+      "label": "Barrio del Puerto-Coslada Central through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-079",
+      "target": "MAD-S-141",
+      "label": "Coslada Central-La Rambla through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-141",
+      "target": "MAD-S-236",
+      "label": "La Rambla-San Fernando through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-236",
+      "target": "MAD-S-127",
+      "label": "San Fernando-Jarama through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-127",
+      "target": "MAD-S-114",
+      "label": "Jarama-Henares through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-114",
+      "target": "MAD-S-120",
+      "label": "Henares-Hospital del Henares through line 7",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-175",
+      "target": "MAD-S-071",
+      "label": "Nuevos Ministerios-Colombia through line 8",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-175",
+      "target": "MAD-S-175",
+      "label": "transfer in Nuevos Ministerios from line 8 to line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-071",
+      "target": "MAD-S-195",
+      "label": "Colombia-Pinar del Rey through line 8",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-071",
+      "target": "MAD-S-071",
+      "label": "transfer in Colombia from line 8 to line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-195",
+      "target": "MAD-S-160",
+      "label": "Pinar del Rey-Mar de Cristal through line 8",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-160",
+      "target": "MAD-S-102",
+      "label": "Mar de Cristal-Feria de Madrid through line 8",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-102",
+      "target": "MAD-S-002",
+      "label": "Feria de Madrid-Aeropuerto T1 T2 T3 through line 8",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-002",
+      "target": "MAD-S-037",
+      "label": "Aeropuerto T1 T2 T3-Barajas through line 8",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-037",
+      "target": "MAD-S-003",
+      "label": "Barajas-Aeropuerto T4 through line 8",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-182",
+      "target": "MAD-S-167",
+      "label": "Paco de Lucía-Mirasierra through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-167",
+      "target": "MAD-S-115",
+      "label": "Mirasierra-Herrera Oria through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-115",
+      "target": "MAD-S-039",
+      "label": "Herrera Oria-Barrio del Pilar through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-039",
+      "target": "MAD-S-265",
+      "label": "Barrio del Pilar-Ventilla through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-265",
+      "target": "MAD-S-199",
+      "label": "Ventilla-Plaza de Castilla through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-199",
+      "target": "MAD-S-087",
+      "label": "Plaza de Castilla-Duque de Pastrana through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-199",
+      "target": "MAD-S-199",
+      "label": "transfer in Plaza de Castilla from line 9 to line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-087",
+      "target": "MAD-S-196",
+      "label": "Duque de Pastrana-Pío XII through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-196",
+      "target": "MAD-S-071",
+      "label": "Pío XII-Colombia through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-071",
+      "target": "MAD-S-075",
+      "label": "Colombia-Concha Espina through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-075",
+      "target": "MAD-S-080",
+      "label": "Concha Espina-Cruz del Rayo through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-080",
+      "target": "MAD-S-029",
+      "label": "Cruz del Rayo-Avenida de América through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-029",
+      "target": "MAD-S-176",
+      "label": "Avenida de América-Núñez de Balboa through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-176",
+      "target": "MAD-S-208",
+      "label": "Núñez de Balboa-Príncipe de Vergara through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-208",
+      "target": "MAD-S-123",
+      "label": "Príncipe de Vergara-Ibiza through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-123",
+      "target": "MAD-S-230",
+      "label": "Ibiza-Sainz de Baranda through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-230",
+      "target": "MAD-S-100",
+      "label": "Sainz de Baranda-Estrella through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-100",
+      "target": "MAD-S-273",
+      "label": "Estrella-Vinateros through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-273",
+      "target": "MAD-S-025",
+      "label": "Vinateros-Artilleros through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-025",
+      "target": "MAD-S-192",
+      "label": "Artilleros-Pavones through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-192",
+      "target": "MAD-S-260",
+      "label": "Pavones-Valdebernardo through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-260",
+      "target": "MAD-S-268",
+      "label": "Valdebernardo-Vicálvaro through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-268",
+      "target": "MAD-S-233",
+      "label": "Vicálvaro-San Cipriano through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-233",
+      "target": "MAD-S-213",
+      "label": "San Cipriano-Puerta de Arganda through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-213",
+      "target": "MAD-S-226",
+      "label": "Puerta de Arganda-Rivas Urbanizaciones through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-226",
+      "target": "MAD-S-225",
+      "label": "Rivas Urbanizaciones-Rivas Futura through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-225",
+      "target": "MAD-S-227",
+      "label": "Rivas Futura-Rivas Vaciamadrid through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-227",
+      "target": "MAD-S-140",
+      "label": "Rivas Vaciamadrid-La Poveda through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-140",
+      "target": "MAD-S-020",
+      "label": "La Poveda-Arganda del Rey through line 9",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-121",
+      "target": "MAD-S-223",
+      "label": "Hospital Infanta Sofía-Reyes Católicos through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-223",
+      "target": "MAD-S-042",
+      "label": "Reyes Católicos-Baunatal through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-042",
+      "target": "MAD-S-158",
+      "label": "Baunatal-Manuel de Falla through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-158",
+      "target": "MAD-S-162",
+      "label": "Manuel de Falla-Marqués de la Valdavia through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-162",
+      "target": "MAD-S-138",
+      "label": "Marqués de la Valdavia-La Moraleja through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-138",
+      "target": "MAD-S-136",
+      "label": "La Moraleja-La Granja through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-136",
+      "target": "MAD-S-228",
+      "label": "La Granja-Ronda de la Comunicación through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-228",
+      "target": "MAD-S-148",
+      "label": "Ronda de la Comunicación-Las Tablas through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-148",
+      "target": "MAD-S-169",
+      "label": "Las Tablas-Montecarmelo through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-148",
+      "target": "MAD-S-148",
+      "label": "transfer in Las Tablas from line 10 to line 14",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-169",
+      "target": "MAD-S-254",
+      "label": "Montecarmelo-Tres Olivos through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-254",
+      "target": "MAD-S-105",
+      "label": "Tres Olivos-Fuencarral through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-105",
+      "target": "MAD-S-043",
+      "label": "Fuencarral-Begoña through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-043",
+      "target": "MAD-S-063",
+      "label": "Begoña-Chamartín through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-063",
+      "target": "MAD-S-199",
+      "label": "Chamartín-Plaza de Castilla through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-199",
+      "target": "MAD-S-083",
+      "label": "Plaza de Castilla-Cuzco through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-083",
+      "target": "MAD-S-240",
+      "label": "Cuzco-Santiago Bernabéu through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-240",
+      "target": "MAD-S-175",
+      "label": "Santiago Bernabéu-Nuevos Ministerios through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-175",
+      "target": "MAD-S-112",
+      "label": "Nuevos Ministerios-Gregorio Marañón through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-112",
+      "target": "MAD-S-010",
+      "label": "Gregorio Marañón-Alonso Martínez through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-010",
+      "target": "MAD-S-255",
+      "label": "Alonso Martínez-Tribunal through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-255",
+      "target": "MAD-S-200",
+      "label": "Tribunal-Plaza de España through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-200",
+      "target": "MAD-S-209",
+      "label": "Plaza de España-Príncipe Pío through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-209",
+      "target": "MAD-S-143",
+      "label": "Príncipe Pío-Lago through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-209",
+      "target": "MAD-S-209",
+      "label": "transfer in Príncipe Pío from line 10 to line 13",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-143",
+      "target": "MAD-S-041",
+      "label": "Lago-Batán through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-041",
+      "target": "MAD-S-061",
+      "label": "Batán-Casa de Campo through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-061",
+      "target": "MAD-S-074",
+      "label": "Casa de Campo-Colonia Jardín through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-074",
+      "target": "MAD-S-034",
+      "label": "Colonia Jardín-Aviación Española through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-074",
+      "target": "MAD-S-074",
+      "label": "transfer in Colonia Jardín from line 10 to line 15",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-074",
+      "target": "MAD-S-074",
+      "label": "transfer in Colonia Jardín from line 10 to line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-034",
+      "target": "MAD-S-082",
+      "label": "Aviación Española-Cuatro Vientos through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-082",
+      "target": "MAD-S-128",
+      "label": "Cuatro Vientos-Joaquín Vilumbrales through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-128",
+      "target": "MAD-S-217",
+      "label": "Joaquín Vilumbrales-Puerta del Sur through line 10",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-217",
+      "target": "MAD-S-217",
+      "label": "transfer in Puerta del Sur from line 10 to line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-201",
+      "target": "MAD-S-000",
+      "label": "Plaza Elíptica-Abrantes through line 11",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-000",
+      "target": "MAD-S-185",
+      "label": "Abrantes-Pan Bendito through line 11",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-185",
+      "target": "MAD-S-237",
+      "label": "Pan Bendito-San Francisco through line 11",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-237",
+      "target": "MAD-S-058",
+      "label": "San Francisco-Carabanchel Alto through line 11",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-058",
+      "target": "MAD-S-139",
+      "label": "Carabanchel Alto-La Peseta through line 11",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-139",
+      "target": "MAD-S-134",
+      "label": "La Peseta-La Fortuna through line 11",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-217",
+      "target": "MAD-S-187",
+      "label": "Puerta del Sur-Parque de Lisboa through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-187",
+      "target": "MAD-S-005",
+      "label": "Parque de Lisboa-Alcorcón Central through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-005",
+      "target": "MAD-S-191",
+      "label": "Alcorcón Central-Parque Oeste through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-191",
+      "target": "MAD-S-256",
+      "label": "Parque Oeste-Universidad Rey Juan Carlos through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-256",
+      "target": "MAD-S-171",
+      "label": "Universidad Rey Juan Carlos-Móstoles Central through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-171",
+      "target": "MAD-S-204",
+      "label": "Móstoles Central-Pradillo through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-204",
+      "target": "MAD-S-119",
+      "label": "Pradillo-Hospital de Móstoles through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-119",
+      "target": "MAD-S-159",
+      "label": "Hospital de Móstoles-Manuela Malasaña through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-159",
+      "target": "MAD-S-153",
+      "label": "Manuela Malasaña-Loranca through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-153",
+      "target": "MAD-S-118",
+      "label": "Loranca-Hospital de Fuenlabrada through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-118",
+      "target": "MAD-S-190",
+      "label": "Hospital de Fuenlabrada-Parque Europa through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-190",
+      "target": "MAD-S-106",
+      "label": "Parque Europa-Fuenlabrada Central through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-106",
+      "target": "MAD-S-188",
+      "label": "Fuenlabrada Central-Parque de los Estados through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-188",
+      "target": "MAD-S-023",
+      "label": "Parque de los Estados-Arroyo Culebro through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-023",
+      "target": "MAD-S-078",
+      "label": "Arroyo Culebro-Conservatorio through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-078",
+      "target": "MAD-S-009",
+      "label": "Conservatorio-Alonso de Mendoza through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-009",
+      "target": "MAD-S-109",
+      "label": "Alonso de Mendoza-Getafe Central through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-109",
+      "target": "MAD-S-130",
+      "label": "Getafe Central-Juan de la Cierva through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-130",
+      "target": "MAD-S-092",
+      "label": "Juan de la Cierva-El Casar through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-092",
+      "target": "MAD-S-154",
+      "label": "El Casar-Los Espartales through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-154",
+      "target": "MAD-S-088",
+      "label": "Los Espartales-El Bercial through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-088",
+      "target": "MAD-S-091",
+      "label": "El Bercial-El Carrascal through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-091",
+      "target": "MAD-S-131",
+      "label": "El Carrascal-Julián Besteiro through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-131",
+      "target": "MAD-S-062",
+      "label": "Julián Besteiro-Casa del Reloj through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-062",
+      "target": "MAD-S-122",
+      "label": "Casa del Reloj-Hospital Severo Ochoa through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-122",
+      "target": "MAD-S-150",
+      "label": "Hospital Severo Ochoa-Leganés Central through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-150",
+      "target": "MAD-S-239",
+      "label": "Leganés Central-San Nicasio through line 12",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-179",
+      "target": "MAD-S-209",
+      "label": "Ópera-Príncipe Pío through line 13",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-194",
+      "target": "MAD-S-107",
+      "label": "Pinar de Chamartín-Fuente de la Mora through line 14",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-107",
+      "target": "MAD-S-274",
+      "label": "Fuente de la Mora-Virgen del Cortijo through line 14",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-274",
+      "target": "MAD-S-019",
+      "label": "Virgen del Cortijo-Antonio Saura through line 14",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-019",
+      "target": "MAD-S-016",
+      "label": "Antonio Saura-Álvarez de Villaamil through line 14",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-016",
+      "target": "MAD-S-047",
+      "label": "Álvarez de Villaamil-Blasco Ibáñez through line 14",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-047",
+      "target": "MAD-S-161",
+      "label": "Blasco Ibáñez-María Tudor through line 14",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-161",
+      "target": "MAD-S-183",
+      "label": "María Tudor-Palas del Rey through line 14",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-183",
+      "target": "MAD-S-148",
+      "label": "Palas del Rey-Las Tablas through line 14",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-074",
+      "target": "MAD-S-205",
+      "label": "Colonia Jardín-Prado de la Vega through line 15",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-074",
+      "target": "MAD-S-074",
+      "label": "transfer in Colonia Jardín from line 15 to line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-205",
+      "target": "MAD-S-073",
+      "label": "Prado de la Vega-Colonia de los Ángeles through line 15",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-073",
+      "target": "MAD-S-207",
+      "label": "Colonia de los Ángeles-Prado del Rey through line 15",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-207",
+      "target": "MAD-S-249",
+      "label": "Prado del Rey-Somosaguas Sur through line 15",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-249",
+      "target": "MAD-S-248",
+      "label": "Somosaguas Sur-Somosaguas Centro through line 15",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-248",
+      "target": "MAD-S-203",
+      "label": "Somosaguas Centro-Pozuelo Oeste through line 15",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-203",
+      "target": "MAD-S-044",
+      "label": "Pozuelo Oeste-Bélgica through line 15",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-044",
+      "target": "MAD-S-086",
+      "label": "Bélgica-Dos Castillas through line 15",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-086",
+      "target": "MAD-S-052",
+      "label": "Dos Castillas-Campus de Somosaguas through line 15",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-052",
+      "target": "MAD-S-030",
+      "label": "Campus de Somosaguas-Avenida de Europa through line 15",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-030",
+      "target": "MAD-S-045",
+      "label": "Avenida de Europa-Berna through line 15",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-045",
+      "target": "MAD-S-096",
+      "label": "Berna-Estación de Aravaca through line 15",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-074",
+      "target": "MAD-S-065",
+      "label": "Colonia Jardín-Ciudad de la Imagen through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-065",
+      "target": "MAD-S-129",
+      "label": "Ciudad de la Imagen-José Isbert through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-129",
+      "target": "MAD-S-067",
+      "label": "José Isbert-Ciudad del Cine through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-067",
+      "target": "MAD-S-070",
+      "label": "Ciudad del Cine-Cocheras through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-070",
+      "target": "MAD-S-221",
+      "label": "Cocheras-Retamares through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-221",
+      "target": "MAD-S-170",
+      "label": "Retamares-Montepríncipe through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-170",
+      "target": "MAD-S-266",
+      "label": "Montepríncipe-Ventorro del Cano through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-266",
+      "target": "MAD-S-206",
+      "label": "Ventorro del Cano-Prado del Espino through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-206",
+      "target": "MAD-S-056",
+      "label": "Prado del Espino-Cantabria through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-056",
+      "target": "MAD-S-103",
+      "label": "Cantabria-Ferial de Boadilla through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-103",
+      "target": "MAD-S-048",
+      "label": "Ferial de Boadilla-Boadilla Centro through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-048",
+      "target": "MAD-S-174",
+      "label": "Boadilla Centro-Nuevo Mundo through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-174",
+      "target": "MAD-S-245",
+      "label": "Nuevo Mundo-Siglo XXI through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-245",
+      "target": "MAD-S-125",
+      "label": "Siglo XXI-Infante Don Luís through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    },
+    {
+      "source": "MAD-S-125",
+      "target": "MAD-S-214",
+      "label": "Infante Don Luís-Puerta de Boadilla through line 16",
+      "size": 1,
+      "type": 0,
+      "info": ""
+    }
+  ]
+}
