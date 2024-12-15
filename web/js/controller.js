@@ -161,7 +161,9 @@ export class Controller {
     // Event handlers ----------------------------------------------------------
 
     onDataChange(data, focusedNodeId, dataSourcePath) {
-        this._add_history(dataSourcePath);
+        if (dataSourcePath !== "") {  // TODO: handle clusters' paths
+            this._add_history(dataSourcePath);
+        }
 
         this.view.onDataChange(data, dataSourcePath);
 
@@ -189,7 +191,7 @@ export class Controller {
             this._update_history(dataSourcePath.replace(this.datasourceRootPath, this.spiRootPath), currentPath);
         }
         else {  // TODO: handle the case when dataSourcePath is a relative path or an absolute path that does not start with this.spiRootPath
-            console.error(`The dataSourcePath ${dataSourcePath} is not a valid path`);
+            console.error(`The dataSourcePath "${dataSourcePath}" is not a valid path`);
         }
     }
 
