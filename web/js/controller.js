@@ -27,8 +27,8 @@ export class Controller {
     }
 
     init(spiRootPath, datasourceRootPath, datasourceInitialContent) {
-        this.spiRootPath = spiRootPath;
-        this.datasourceRootPath = datasourceRootPath;
+        this.spiRootPath = removeTrailingSlash(spiRootPath);
+        this.datasourceRootPath = removeTrailingSlash(datasourceRootPath);
         if (removeTrailingSlash(window.location.pathname) === spiRootPath) {
             this.model.setDataFromSource(datasourceInitialContent);
         }
@@ -175,9 +175,9 @@ export class Controller {
     }
 
     onUrlChange() {
-        const path = window.location.pathname.replace(/\/$/, '', '');  // remove trailing slash
+        const path = removeTrailingSlash(window.location.pathname);
         if (path.startsWith(this.spiRootPath)) {
-            const datasource = this.datasourceRootPath + path.replace(/\/$/, '', '');  // TODO: REVIEW!!!
+            const datasource = this.datasourceRootPath + path.replace(this.spiRootPath, '');
             this.model.setDataFromSource(datasource);
         }
     }
