@@ -17,7 +17,8 @@ export class Controller {
         this.view.setController(this);
         this.model.setController(this);
 
-        this.rootPath = null;
+        this.spiRootPath = null;
+        this.datasourceRootPath = null;
         this.focusedNodeId = null;
         this.preFocusedNodeId = null;
         this.focusedEdgeId = null;
@@ -25,10 +26,11 @@ export class Controller {
         this.history = [];
     }
 
-    init(rootPath, datasource) {
-        this.rootPath = rootPath;
-        if (removeTrailingSlash(window.location.pathname) === rootPath) {
-            this.model.setDataFromSource(datasource);
+    init(spiRootPath, datasourceRootPath, datasourceInitialContent) {
+        this.spiRootPath = spiRootPath;
+        this.datasourceRootPath = datasourceRootPath;
+        if (removeTrailingSlash(window.location.pathname) === spiRootPath) {
+            this.model.setDataFromSource(datasourceInitialContent);
         }
         else {
             this.onUrlChange();
@@ -171,9 +173,9 @@ export class Controller {
     }
 
     onUrlChange() {
-        const path = window.location.pathname.replace(/\/$/, '', '');
-        if (path.startsWith(this.rootPath)) {
-            const datasource = "/srv" + path.replace(/\/$/, '', '');  // TODO: REVIEW!!!
+        const path = window.location.pathname.replace(/\/$/, '', '');  // remove trailing slash
+        if (path.startsWith(this.spiRootPath)) {
+            const datasource = this.datasourceRootPath + path.replace(/\/$/, '', '');  // TODO: REVIEW!!!
             this.model.setDataFromSource(datasource);
         }
     }
@@ -181,18 +183,18 @@ export class Controller {
     // Internal methods --------------------------------------------------------
 
     _add_history(dataSourcePath) {
-        // modify the window history considering `this.roothPath` and `dataSourcePath` to reflect the current state. `dataSourcePath` can be a relative path or an absolute path, and it usually starts with the value of `this.rootPath`.
-        if (dataSourcePath.startsWith("/srv" + this.rootPath)) {
+        // modify the window history considering `this.roothPath` and `dataSourcePath` to reflect the current state. `dataSourcePath` can be a relative path or an absolute path, and it usually starts with the value of `this.spiRootPath`.
+        if (dataSourcePath.startsWith(this.datasourceRootPath)) {
             const currentPath = window.location.pathname;
-            this._update_history(dataSourcePath.replace("/srv", ""), currentPath);
+            this._update_history(dataSourcePath.replace(this.datasourceRootPath, this.spiRootPath), currentPath);
         }
-        else {  // TODO: handle the case when dataSourcePath is a relative path or an absolute path that does not start with this.rootPath
+        else {  // TODO: handle the case when dataSourcePath is a relative path or an absolute path that does not start with this.spiRootPath
             console.error(`The dataSourcePath ${dataSourcePath} is not a valid path`);
         }
     }
 
     _update_history(dataSourcePath, current_path) {
-        if (current_path === this.rootPath) { // remove current history state and replace current path with the new one
+        if (current_path === this.spiRootPath) { // remove current history state and replace current path with the new one
             window.history.replaceState({}, '', dataSourcePath);
         }
         else {

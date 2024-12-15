@@ -8,6 +8,6 @@ const view = new View();
 const controller = new Controller(model, view);
 
 
-export function pollygraph(rootPath, initialDatasource) {  
-    controller.init(rootPath, initialDatasource);
+export function pollygraph(spiRootPath, datasourceRootPath, datasourceInitialContent) {  
+    controller.init(spiRootPath, datasourceRootPath, datasourceInitialContent);
 }
