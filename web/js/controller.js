@@ -1,9 +1,10 @@
 import { Model } from './model.js';
 import { View } from './view.js';
+import { Router } from './router.js';
 
 
 export class Controller {
-    constructor(model, view) {
+    constructor(model, view, router=null) {
         if (!model || model.constructor !== Model) {
             throw new Error('Model is required');
         }
@@ -14,11 +15,16 @@ export class Controller {
         }
         this.view = view;
 
+        if (router && router.constructor !== Router) {
+            throw new Error('Provided `router` is not a proper Router instance');
+        }
+        this.router = router;
+
         this.view.setController(this);
         this.model.setController(this);
 
-        this.spiRootPath = null;
-        this.datasourceRootPath = null;
+        // this.spiRootPath = null;
+        // this.datasourceRootPath = null;
         this.focusedNodeId = null;
         this.preFocusedNodeId = null;
         this.focusedEdgeId = null;
@@ -27,17 +33,10 @@ export class Controller {
     }
 
     init(spiRootPath, datasourceRootPath, datasourceInitialContent) {
-        this.spiRootPath = removeTrailingSlash(spiRootPath);
-        this.datasourceRootPath = removeTrailingSlash(datasourceRootPath);
-        if (removeTrailingSlash(window.location.pathname) === spiRootPath) {
-            this.model.setDataFromSource(datasourceInitialContent);
+        if (this.router) {
+            this.router.init(this, spiRootPath, datasourceRootPath, datasourceInitialContent);
         }
-        else {
-            this.onUrlChange();
-        }
-
-        this.onUrlChange = this.onUrlChange.bind(this); // Bind the method to the class instance to avoid `this` confusion
-        window.addEventListener('popstate', this.onUrlChange)
+        this.model.setDataFromSource(datasourceInitialContent);
     }
 
     // Focus methods -----------------------------------------------------------
@@ -161,8 +160,8 @@ export class Controller {
     // Event handlers ----------------------------------------------------------
 
     onDataChange(data, focusedNodeId, dataSourcePath) {
-        if (dataSourcePath !== "") {  // TODO: handle clusters' paths
-            this._add_history(dataSourcePath);
+        if (this.router && dataSourcePath !== "") {  // TODO: handle clusters' paths
+            this.router._add_history(dataSourcePath);
         }
 
         this.view.onDataChange(data, dataSourcePath);
@@ -173,36 +172,8 @@ export class Controller {
 
         this.view.findAndFocusElement(this.focusedNodeId);
     }
-
-    onUrlChange() {
-        const path = removeTrailingSlash(window.location.pathname);
-        if (path.startsWith(this.spiRootPath)) {
-            const datasource = this.datasourceRootPath + path.replace(this.spiRootPath, '');
-            this.model.setDataFromSource(datasource);
-        }
-    }
     
     // Internal methods --------------------------------------------------------
-
-    _add_history(dataSourcePath) {
-        // modify the window history considering `this.roothPath` and `dataSourcePath` to reflect the current state. `dataSourcePath` can be a relative path or an absolute path, and it usually starts with the value of `this.spiRootPath`.
-        if (dataSourcePath.startsWith(this.datasourceRootPath)) {
-            const currentPath = window.location.pathname;
-            this._update_history(dataSourcePath.replace(this.datasourceRootPath, this.spiRootPath), currentPath);
-        }
-        else {  // TODO: handle the case when dataSourcePath is a relative path or an absolute path that does not start with this.spiRootPath
-            console.error(`The dataSourcePath "${dataSourcePath}" is not a valid path`);
-        }
-    }
-
-    _update_history(dataSourcePath, current_path) {
-        if (current_path === this.spiRootPath) { // remove current history state and replace current path with the new one
-            window.history.replaceState({}, '', dataSourcePath);
-        }
-        else {
-            window.history.pushState({}, '', dataSourcePath);
-        }
-    }
 
     _focusOnOtherSideToPrefocusedNode() {
         // this.traversingNearby = false;
