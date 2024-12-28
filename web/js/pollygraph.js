@@ -6,10 +6,10 @@ import { Router } from './router.js';
 
 const model = new Model();
 const view = new View();
-const router = new Router();
-const controller = new Controller(model, view, router);
+const controller = new Controller(model, view);
 
 
-export function pollygraph(spiRootPath, datasourceRootPath, datasourceInitialContent) {  
-    controller.init(spiRootPath, datasourceRootPath, datasourceInitialContent);
+export function pollygraph(datasourceInitialContent, spiRootPath="", datasourceRootPath="") {  
+    const router = spiRootPath != "" ? new Router(spiRootPath, datasourceRootPath) : null;
+    controller.init(datasourceInitialContent, router);
 }

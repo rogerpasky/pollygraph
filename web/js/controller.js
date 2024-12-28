@@ -4,7 +4,7 @@ import { Router } from './router.js';
 
 
 export class Controller {
-    constructor(model, view, router=null) {
+    constructor(model, view) {
         if (!model || model.constructor !== Model) {
             throw new Error('Model is required');
         }
@@ -15,16 +15,10 @@ export class Controller {
         }
         this.view = view;
 
-        if (router && router.constructor !== Router) {
-            throw new Error('Provided `router` is not a proper Router instance');
-        }
-        this.router = router;
-
         this.view.setController(this);
         this.model.setController(this);
 
-        // this.spiRootPath = null;
-        // this.datasourceRootPath = null;
+        this.router = null;
         this.focusedNodeId = null;
         this.preFocusedNodeId = null;
         this.focusedEdgeId = null;
@@ -32,10 +26,16 @@ export class Controller {
         this.history = [];
     }
 
-    init(spiRootPath, datasourceRootPath, datasourceInitialContent) {
-        if (this.router) {
-            this.router.init(this, spiRootPath, datasourceRootPath, datasourceInitialContent);
+    init(datasourceInitialContent, router=null) {
+        if (router && router.constructor !== Router) {
+            throw new Error('Provided `router` is not a proper Router instance');
         }
+        this.router = router;
+
+        if (this.router) {
+            this.router.init(this);
+        }
+
         this.model.setDataFromSource(datasourceInitialContent);
     }
 
@@ -160,6 +160,8 @@ export class Controller {
     // Event handlers ----------------------------------------------------------
 
     onDataChange(data, focusedNodeId, dataSourcePath) {
+        console.log("Controller: onDataChange");
+
         if (this.router && dataSourcePath !== "") {  // TODO: handle clusters' paths
             this.router._add_history(dataSourcePath);
         }
@@ -204,9 +206,4 @@ export class Controller {
         this.view.displayPreFocusOnConnectedEdgesToNodeId(this.preFocusedNodeId);
         this.focusedNodeId = null;
     }
-}
-
-
-function removeTrailingSlash(path) {
-    return path.replace(/\/$/, '');
 }
