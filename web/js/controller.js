@@ -33,7 +33,7 @@ export class Controller {
         this.router = router;
 
         if (this.router) {
-            this.router.init(this);
+            this.router.init(this.model.setDataFromSource.bind(this.model));
         }
 
         this.model.setDataFromSource(datasourceInitialContent);
@@ -53,7 +53,7 @@ export class Controller {
 
         this.view.displayFocusOnNodeId(this.focusedNodeId);
         this.view.displayElementInfo(this.focusedNodeId);
-        console.log("Focused Node: " + this.focusedNodeId);
+        console.log("Focused Node: " + this.focusedNodeId + " -----------------");
     }
 
     unFocusNode(nodeId) {
@@ -163,7 +163,7 @@ export class Controller {
         console.log("Controller: onDataChange");
 
         if (this.router && dataSourcePath !== "") {  // TODO: handle clusters' paths
-            this.router._add_history(dataSourcePath);
+            this.router.setNewDataOnUrl(dataSourcePath);
         }
 
         this.view.onDataChange(data, dataSourcePath);

@@ -29,5 +29,5 @@
     ], 
     "label": "Help 2", 
     "info":"<H1>Help Graph 2</H1>This is the help file.", 
-    "outer": "/help/help-contents/help-content-1.json"
+    "outer": "/help/help-contents/help-content-1"
 }

@@ -1,5 +1,3 @@
-import { Controller } from './controller.js';
-
 // Following class is responsible for routing the Single page application in order to do both
 // client side and server side routing, i.e. to navigate between different pages of the application
 // reflecting the right path in the browser's address bar and to handle the back and forward buttons.
@@ -8,18 +6,16 @@ export class Router {
     constructor(spiRootPath, datasourceRootPath) {
         this.spiRootPath = removeTrailingSlash(spiRootPath);
         this.datasourceRootPath = removeTrailingSlash(datasourceRootPath);
-        this.controller = null;
+        this.setDataFromSource = null;
 
         console.log("Router constructor");  // TODO: remove this line
     }
 
-    init(controller) {
+    init(setDataFromSource) {
         console.log("Router init begins");  // TODO: remove this line
 
-        if (!controller || controller.constructor !== Controller) {
-            throw new Error('Controller is required');
-        }
-        this.controller = controller;
+        this.setDataFromSource = setDataFromSource
+        this._listenToBackAndForward();
 
 
         // if (removeTrailingSlash(window.location.pathname) === spiRootPath) {
@@ -28,9 +24,6 @@ export class Router {
         // else {
         //     this.route();
         // }
-
-        this.doRoute = this.route.bind(this);
-        window.addEventListener('popstate', this.doRoute)
 
         console.log("Router init ends");  // TODO: remove this line
     }
@@ -45,36 +38,13 @@ export class Router {
         if (path.startsWith(this.spiRootPath)) {
             const datasource = this.datasourceRootPath + path.replace(this.spiRootPath, '');
             console.log(`Router route:  ${path} => ${datasource}`);  // TODO: remove this line
-            this.controller.model.setDataFromSource(datasource);
+            this.setDataFromSource(datasource);
         }
 
         console.log("Router route ends");  // TODO: remove this line
     }
 
-    // This method is responsible for handling the back and forward buttons
-    // by listening to the popstate event.
-    // listen() {
-    //     window.addEventListener("popstate", () => {
-    //         this.route();
-    //     });
-    // }
-
-    // This method is responsible for navigating to a new path
-    // by pushing a new state to the history object
-    // onUrlChange(path) {
-    //     window.history.pushState(null, "", path);
-    //     this.route();
-    // }
-
-    // onUrlChange() {
-    //     const path = removeTrailingSlash(window.location.pathname);
-    //     if (path.startsWith(this.spiRootPath)) {
-    //         const datasource = this.datasourceRootPath + path.replace(this.spiRootPath, '');
-    //         this.controller.model.setDataFromSource(datasource);
-    //     }
-    // }
-
-    _add_history(dataSourcePath) {
+    setNewDataOnUrl(dataSourcePath) {
         console.log("Router _add_history begins");  // TODO: remove this line
 
         // modify the window history considering `this.roothPath` and `dataSourcePath` to reflect the current state. `dataSourcePath` can be a relative path or an absolute path, and it usually starts with the value of `this.spiRootPath`.
@@ -88,6 +58,17 @@ export class Router {
 
         console.log("Router _add_history ends");  // TODO: remove this line
     }
+
+    _listenToBackAndForward() {
+        window.addEventListener('popstate', this.route.bind(this))
+    }
+
+    // This method is responsible for navigating to a new path
+    // by pushing a new state to the history object
+    // onUrlChange(path) {
+    //     window.history.pushState(null, "", path);
+    //     this.route();
+    // }
 
     _update_history(dataSourcePath, current_path) {
         console.log("Router _update_history begins");  // TODO: remove this line
