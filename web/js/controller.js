@@ -33,10 +33,12 @@ export class Controller {
         this.router = router;
 
         if (this.router) {
-            this.router.init(this.model.setDataFromSource.bind(this.model));
+            const onUrlChangeCallback = this.model.setDataFromSource.bind(this.model)
+            this.router.init(onUrlChangeCallback, datasourceInitialContent);
         }
-
-        this.model.setDataFromSource(datasourceInitialContent);
+        else {
+            this.model.setDataFromSource(datasourceInitialContent);
+        }
     }
 
     // Focus methods -----------------------------------------------------------
@@ -163,7 +165,7 @@ export class Controller {
         console.log("Controller: onDataChange");
 
         if (this.router && dataSourcePath !== "") {  // TODO: handle clusters' paths
-            this.router.setNewDataOnUrl(dataSourcePath);
+            this.router.route(dataSourcePath);
         }
 
         this.view.onDataChange(data, dataSourcePath);
