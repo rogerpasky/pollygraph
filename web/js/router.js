@@ -3,7 +3,6 @@ export class Router {
         this.spiRootPath = _removeTrailingSlash(spiRootPath);
         this.datasourceRootPath = _removeTrailingSlash(datasourceRootPath);
         this.onUrlChangeCallback = null;
-        this.reactingToHistoryChange = false;
     }
 
     init(onUrlChangeCallback, datasourceInitialContent) {
@@ -23,18 +22,16 @@ export class Router {
         const changedPath = event.state ? event.state.path : _getCurrentCleanUrl();
         if (changedPath.startsWith(this.spiRootPath)) {
             const datasource = this.datasourceRootPath + changedPath.replace(this.spiRootPath, '');
-            this.reactingToHistoryChange = true;
-            this.onUrlChangeCallback(datasource);
+            this.onUrlChangeCallback(datasource, true);
         }
     }
 
-    route(dataSourcePath) {
+    route(dataSourcePath, fromRouter=false) {
         if (!dataSourcePath.startsWith(this.datasourceRootPath)) {  // TODO: handle the case when dataSourcePath is a relative path or an absolute path that does not start with this.spiRootPath
             console.error(`The dataSourcePath "${dataSourcePath}" is not a valid path`);
         }
 
-        if (this.reactingToHistoryChange) {
-            this.reactingToHistoryChange = false;
+        if (fromRouter) {
             return;
         }
 
@@ -59,6 +56,11 @@ export class Router {
 
 function _getCurrentCleanUrl() {
     return _removeTrailingSlash(window.location.pathname);
+}
+
+
+function _getCurrentCleanHash() {
+    return window.location.hash.replace(/^#/, '');
 }
 
 

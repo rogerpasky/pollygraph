@@ -161,11 +161,11 @@ export class Controller {
 
     // Event handlers ----------------------------------------------------------
 
-    onDataChange(data, focusedNodeId, dataSourcePath) {
+    onDataChange(data, focusedNodeId, dataSourcePath, fromRouter=false) {
         console.log("Controller: onDataChange");
 
         if (this.router && dataSourcePath !== "") {  // TODO: handle clusters' paths
-            this.router.route(dataSourcePath);
+            this.router.route(dataSourcePath, fromRouter);
         }
 
         this.view.onDataChange(data, dataSourcePath);

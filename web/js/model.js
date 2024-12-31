@@ -16,20 +16,6 @@ export class Model {
 
     // Public methods ----------------------------------------------------------
 
-    _setNewData(data, path="") {
-        console.log('New data:', data);  // TODO: remove
-        this._data = data;
-        this._notifyDataChange(path);
-    }
-
-    _notifyDataChange(path="") {
-        if (! this._controller || ! this._data) {
-            return;
-        }
-
-        this._controller.onDataChange(this._data, this._data.nodes[0].id, path);  // TODO: initial focused could be a graph field
-    }
-
     async setDataFromOuterData() {
         if (this._data.outer) {
             this.setDataFromSource(this._data.outer);
@@ -43,7 +29,7 @@ export class Model {
         }
     }
 
-    async setDataFromSource(dataSource) {
+    async setDataFromSource(dataSource, fromRouter=false) {
         if (! dataSource) {
             throw new Error('Data source is required');
         }
@@ -55,7 +41,7 @@ export class Model {
             if (dataSource.startsWith('http') || dataSource.startsWith('./') || dataSource.startsWith('/')) {
                 fetch(dataSource)
                 .then(response => response.json().then(data => ({ data, path: new URL(response.url).pathname })))
-                .then(({ data, path }) => this._setNewData(this._normalizeData(data), path))
+                .then(({ data, path }) => this._setNewData(this._normalizeData(data), path, fromRouter))
                 .catch(error => console.error(`Error fetching data from "${dataSource}":`, error));
                 return;
             }
@@ -137,6 +123,20 @@ export class Model {
     }
 
     // Internal methods --------------------------------------------------------
+
+    _setNewData(data, path="", fromRouter=false) {
+        console.log('New data:', data);  // TODO: remove
+        this._data = data;
+        this._notifyDataChange(path, fromRouter);
+    }
+
+    _notifyDataChange(path="", fromRouter=false) {
+        if (! this._controller || ! this._data) {
+            return;
+        }
+
+        this._controller.onDataChange(this._data, this._data.nodes[0].id, path, fromRouter);  // TODO: initial focused could be a graph field
+    }
 
     _normalizeData(rawData) {
         rawData.nodes = rawData.nodes.map(node => _getNewNode(node.id, node.label, node.type, node.size, node.level, node.info, node.inner));
