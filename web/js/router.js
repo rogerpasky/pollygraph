@@ -1,8 +1,8 @@
 export class Router {
-    constructor(spiRootPath, datasourceRootPath, getTitle=_defaultGetTitle) {
+    constructor(spiRootPath, datasourceRootPath, getTitleFunction=_defaultGetTitleFunction) {
         this.spiRootPath = _removeTrailingSlash(spiRootPath);
         this.datasourceRootPath = _removeTrailingSlash(datasourceRootPath);
-        this.getTitle = getTitle;
+        this.getTitle = getTitleFunction;
         this.onUrlChangeCallback = null;
     }
 
@@ -10,57 +10,55 @@ export class Router {
         this.onUrlChangeCallback = onUrlChangeCallback
         this._listenToBackAndForward();
 
-        const currentPath = _getCurrentCleanUrl();
+        const currentPath = _getCurrentCleanPath();
         if (currentPath === this.spiRootPath) {
             this.onUrlChangeCallback(datasourceInitialContent);
         }
         else {
-            this.onHistoryChange({ state: { path: currentPath } });
+            this._onHistoryChange();
         }
     }
 
-    onHistoryChange(event) {
-        // const changedPath = event.state ? event.state.path : _getCurrentCleanUrl();
-
-        // if (! changedPath.startsWith(this.spiRootPath)) {
-        //     return;
-        // }
-        const changedPath = _getCurrentCleanUrl();
-
-        const datasource = this.datasourceRootPath + changedPath.replace(this.spiRootPath, '');
-        const focusedNodeId = _getCurrentCleanHash();
-        this.onUrlChangeCallback(datasource, focusedNodeId, true);  // TODO: handle the case when datasource didn't chage but focusedNodeId did
-    }
-
-    route(dataSourcePath, focusedNodeId, fromRouter=false) {
-        if (!dataSourcePath.startsWith(this.datasourceRootPath)) {  // TODO: handle the case when dataSourcePath is a relative path or an absolute path that does not start with this.spiRootPath
-            console.error(`The dataSourcePath "${dataSourcePath}" is not a valid path`);
-        }
-
+    route(dataSourcePath, focusedElementId, fromRouter=false) {
         if (fromRouter) {
             return;
         }
 
-        const currentPath = _getCurrentCleanUrl();
+        if (! dataSourcePath.startsWith(this.datasourceRootPath) || dataSourcePath.startsWith('./')) {
+            throw new Error(`The dataSourcePath "${dataSourcePath}" is not a valid path`);
+        }
+
+        const currentPath = _getCurrentCleanPath();
         const currentRoute = `${currentPath}#${_getCurrentCleanHash()}`;
 
         const newPath = dataSourcePath.replace(this.datasourceRootPath, this.spiRootPath)
-        const newRoute = newPath + (focusedNodeId ? `#${focusedNodeId}` : '');
+        const newRoute = newPath + (focusedElementId ? `#${focusedElementId}` : '');
                 
         if (currentPath !== this.spiRootPath && currentRoute !== newRoute) {
-            window.history.pushState({ path: currentRoute }, '', currentRoute);
+            window.history.pushState({}, '', currentRoute);
         }
-        window.history.replaceState({ path: newRoute }, '', newRoute);
-        document.title = this.getTitle(newPath, focusedNodeId);
+        window.history.replaceState({}, '', newRoute);
+        document.title = this.getTitle(newPath, focusedElementId);
     }
-                
+
     _listenToBackAndForward() {
-        window.addEventListener('popstate', this.onHistoryChange.bind(this));
+        window.addEventListener('popstate', this._onHistoryChange.bind(this));
+    }
+
+    _onHistoryChange() {
+        const changedPath = _getCurrentCleanPath();
+        if (! changedPath.startsWith(this.spiRootPath)) {
+            return;
+        }
+
+        const datasourcePath = this.datasourceRootPath + changedPath.replace(this.spiRootPath, '');
+        const focusedElementId = _getCurrentCleanHash();
+        this.onUrlChangeCallback(datasourcePath, focusedElementId, true);
     }
 }
 
 
-function _getCurrentCleanUrl() {
+function _getCurrentCleanPath() {
     return _removeTrailingSlash(window.location.pathname);
 }
 
@@ -74,7 +72,8 @@ function _removeTrailingSlash(path) {
     return path.replace(/\/$/, '');
 }
 
-function _defaultGetTitle(path, hash) {
+
+function _defaultGetTitleFunction(path, hash) {
     const parts = path.split('/').filter(part => part.length > 0);
     return `${parts[parts.length - 1]} - ${hash}`;
 }
