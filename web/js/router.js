@@ -1,18 +1,18 @@
 export class Router {
     constructor(spiRootPath, datasourceRootPath, getTitleFunction=_defaultGetTitleFunction) {
-        this.spiRootPath = _removeTrailingSlash(spiRootPath);
-        this.datasourceRootPath = _removeTrailingSlash(datasourceRootPath);
-        this.getTitle = getTitleFunction;
-        this.onUrlChangeCallback = null;
+        this._spiRootPath = _removeTrailingSlash(spiRootPath);
+        this._datasourceRootPath = _removeTrailingSlash(datasourceRootPath);
+        this._getTitle = getTitleFunction;
+        this._onUrlChangeCallback = null;
     }
 
     init(onUrlChangeCallback, datasourceInitialContent) {
-        this.onUrlChangeCallback = onUrlChangeCallback
+        this._onUrlChangeCallback = onUrlChangeCallback
         this._listenToBackAndForward();
 
         const currentPath = _getCurrentCleanPath();
-        if (currentPath === this.spiRootPath) {
-            this.onUrlChangeCallback(datasourceInitialContent);
+        if (currentPath === this._spiRootPath) {
+            this._onUrlChangeCallback(datasourceInitialContent);
         }
         else {
             this._onHistoryChange();
@@ -24,21 +24,21 @@ export class Router {
             return;
         }
 
-        if (! dataSourcePath.startsWith(this.datasourceRootPath) || dataSourcePath.startsWith('./')) {
+        if (! dataSourcePath.startsWith(this._datasourceRootPath) || dataSourcePath.startsWith('./')) {
             throw new Error(`The dataSourcePath "${dataSourcePath}" is not a valid path`);
         }
 
         const currentPath = _getCurrentCleanPath();
-        const currentRoute = `${currentPath}#${_getCurrentCleanHash()}`;
+        const currentRoute = currentPath + window.location.hash;
 
-        const newPath = dataSourcePath.replace(this.datasourceRootPath, this.spiRootPath)
+        const newPath = dataSourcePath.replace(this._datasourceRootPath, this._spiRootPath)
         const newRoute = newPath + (focusedElementId ? `#${focusedElementId}` : '');
                 
-        if (currentPath !== this.spiRootPath && currentRoute !== newRoute) {
+        if (currentPath !== this._spiRootPath && currentRoute !== newRoute) {
             window.history.pushState({}, '', currentRoute);
         }
         window.history.replaceState({}, '', newRoute);
-        document.title = this.getTitle(newPath, focusedElementId);
+        document.title = this._getTitle(newPath, focusedElementId);
     }
 
     _listenToBackAndForward() {
@@ -47,13 +47,13 @@ export class Router {
 
     _onHistoryChange() {
         const changedPath = _getCurrentCleanPath();
-        if (! changedPath.startsWith(this.spiRootPath)) {
+        if (! changedPath.startsWith(this._spiRootPath)) {
             return;
         }
 
-        const datasourcePath = this.datasourceRootPath + changedPath.replace(this.spiRootPath, '');
+        const datasourcePath = this._datasourceRootPath + changedPath.replace(this._spiRootPath, '');
         const focusedElementId = _getCurrentCleanHash();
-        this.onUrlChangeCallback(datasourcePath, focusedElementId, true);
+        this._onUrlChangeCallback(datasourcePath, focusedElementId, true);
     }
 }
 
