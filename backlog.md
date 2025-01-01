@@ -4,7 +4,6 @@
 ## TO-DO
 
 * prompt "back to" in first edge title to differentiate to others when needed
-* use `#` values as focus indicators
 * better content on cluster's info
 * fix default functions on View constructor
 * Legend and legend accesibility (including each node)
@@ -21,3 +20,4 @@
 
 * sort clusters by size
 * use window.history to manage navigation details and allow precise bookmarks
+* use `#` values as focus indicators
