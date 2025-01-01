@@ -20,11 +20,12 @@ export class Router {
     }
 
     onHistoryChange(event) {
-        const changedPath = event.state ? event.state.path : _getCurrentCleanUrl();
+        // const changedPath = event.state ? event.state.path : _getCurrentCleanUrl();
 
-        if (! changedPath.startsWith(this.spiRootPath)) {
-            return;
-        }
+        // if (! changedPath.startsWith(this.spiRootPath)) {
+        //     return;
+        // }
+        const changedPath = _getCurrentCleanUrl();
 
         const datasource = this.datasourceRootPath + changedPath.replace(this.spiRootPath, '');
         const focusedNodeId = _getCurrentCleanHash();

@@ -98,7 +98,7 @@ export class Controller {
 
     setDataFromSource(dataSourcePath, focusedNodeId="", fromRouter=false) {
         if (this.currentDataSource === dataSourcePath) {
-            this.onDataChange(data, dataSourcePath, focusedNodeId, fromRouter)
+            this.onDataChange(null, dataSourcePath, focusedNodeId, fromRouter)
         }
         else {
             this.model.setDataFromSource(dataSourcePath, focusedNodeId, fromRouter);
@@ -185,7 +185,9 @@ export class Controller {
         //     this.router.route(dataSourcePath, focusedNodeId, fromRouter);
         // }
 
-        this.view.onDataChange(data, dataSourcePath);
+        if (data) {
+            this.view.onDataChange(data, dataSourcePath);
+        }
 
         this.preFocusedNodeId = this.focusedNodeId = focusedNodeId;
         this.focusedEdgeId = null;
