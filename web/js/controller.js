@@ -23,6 +23,7 @@ export class Controller {
         this.preFocusedNodeId = null;
         this.focusedEdgeId = null;
         this.traversingNearby = false;
+        this.currentDataSource = null;
         this.history = [];
     }
 
@@ -33,7 +34,7 @@ export class Controller {
         this.router = router;
 
         if (this.router) {
-            const onUrlChangeCallback = this.model.setDataFromSource.bind(this.model)
+            const onUrlChangeCallback = this.setDataFromSource.bind(this)
             this.router.init(onUrlChangeCallback, datasourceInitialContent);
         }
         else {
@@ -55,6 +56,11 @@ export class Controller {
 
         this.view.displayFocusOnNodeId(this.focusedNodeId);
         this.view.displayElementInfo(this.focusedNodeId);
+
+        if (this.router && this.currentDataSource !== "") {  // TODO: handle clusters' paths
+            this.router.route(this.currentDataSource, this.focusedNodeId);
+        }
+    
         console.log("Focused Node: " + this.focusedNodeId + " -----------------");
     }
 
@@ -89,6 +95,15 @@ export class Controller {
     }
 
     // Actions -----------------------------------------------------------------
+
+    setDataFromSource(dataSourcePath, focusedNodeId="", fromRouter=false) {
+        if (this.currentDataSource === dataSourcePath) {
+            this.onDataChange(data, dataSourcePath, focusedNodeId, fromRouter)
+        }
+        else {
+            this.model.setDataFromSource(dataSourcePath, focusedNodeId, fromRouter);
+        }
+    }
 
     focusForward() {
         if (this.focusedEdgeId) {
@@ -161,12 +176,14 @@ export class Controller {
 
     // Event handlers ----------------------------------------------------------
 
-    onDataChange(data, focusedNodeId, dataSourcePath, fromRouter=false) {
+    onDataChange(data, dataSourcePath, focusedNodeId, fromRouter=false) {
         console.log("Controller: onDataChange");
 
-        if (this.router && dataSourcePath !== "") {  // TODO: handle clusters' paths
-            this.router.route(dataSourcePath, fromRouter);
-        }
+        this.currentDataSource = dataSourcePath;
+
+        // if (this.router && dataSourcePath !== "") {  // TODO: handle clusters' paths
+        //     this.router.route(dataSourcePath, focusedNodeId, fromRouter);
+        // }
 
         this.view.onDataChange(data, dataSourcePath);
 

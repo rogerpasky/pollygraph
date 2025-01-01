@@ -29,7 +29,7 @@ export class Model {
         }
     }
 
-    async setDataFromSource(dataSource, fromRouter=false) {
+    async setDataFromSource(dataSource, focusedNode="", fromRouter=false) {
         if (! dataSource) {
             throw new Error('Data source is required');
         }
@@ -41,7 +41,7 @@ export class Model {
             if (dataSource.startsWith('http') || dataSource.startsWith('./') || dataSource.startsWith('/')) {
                 fetch(dataSource)
                 .then(response => response.json().then(data => ({ data, path: new URL(response.url).pathname })))
-                .then(({ data, path }) => this._setNewData(this._normalizeData(data), path, fromRouter))
+                .then(({ data, path }) => this._setNewData(this._normalizeData(data), path, focusedNode, fromRouter))
                 .catch(error => console.error(`Error fetching data from "${dataSource}":`, error));
                 return;
             }
@@ -124,18 +124,22 @@ export class Model {
 
     // Internal methods --------------------------------------------------------
 
-    _setNewData(data, path="", fromRouter=false) {
+    _setNewData(data, path="", focusedNode="", fromRouter=false) {
         console.log('New data:', data);  // TODO: remove
         this._data = data;
-        this._notifyDataChange(path, fromRouter);
+        this._notifyDataChange(path, focusedNode, fromRouter);
     }
 
-    _notifyDataChange(path="", fromRouter=false) {
+    _notifyDataChange(path="", focusedNode="", fromRouter=false) {
         if (! this._controller || ! this._data) {
             return;
         }
 
-        this._controller.onDataChange(this._data, this._data.nodes[0].id, path, fromRouter);  // TODO: initial focused could be a graph field
+        if (focusedNode === "") {
+            focusedNode = this._data.nodes[0].id;
+        }
+
+        this._controller.onDataChange(this._data, path, focusedNode, fromRouter);  // TODO: initial focused could be a graph field
     }
 
     _normalizeData(rawData) {

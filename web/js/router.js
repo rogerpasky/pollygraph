@@ -1,7 +1,8 @@
 export class Router {
-    constructor(spiRootPath, datasourceRootPath) {
+    constructor(spiRootPath, datasourceRootPath, getTitle=_defaultGetTitle) {
         this.spiRootPath = _removeTrailingSlash(spiRootPath);
         this.datasourceRootPath = _removeTrailingSlash(datasourceRootPath);
+        this.getTitle = getTitle;
         this.onUrlChangeCallback = null;
     }
 
@@ -20,13 +21,17 @@ export class Router {
 
     onHistoryChange(event) {
         const changedPath = event.state ? event.state.path : _getCurrentCleanUrl();
-        if (changedPath.startsWith(this.spiRootPath)) {
-            const datasource = this.datasourceRootPath + changedPath.replace(this.spiRootPath, '');
-            this.onUrlChangeCallback(datasource, true);
+
+        if (! changedPath.startsWith(this.spiRootPath)) {
+            return;
         }
+
+        const datasource = this.datasourceRootPath + changedPath.replace(this.spiRootPath, '');
+        const focusedNodeId = _getCurrentCleanHash();
+        this.onUrlChangeCallback(datasource, focusedNodeId, true);  // TODO: handle the case when datasource didn't chage but focusedNodeId did
     }
 
-    route(dataSourcePath, fromRouter=false) {
+    route(dataSourcePath, focusedNodeId, fromRouter=false) {
         if (!dataSourcePath.startsWith(this.datasourceRootPath)) {  // TODO: handle the case when dataSourcePath is a relative path or an absolute path that does not start with this.spiRootPath
             console.error(`The dataSourcePath "${dataSourcePath}" is not a valid path`);
         }
@@ -35,17 +40,17 @@ export class Router {
             return;
         }
 
-        const urlToStore = dataSourcePath.replace(this.datasourceRootPath, this.spiRootPath);
         const currentPath = _getCurrentCleanUrl();
-        const parts = currentPath.split('/').filter(part => part.length > 0);
-        document.title = parts[parts.length - 1];
-        
-        if (currentPath === this.spiRootPath) {
-            window.history.replaceState({ path: urlToStore }, '', urlToStore);
+        const currentRoute = `${currentPath}#${_getCurrentCleanHash()}`;
+
+        const newPath = dataSourcePath.replace(this.datasourceRootPath, this.spiRootPath)
+        const newRoute = newPath + (focusedNodeId ? `#${focusedNodeId}` : '');
+                
+        if (currentPath !== this.spiRootPath && currentRoute !== newRoute) {
+            window.history.pushState({ path: currentRoute }, '', currentRoute);
         }
-        else {
-            window.history.pushState({ path: urlToStore }, '', urlToStore);
-        }
+        window.history.replaceState({ path: newRoute }, '', newRoute);
+        document.title = this.getTitle(newPath, focusedNodeId);
     }
                 
     _listenToBackAndForward() {
@@ -66,4 +71,9 @@ function _getCurrentCleanHash() {
 
 function _removeTrailingSlash(path) {
     return path.replace(/\/$/, '');
+}
+
+function _defaultGetTitle(path, hash) {
+    const parts = path.split('/').filter(part => part.length > 0);
+    return `${parts[parts.length - 1]} - ${hash}`;
 }
