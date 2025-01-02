@@ -9,7 +9,7 @@
   <script type="module" defer>
     import { pollygraph } from '/js/pollygraph.js';
     import { getWorldCountries } from './get-world-countries.js';
-    pollygraph("/countries", "", getWorldCountries());
+    pollygraph(getWorldCountries(), "/countries");
   </script>
   
   <link rel="stylesheet" href="/css/styles.css">

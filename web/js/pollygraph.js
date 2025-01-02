@@ -10,6 +10,6 @@ const controller = new Controller(model, view);
 
 
 export function pollygraph(datasourceInitialContent, spiRootPath="", datasourceRootPath="") {  
-    const router = spiRootPath != "" ? new Router(spiRootPath, datasourceRootPath) : null;
+    const router = datasourceRootPath != "" ? new Router(spiRootPath, datasourceRootPath) : null;
     controller.init(datasourceInitialContent, router);
 }
