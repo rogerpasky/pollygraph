@@ -31,11 +31,11 @@ export class View {
         directedEdgeTextFormatter = null,
     ) {
         this.controller = null;
-        this.edgesGroup = null;
-        this.nodesGroup = null;
+        this.edgesSelection = null;
+        this.nodesSelection = null;
         this.simulation = null;
-        this.svg = this._getDomSvg();
-        this.infoDiv = this._getInfoDiv();
+        this.svg = _getSvgSelection('#the-graph');
+        this.infoDiv = _getInfoDiv('info');
         this.shiftPressed = false;
         this.altPressed = false;
         this.controlPressed = false;
@@ -58,11 +58,14 @@ export class View {
 
     onDataChange(data, dataSourcePath) {
         this._restart();
+
         const edgesData = data.edges.map(edge => ({...edge}));  // TODO: review the need for a copy, because view simulation appears to change source and target to the pointed objects instead its ids
         this._createEdges(edgesData);
 
         const nodesData = data.nodes;  // Nodes are created after edges to be painted on top
         this._createNodes(nodesData);
+
+        this._createTitlesForVoiceOver();
 
         this._createSimulation(edgesData, nodesData);
     }
@@ -70,47 +73,47 @@ export class View {
     // Displaying methods ------------------------------------------------------
 
     displayFocusOnNodeId(nodeId) {
-        const node = document.getElementById(nodeId);
-        this._displayFocusOnNode(node);
+        const node = _getElementFromSelection(nodeId, this.nodesSelection);
+        _displayFocusOnNode(node);
     }
 
     displayPreFocusOnNodeId(nodeId) {
-        const node = document.getElementById(nodeId);
-        this._displayPreFocusOnNode(node);
+        const node = _getElementFromSelection(nodeId, this.nodesSelection);
+        _displayPreFocusOnNode(node);
     }
 
     displayUnFocusOnNodeId(nodeId) {
-        const node = document.getElementById(nodeId);
-        this._displayUnFocusOnNode(node);
+        const node = _getElementFromSelection(nodeId, this.nodesSelection);
+        _displayUnFocusOnNode(node);
     }
 
     displayFocusOnEdgeId(edgeId) {
-        const edge = document.getElementById(edgeId);
-        this._displayFocusOnEdge(edge);
+        const edge = _getElementFromSelection(edgeId, this.edgesSelection);
+        _displayFocusOnEdge(edge);
     }
 
     displayPreFocusOnEdgeId(edgeId) {
-        const edge = document.getElementById(edgeId);
-        this._displayPreFocusOnEdge(edge);
+        const edge = _getElementFromSelection(edgeId, this.edgesSelection);
+        _displayPreFocusOnEdge(edge);
     }
 
     displayUnFocusOnEdgeId(edgeId) {
-        const edge = document.getElementById(edgeId);
-        this._displayUnFocusOnEdge(edge);
+        const edge = _getElementFromSelection(edgeId, this.edgesSelection);
+        _displayUnFocusOnEdge(edge);
     }
 
     displayPreFocusOnConnectedEdgesToNodeId(nodeId) {
         const connectedEdges = this._selectConnectedEdges(nodeId);
         const classThis = this;  // to avoid DOM `this` confusion
-        this.edgesGroup
+        this.edgesSelection
             .selectAll(function(d) {
                 const title = this.getElementsByTagName('title')[0];
                 if (connectedEdges.nodes().includes(this)) {
-                    classThis._displayPreFocusOnEdge(this);
+                    _displayPreFocusOnEdge(this);
                     title.textContent = classThis._formatEdgeLabelStartingFromNodeId(d, nodeId, connectedEdges.nodes().indexOf(this)+1, connectedEdges.size());
                 }
                 else {
-                    classThis._displayUnFocusOnEdge(this);
+                    _displayUnFocusOnEdge(this);
                     title.textContent = classThis._formatEdgeLabelbetweenTwoNodeId(d);
                 }
             });
@@ -127,7 +130,7 @@ export class View {
         if (!elementId) {
             return;
         }
-        const element = document.getElementById(elementId);
+        const element = _getElementFromSelection(elementId, this.svg.selectAll('circle, line'));
         if (element) {
             console.log(`Focus on element with id ${elementId}`);
             element.focus();
@@ -147,10 +150,10 @@ export class View {
         if (this.simulation) {
             this.simulation.stop();
         }
-        if (this.edgesGroup) {
+        if (this.edgesSelection) {
             this.svg.select("#edges").remove();
         }
-        if (this.nodesGroup) {
+        if (this.nodesSelection) {
             this.svg.select("#nodes").remove();
         }
     }
@@ -161,29 +164,9 @@ export class View {
             .on("keyup", (event) => this._onKeyup(event.key));
     }
 
-    _getWidth(element) {
-        const computedStyle = window.getComputedStyle(element);
-        return parseInt(computedStyle.width);
-    }
-
-    _getHeight(element) {
-        const computedStyle = window.getComputedStyle(element);
-        return parseInt(computedStyle.height);
-    }
-
-    _getDomSvg() {
-        return d3.select('#the-graph');
-    }
-
-    _getInfoDiv() {
-        const div = document.getElementById('info');
-        div.setAttribute('tabindex', 0);
-        return div;
-    }
-
     _createNodes(nodesData) {
         var classThis = this;  // to avoid DOM `this` confusion
-        this.nodesGroup = this.svg
+        this.nodesSelection = this.svg
             .append("g")
             .attr('id', 'nodes')
             .selectAll()
@@ -201,15 +184,11 @@ export class View {
                 .on('focus', (event) => classThis._onFocusNode(event.target))
                 .on('blur', (event) => classThis._onBlurNode(event.target))
                 .on('dblclick', () => classThis._onDoubleClickNode());
-
-        this.nodesGroup
-            .append("title")
-                .text(d => d.label ? d.label : d.id);
     }
 
     _createEdges(edgesData) {
         var classThis = this;  // to avoid DOM `this` confusion
-        this.edgesGroup = this.svg
+        this.edgesSelection = this.svg
             .append("g")
             .attr('id', 'edges')
             .selectAll()
@@ -224,10 +203,16 @@ export class View {
                 .attr("stroke-width", d => d.size)
                 .on('focus', (event) => classThis._onFocusEdge(event.target))
                 .on('blur', (event) => classThis._onBlurEdge(event.target));
-        this.edgesGroup
+    }
+
+    _createTitlesForVoiceOver() {
+        this.nodesSelection
+            .append("title")
+                .text(d => d.label ? d.label : d.id);
+        this.edgesSelection
             .append("title")
             .text(d => this._formatEdgeLabelbetweenTwoNodeId(d));
-        }
+    }
 
     _createSimulation(edgesData, nodesData) {
         // get a list of all node levels
@@ -275,22 +260,22 @@ export class View {
     }
 
     _relocateElements() {
-        this.edgesGroup
+        this.edgesSelection
             .attr("x1", d => d.source.x)
             .attr("y1", d => d.source.y)
             .attr("x2", d => d.target.x)
             .attr("y2", d => d.target.y);
 
-        this.nodesGroup
+        this.nodesSelection
             .attr("cx", d => d.x)
             .attr("cy", d => d.y);
     }
 
     _adjustViewBox() {
-        const minX = d3.min(this.nodesGroup.data(), d => d.x);
-        const maxX = d3.max(this.nodesGroup.data(), d => d.x);
-        const minY = d3.min(this.nodesGroup.data(), d => d.y);
-        const maxY = d3.max(this.nodesGroup.data(), d => d.y);
+        const minX = d3.min(this.nodesSelection.data(), d => d.x);
+        const maxX = d3.max(this.nodesSelection.data(), d => d.x);
+        const minY = d3.min(this.nodesSelection.data(), d => d.y);
+        const maxY = d3.max(this.nodesSelection.data(), d => d.y);
         const width = maxX - minX;
         const height = maxY - minY;
 
@@ -405,55 +390,20 @@ export class View {
         return this.shiftPressed && !this.altPressed && !this.controlPressed && !this.metaPressed && !this.capsLockPressed;
     }
 
-    // Visualization methods ---------------------------------------------------
-
-    _displayFocusOnNode(node) {
-        node.setAttribute('stroke', NODE_COLOR_FOCUSED);
-        node.setAttribute('stroke-opacity', NODE_OPACITY_FOCUSED);
-    }
-
-    _displayPreFocusOnNode(node) {
-        node.setAttribute('stroke', NODE_COLOR_PREFOCUSED);
-        node.setAttribute('stroke-opacity', NODE_OPACITY_PREFOCUSED);
-    }
-
-    _displayUnFocusOnNode(node) {
-        node.setAttribute('stroke', NODE_COLOR_UNFOCUSED);
-        node.setAttribute('stroke-opacity', NODE_OPACITY_UNFOCUSED);
-    }
-
-    _displayFocusOnEdge(edge) {
-        edge.setAttribute('stroke', EDGE_COLOR_FOCUSED);
-        edge.setAttribute('stroke-opacity', EDGE_OPACITY_FOCUSED);
-    }
-
-    _displayPreFocusOnEdge(edge) {
-        edge.setAttribute('stroke', EDGE_COLOR_PREFOCUSED);
-        edge.setAttribute('stroke-opacity', EDGE_OPACITY_PREFOCUSED);
-    }
-
-    _displayUnFocusOnEdge(edge) {
-        edge.setAttribute('stroke', EDGE_COLOR_UNFOCUSED);
-        edge.setAttribute('stroke-opacity', EDGE_OPACITY_UNFOCUSED);
-    }
-
     // Selection methods -------------------------------------------------------
 
     _selectConnectedEdges(nodeId) {
-        return this.edgesGroup.filter(d => d.source.id === nodeId || d.target.id === nodeId);
+        return this.edgesSelection.filter(d => d.source.id === nodeId || d.target.id === nodeId);
     }
 
     // Formatting methods ------------------------------------------------------
 
     _formatEdgeLabelStartingFromNodeId(edgeData, fromNodeId, i, n) {
-        if (edgeData.source.id === fromNodeId) {
-            var toNodeId = edgeData.target.id;
-        }
-        else {
-            var toNodeId = edgeData.source.id;
-        }
-        const fromText = document.getElementById(fromNodeId).getElementsByTagName('title')[0].textContent;
-        const toText = document.getElementById(toNodeId).getElementsByTagName('title')[0].textContent;
+        const toNodeId = edgeData.source.id === fromNodeId ? edgeData.target.id : edgeData.source.id;
+        const fromElement = _getElementFromSelection(fromNodeId, this.nodesSelection);
+        const fromText = fromElement ? fromElement.getElementsByTagName('title')[0].textContent : fromNodeId;
+        const toElement = _getElementFromSelection(toNodeId, this.nodesSelection);
+        const toText = toElement ? toElement.getElementsByTagName('title')[0].textContent : toNodeId;
         return `${this.toFormater(toText)}, ${this.nFormater(i, n)}, ${this.fromFormater(fromText)}`;
     }
 
@@ -461,15 +411,76 @@ export class View {
         if (edgeData.label) {
             return edgeData.label;
         }
-        const sourceId = edgeData.source.id;
-        const targetId = edgeData.target.id;
-        const sourceElement = document.getElementById(sourceId)
-        const sourceText = sourceElement ? sourceElement.getElementsByTagName('title')[0].textContent : sourceId;
-        const targetElement = document.getElementById(targetId)
-        const targetText = targetElement ? targetElement.getElementsByTagName('title')[0].textContent : targetId;
-        return this.edgeTextFormatter(sourceText, targetText);
+        const fromNodeId = edgeData.source;
+        const toNodeId = edgeData.target;
+        const fromElement = _getElementFromSelection(fromNodeId, this.nodesSelection);
+        const fromText = fromElement ? fromElement.getElementsByTagName('title')[0].textContent : fromNodeId;
+        const toElement = _getElementFromSelection(toNodeId, this.nodesSelection);
+        const toText = toElement ? toElement.getElementsByTagName('title')[0].textContent : toNodeId;
+        return this.edgeTextFormatter(fromText, toText);
     }
 }
+
+
+// DOM getter functions -------------------------------------------------------
+
+function _getElementFromSelection(elementID, selection) {
+    return selection.filter(d => d.id === elementID).node();
+}
+
+function _getWidth(element) {
+    const computedStyle = window.getComputedStyle(element);
+    return parseInt(computedStyle.width);
+}
+
+function _getHeight(element) {
+    const computedStyle = window.getComputedStyle(element);
+    return parseInt(computedStyle.height);
+}
+
+function _getSvgSelection(elementId) {
+    return d3.select(elementId);
+}
+
+function _getInfoDiv(elementId) {
+    const div = document.getElementById(elementId);
+    div.setAttribute('tabindex', 0);
+    return div;
+}
+
+
+// Visualization functions ----------------------------------------------------
+
+function _displayFocusOnNode(node) {
+    node.setAttribute('stroke', NODE_COLOR_FOCUSED);
+    node.setAttribute('stroke-opacity', NODE_OPACITY_FOCUSED);
+}
+
+function _displayPreFocusOnNode(node) {
+    node.setAttribute('stroke', NODE_COLOR_PREFOCUSED);
+    node.setAttribute('stroke-opacity', NODE_OPACITY_PREFOCUSED);
+}
+
+function _displayUnFocusOnNode(node) {
+    node.setAttribute('stroke', NODE_COLOR_UNFOCUSED);
+    node.setAttribute('stroke-opacity', NODE_OPACITY_UNFOCUSED);
+}
+
+function _displayFocusOnEdge(edge) {
+    edge.setAttribute('stroke', EDGE_COLOR_FOCUSED);
+    edge.setAttribute('stroke-opacity', EDGE_OPACITY_FOCUSED);
+}
+
+function _displayPreFocusOnEdge(edge) {
+    edge.setAttribute('stroke', EDGE_COLOR_PREFOCUSED);
+    edge.setAttribute('stroke-opacity', EDGE_OPACITY_PREFOCUSED);
+}
+
+function _displayUnFocusOnEdge(edge) {
+    edge.setAttribute('stroke', EDGE_COLOR_UNFOCUSED);
+    edge.setAttribute('stroke-opacity', EDGE_OPACITY_UNFOCUSED);
+}
+
 
 // Default formatters ---------------------------------------------------------
 
