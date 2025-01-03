@@ -27,85 +27,75 @@ const EDGE_OPACITY_UNFOCUSED = 0.2;
 
 export class View {
     constructor(
-        edgeTextFormatter = null,
-        directedEdgeTextFormatter = null,
+        nonDirectedEdgeTextFormatter = _defaultNonDirectedEdgeTextFormatter,
+        directedEdgeTextFormatter = _defaultDirectedEdgeTextFormatter,
     ) {
-        this.controller = null;
-        this.edgesSelection = null;
-        this.nodesSelection = null;
-        this.simulation = null;
-        this.svg = _getSvgSelection('#the-graph');
-        this.infoDiv = _getInfoDiv('info');
-        this.shiftPressed = false;
-        this.altPressed = false;
-        this.controlPressed = false;
-        this.metaPressed = false;
-        this.capsLockPressed = false;
+        this._nonDirectedEdgeTextFormatter = nonDirectedEdgeTextFormatter;
+        this._directedEdgeTextFormatter = directedEdgeTextFormatter;
+        this._controller = null;
+        this._edgesSelection = null;
+        this._nodesSelection = null;
+        this._simulation = null;
+        this._keyModifierStatus = {"Shift": false, "Alt": false, "Control": false, "Meta": false, "CapsLock": false};
+        this._svg = _getSvgSelection('#the-graph');
+        this._infoDiv = _getInfoDiv('info');
         this._setKeyCallbacks();
-        this.edgeTextFormatter = edgeTextFormatter || _defaultEdgeTextFormatter;
-        this.directedEdgeTextFormatter = directedEdgeTextFormatter || _defaultDirectedEdgeTextFormatter;
-        this.toFormater = _defaultTo;
-        this.fromFormater = _defaultFrom;
-        this.nFormater = _defaultN;
         this._restart()
     }
 
     // Public methods ----------------------------------------------------------
 
     setController(controller) {
-        this.controller = controller;
+        this._controller = controller;
     }
 
-    onDataChange(data, dataSourcePath) {
+    onDataChange(data) {
         this._restart();
 
-        const edgesData = data.edges.map(edge => ({...edge}));  // TODO: review the need for a copy, because view simulation appears to change source and target to the pointed objects instead its ids
+        const edgesData = data.edges.map(edge => ({...edge}));  // A copy is done because view simulation appears to change source and target to the pointed objects instead its ids
         this._createEdges(edgesData);
-
         const nodesData = data.nodes;  // Nodes are created after edges to be painted on top
         this._createNodes(nodesData);
-
         this._createTitlesForVoiceOver();
-
         this._createSimulation(edgesData, nodesData);
     }
 
     // Displaying methods ------------------------------------------------------
 
     displayFocusOnNodeId(nodeId) {
-        const node = _getElementFromSelection(nodeId, this.nodesSelection);
+        const node = _getElementFromSelection(nodeId, this._nodesSelection);
         _displayFocusOnNode(node);
     }
 
     displayPreFocusOnNodeId(nodeId) {
-        const node = _getElementFromSelection(nodeId, this.nodesSelection);
+        const node = _getElementFromSelection(nodeId, this._nodesSelection);
         _displayPreFocusOnNode(node);
     }
 
     displayUnFocusOnNodeId(nodeId) {
-        const node = _getElementFromSelection(nodeId, this.nodesSelection);
+        const node = _getElementFromSelection(nodeId, this._nodesSelection);
         _displayUnFocusOnNode(node);
     }
 
     displayFocusOnEdgeId(edgeId) {
-        const edge = _getElementFromSelection(edgeId, this.edgesSelection);
+        const edge = _getElementFromSelection(edgeId, this._edgesSelection);
         _displayFocusOnEdge(edge);
     }
 
     displayPreFocusOnEdgeId(edgeId) {
-        const edge = _getElementFromSelection(edgeId, this.edgesSelection);
+        const edge = _getElementFromSelection(edgeId, this._edgesSelection);
         _displayPreFocusOnEdge(edge);
     }
 
     displayUnFocusOnEdgeId(edgeId) {
-        const edge = _getElementFromSelection(edgeId, this.edgesSelection);
+        const edge = _getElementFromSelection(edgeId, this._edgesSelection);
         _displayUnFocusOnEdge(edge);
     }
 
     displayPreFocusOnConnectedEdgesToNodeId(nodeId) {
         const connectedEdges = this._selectConnectedEdges(nodeId);
         const classThis = this;  // to avoid DOM `this` confusion
-        this.edgesSelection
+        this._edgesSelection
             .selectAll(function(d) {
                 const title = this.getElementsByTagName('title')[0];
                 if (connectedEdges.nodes().includes(this)) {
@@ -120,8 +110,8 @@ export class View {
     }
 
     displayElementInfo(elementId) {
-        const text = this.controller.getInfo(elementId);
-        this.infoDiv.innerHTML = text;
+        const text = this._controller.getInfo(elementId);
+        this._infoDiv.innerHTML = text;
     }
 
     // Find and Focus methods --------------------------------------------------
@@ -130,31 +120,32 @@ export class View {
         if (!elementId) {
             return;
         }
-        const element = _getElementFromSelection(elementId, this.svg.selectAll('circle, line'));
-        if (element) {
-            console.log(`Focus on element with id ${elementId}`);
-            element.focus();
-        }
-        else {
+
+        const element = _getElementFromSelection(elementId, this._svg.selectAll('circle, line'));
+        if (! element) {
             console.error(`Element with id ${elementId} not found`);
+            return;
         }
+
+        console.log(`Focus on element with id ${elementId}`);
+        element.focus();
     }
 
     focusInfo() {
-        this.infoDiv.focus();
+        this._infoDiv.focus();
     }
 
     // Setup methods -----------------------------------------------------------
 
     _restart() {
-        if (this.simulation) {
-            this.simulation.stop();
+        if (this._simulation) {
+            this._simulation.stop();
         }
-        if (this.edgesSelection) {
-            this.svg.select("#edges").remove();
+        if (this._edgesSelection) {
+            this._svg.select("#edges").remove();
         }
-        if (this.nodesSelection) {
-            this.svg.select("#nodes").remove();
+        if (this._nodesSelection) {
+            this._svg.select("#nodes").remove();
         }
     }
 
@@ -166,7 +157,7 @@ export class View {
 
     _createNodes(nodesData) {
         var classThis = this;  // to avoid DOM `this` confusion
-        this.nodesSelection = this.svg
+        this._nodesSelection = this._svg
             .append("g")
             .attr('id', 'nodes')
             .selectAll()
@@ -188,7 +179,7 @@ export class View {
 
     _createEdges(edgesData) {
         var classThis = this;  // to avoid DOM `this` confusion
-        this.edgesSelection = this.svg
+        this._edgesSelection = this._svg
             .append("g")
             .attr('id', 'edges')
             .selectAll()
@@ -206,10 +197,10 @@ export class View {
     }
 
     _createTitlesForVoiceOver() {
-        this.nodesSelection
+        this._nodesSelection
             .append("title")
                 .text(d => d.label ? d.label : d.id);
-        this.edgesSelection
+        this._edgesSelection
             .append("title")
             .text(d => this._formatEdgeLabelbetweenTwoNodeId(d));
     }
@@ -221,7 +212,7 @@ export class View {
         var classThis = this;  // to avoid DOM `this` confusion
         // if (edgesData.length === nodesData.length * (nodesData.length - 1) / 2) {
         if (levels.length === 1 && levels[0] === 0) {  // cloudy graph
-            this.simulation = d3.forceSimulation(nodesData)
+            this._simulation = d3.forceSimulation(nodesData)
                 .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0.9))
                 .force("charge", d3.forceManyBody().strength(-5))
                 .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
@@ -230,7 +221,7 @@ export class View {
         else if (levels.length === 1 && levels[0] > 0) {  // fully connected graph
             const sumOfAllRadius = nodesData.reduce((acc, d) => acc + _getRadius(d), 0);
             const radius = 2 * sumOfAllRadius / Math.PI;
-            this.simulation = d3.forceSimulation(nodesData)
+            this._simulation = d3.forceSimulation(nodesData)
                 .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0))
                 .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
                 .force("r", d3.forceRadial(radius))
@@ -243,7 +234,7 @@ export class View {
                 node.x = 100 * (maxX[node.level]++);
                 node.y = node.level * 30;
             });
-            this.simulation = d3.forceSimulation(nodesData)
+            this._simulation = d3.forceSimulation(nodesData)
                 .force("link", d3.forceLink(edgesData).id(d => d.id).strength(0.1))
                 .force("charge", d3.forceManyBody().strength(-50))
                 .force("collide", d3.forceCollide(d => _getRadius(d) + 3))
@@ -260,26 +251,26 @@ export class View {
     }
 
     _relocateElements() {
-        this.edgesSelection
+        this._edgesSelection
             .attr("x1", d => d.source.x)
             .attr("y1", d => d.source.y)
             .attr("x2", d => d.target.x)
             .attr("y2", d => d.target.y);
 
-        this.nodesSelection
+        this._nodesSelection
             .attr("cx", d => d.x)
             .attr("cy", d => d.y);
     }
 
     _adjustViewBox() {
-        const minX = d3.min(this.nodesSelection.data(), d => d.x);
-        const maxX = d3.max(this.nodesSelection.data(), d => d.x);
-        const minY = d3.min(this.nodesSelection.data(), d => d.y);
-        const maxY = d3.max(this.nodesSelection.data(), d => d.y);
+        const minX = d3.min(this._nodesSelection.data(), d => d.x);
+        const maxX = d3.max(this._nodesSelection.data(), d => d.x);
+        const minY = d3.min(this._nodesSelection.data(), d => d.y);
+        const maxY = d3.max(this._nodesSelection.data(), d => d.y);
         const width = maxX - minX;
         const height = maxY - minY;
 
-        this.svg.attr("viewBox", [
+        this._svg.attr("viewBox", [
             minX - MAX_RADIUS, 
             minY - MAX_RADIUS, 
             width + 2 * MAX_RADIUS, 
@@ -289,140 +280,123 @@ export class View {
 
     _onFocusNode(node) {
         const nodeId = node.getAttribute('id');
-        this.controller.focusNode(nodeId);
+        this._controller.focusNode(nodeId);
     }
 
     _onBlurNode(node) {
         const nodeId = node.getAttribute('id');
-        this.controller.unFocusNode(nodeId);
+        this._controller.unFocusNode(nodeId);
     }
 
     _onFocusEdge(edge) {
         const edgeId = edge.getAttribute('id');
-        this.controller.focusEdge(edgeId);
+        this._controller.focusEdge(edgeId);
     }
 
     _onBlurEdge(edge) {
         const edgeId = edge.getAttribute('id');
-        this.controller.unFocusEdge(edgeId)
+        this._controller.unFocusEdge(edgeId)
     }
 
     _onDoubleClickNode() {
-        if (this.shiftPressed) {
-            this.controller.focusOuter();
+        if (this._onlyShiftKeyPressed()) {
+            this._controller.focusOuter();
         }
         else {
-            this.controller.focusInner();
+            this._controller.focusInner();
         }
     }
 
     _onKeydown(key) {
-        if (!this.controller) {
+        if (!this._controller) {
             return;
         }
         else if (key === "ArrowRight" && this._noModifierKeyPressed()) {
-            this.controller.focusForward();
+            this._controller.focusForward();
         }
         else if (key === "ArrowLeft" && this._noModifierKeyPressed()) {
-            this.controller.focusBackward();
+            this._controller.focusBackward();
         }
         else if (key === "ArrowUp" && this._noModifierKeyPressed()) {
-            this.controller.focusPrevious(this._onlyShiftKeyPressed());
+            this._controller.focusPrevious();
         }
         else if (key === "ArrowDown" && this._noModifierKeyPressed()) {
-            this.controller.focusNext();
+            this._controller.focusNext();
         }
         else if (key === "Enter" && this._noModifierKeyPressed()) {
-            this.controller.focusInner();
+            this._controller.focusInner();
         }
         else if (key === "Enter" && this._onlyShiftKeyPressed()) {
-            this.controller.focusOuter();
+            this._controller.focusOuter();
         }
         else if (key === " " && this._noModifierKeyPressed()) {
-            this.controller.focusDetails();
+            this._controller.focusDetails();
         }
         else if (key === "Escape" && this._noModifierKeyPressed()) {
-            this.controller.focusBackFromDetails();
+            this._controller.focusBackFromDetails();
         }
-        else if (key === "Shift") {
-            this.shiftPressed = true;
-        }
-        else if (key === "Alt") {
-            this.altPressed = true;
-        }
-        else if (key === "Control") {
-            this.controlPressed = true;
-        }
-        else if (key === "Meta") {
-            this.metaPressed = true;
-        }
-        else if (key === "CapsLock") {
-            this.capsLockPressed = true;
+        else if (key in this._keyModifierStatus) {
+            this._keyModifierStatus[key] = true;
         }
         else {
-            console.log(`Unhandled Key pressed: ${key}\n{shift: ${this.shiftPressed}, alt: ${this.altPressed}, control: ${this.controlPressed}, meta: ${this.metaPressed}, capsLock: ${this.capsLockPressed}}`);
+            console.log(`Unhandled Key pressed: ${key}\n${Object.entries(this._keyModifierStatus)}`);
         }
     }
 
     _onKeyup(key) {
-        if (key === "Shift") {
-            this.shiftPressed = false;
-        }
-        else if (key === "Alt") {
-            this.altPressed = false;
-        }
-        else if (key === "Control") {
-            this.controlPressed = false;
-        }
-        else if (key === "Meta") {
-            this.metaPressed = false;
-        }
-        else if (key === "CapsLock") {
-            this.capsLockPressed = false;
+        if (key in this._keyModifierStatus) {
+            this._keyModifierStatus[key] = false;
         }
     }
 
     _noModifierKeyPressed() {
-        return !this.shiftPressed && !this.altPressed && !this.controlPressed && !this.metaPressed && !this.capsLockPressed;
+        return Object.values(this._keyModifierStatus).every(v => !v);
     }
 
     _onlyShiftKeyPressed() {
-        return this.shiftPressed && !this.altPressed && !this.controlPressed && !this.metaPressed && !this.capsLockPressed;
+        return Object.values(this._keyModifierStatus).filter(v => v).length === 1 && this._keyModifierStatus["Shift"];
     }
 
     // Selection methods -------------------------------------------------------
 
     _selectConnectedEdges(nodeId) {
-        return this.edgesSelection.filter(d => d.source.id === nodeId || d.target.id === nodeId);
+        return this._edgesSelection.filter(d => d.source.id === nodeId || d.target.id === nodeId);
     }
 
     // Formatting methods ------------------------------------------------------
 
     _formatEdgeLabelStartingFromNodeId(edgeData, fromNodeId, i, n) {
         const toNodeId = edgeData.source.id === fromNodeId ? edgeData.target.id : edgeData.source.id;
-        const fromElement = _getElementFromSelection(fromNodeId, this.nodesSelection);
+
+        const fromElement = _getElementFromSelection(fromNodeId, this._nodesSelection);
         const fromText = fromElement ? fromElement.getElementsByTagName('title')[0].textContent : fromNodeId;
-        const toElement = _getElementFromSelection(toNodeId, this.nodesSelection);
+
+        const toElement = _getElementFromSelection(toNodeId, this._nodesSelection);
         const toText = toElement ? toElement.getElementsByTagName('title')[0].textContent : toNodeId;
-        return `${this.toFormater(toText)}, ${this.nFormater(i, n)}, ${this.fromFormater(fromText)}`;
+
+        return this._directedEdgeTextFormatter(fromText, toText, i, n);
     }
 
     _formatEdgeLabelbetweenTwoNodeId(edgeData) {
         if (edgeData.label) {
             return edgeData.label;
         }
+
         const fromNodeId = edgeData.source;
         const toNodeId = edgeData.target;
-        const fromElement = _getElementFromSelection(fromNodeId, this.nodesSelection);
+
+        const fromElement = _getElementFromSelection(fromNodeId, this._nodesSelection);
         const fromText = fromElement ? fromElement.getElementsByTagName('title')[0].textContent : fromNodeId;
-        const toElement = _getElementFromSelection(toNodeId, this.nodesSelection);
+
+        const toElement = _getElementFromSelection(toNodeId, this._nodesSelection);
         const toText = toElement ? toElement.getElementsByTagName('title')[0].textContent : toNodeId;
-        return this.edgeTextFormatter(fromText, toText);
+
+        return this._nonDirectedEdgeTextFormatter(fromText, toText);
     }
 }
 
 
-// DOM getter functions -------------------------------------------------------
+// Getter functions -------------------------------------------------------
 
 function _getElementFromSelection(elementID, selection) {
     return selection.filter(d => d.id === elementID).node();
@@ -446,6 +420,10 @@ function _getInfoDiv(elementId) {
     const div = document.getElementById(elementId);
     div.setAttribute('tabindex', 0);
     return div;
+}
+
+function _getRadius(d) {
+    return Math.sqrt(d.size) * (MAX_RADIUS - MIN_RADIUS) + MIN_RADIUS;
 }
 
 
@@ -484,26 +462,12 @@ function _displayUnFocusOnEdge(edge) {
 
 // Default formatters ---------------------------------------------------------
 
-function _defaultEdgeTextFormatter(sourceText, targetText) {
+function _defaultNonDirectedEdgeTextFormatter(sourceText, targetText) {
     return `${sourceText} - ${targetText}`;
 }
 
-function _defaultDirectedEdgeTextFormatter(fromText, toText) {
-    return `from ${fromText} to ${toText}`;
-}
-
-function _defaultFrom(fromText) {
-    return `from ${fromText}`;
-}
-
-function _defaultTo(toText) {
-    return `to ${toText}`;
-}
-
-function _defaultN(i, n) {
-    return `${i} of ${n}`;
-}
-
-function _getRadius(d) {
-    return Math.sqrt(d.size) * (MAX_RADIUS - MIN_RADIUS) + MIN_RADIUS;
+function _defaultDirectedEdgeTextFormatter(fromText, toText, i, n) {
+    const turnaround = i == 1 && n > 1 ? `first edge ` : '';
+    const enumeration = n > 1 ? `, ${i} of ${n},` : '';
+    return `${turnaround}to ${toText}${enumeration} from ${fromText}`;
 }

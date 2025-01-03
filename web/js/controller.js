@@ -186,7 +186,7 @@ export class Controller {
         // }
 
         if (data) {
-            this.view.onDataChange(data, dataSourcePath);
+            this.view.onDataChange(data);
         }
 
         this.preFocusedNodeId = this.focusedNodeId = focusedNodeId;
