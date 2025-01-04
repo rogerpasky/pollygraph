@@ -17,9 +17,30 @@
 .resizable {
     width: 40%;
     height: auto;
-    border: 1px solid #000;
+    border: 1px solid #00F;
     padding: 10px;
     resize: horizontal;
-    overflow-y: auto
 }
 
+.info {
+    width: auto;
+    height: auto;
+    border: 1px solid #F00;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+#suggestions {
+    display: none;
+    position: absolute;
+    background-color: white;
+    z-index: 1;
+}
+#suggestions li {
+    list-style: none;
+    padding: 10px;
+    cursor: pointer;
+}
+#suggestions li:hover {
+    background-color: #f0f0f0;
+}

@@ -3,7 +3,6 @@
 
 ## TO-DO
 
-* make an optional searcher
 * make info DIV optional
 * edges integration with router
 * cluster integration with router
@@ -26,3 +25,4 @@
 * use `#` values as focus indicators
 * prompt "back to" in first edge title to differentiate to others when needed
 * fix default functions on View constructor
+* make an optional searcher

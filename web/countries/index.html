@@ -10,19 +10,25 @@
     import { pollygraph } from '/js/pollygraph.js';
     import { getWorldCountries } from './get-world-countries.js';
     pollygraph(getWorldCountries(), "/countries");
-  </script>
-  
+  </script>  
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
-<h1>World Countries Graph</h1>
-
 <div class="graph-container">
+
   <div id="graph" class="graph">
+    <h1>World Countries Graph</h1>
     <svg id="the-graph", style="width:100%; height:100%"></svg>
   </div>
-  <div id="info" class="resizable"></div>
+
+  <div id="sidebar" class="resizable">
+    <input type="text" id="searchInput" placeholder="Search...">
+    <ul id="suggestions"></ul>
+    <h1>Country Info</h1>
+    <div id="info" class="info"></div>
+  </div>
+
 </div>
 
 </body>

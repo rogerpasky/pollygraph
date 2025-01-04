@@ -193,6 +193,10 @@ export class Controller {
             this._view.onDataChange(data);
         }
 
+        this.onFocusChange(focusedNodeId);
+    }
+
+    onFocusChange(focusedNodeId) {
         this._preFocusedNodeId = this._focusedNodeId = focusedNodeId;
         this._focusedEdgeId = null;
         this._traversingNearby = false;

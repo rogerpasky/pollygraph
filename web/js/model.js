@@ -21,24 +21,23 @@ export class Model {
             return;
         }
 
-        const finalQuery = caseSensitive ? query : query.toLowerCase();
         let findings = {};
-
         const nodes = this._data.nodes;
+
         findings["nodeLabels"] = nodes
-            .filter(node => node.label.toLowerCase().includes(finalQuery))
-            .map(node => [`${currentDataSource}#${node.id}`, _getExtendedSubstring(node.label, query, length)]);
+            .filter(node => node.label.toLowerCase().includes(query))
+            .map(node => [`${currentDataSource}#${node.id}`, _getExtendedSubstring(node.label, query, caseSensitive, length)]);
         findings["nodeInfos"] = nodes
-            .filter(node => node.info.toLowerCase().includes(finalQuery))
-            .map(node => [`${currentDataSource}#${node.id}`, _getExtendedSubstring(node.info, query, length)]);
+            .filter(node => node.info.toLowerCase().includes(query))
+            .map(node => [`${currentDataSource}#${node.id}`, _getExtendedSubstring(node.info, query, caseSensitive, length)]);
 
         const edges = this._data.edges;
         findings["edgeLabels"] = edges
-            .filter(edge => edge.label.toLowerCase().includes(finalQuery))
-            .map(edge => [`${currentDataSource}#${edge.id}`, _getExtendedSubstring(edge.label, query, length)]);
+            .filter(edge => edge.label.toLowerCase().includes(query))
+            .map(edge => [`${currentDataSource}#${edge.id}`, _getExtendedSubstring(edge.label, query, caseSensitive, length)]);
         findings["edgeInfos"] = edges
-            .filter(edge => edge.info.toLowerCase().includes(finalQuery))
-            .map(edge => [`${currentDataSource}#${edge.id}`, _getExtendedSubstring(edge.info, query, length)]);
+            .filter(edge => edge.info.toLowerCase().includes(query))
+            .map(edge => [`${currentDataSource}#${edge.id}`, _getExtendedSubstring(edge.info, query, caseSensitive, length)]);
 
         return findings;
     }
@@ -340,15 +339,15 @@ function _dfs(nodes, edges, visited, node, cluster) {
 
 function _getEdgeId(source, target) {
     if (source < target) {
-        return `${source} - ${target}`;
+        return `${source}-${target}`;
     }
     else {
-        return `${target} - ${source}`;
+        return `${target}-${source}`;
     }
 }
 
-function _getExtendedSubstring(fullString, substring, length) {
-    const index = fullString.indexOf(substring);
+function _getExtendedSubstring(fullString, substring, caseSensitive, length) {
+    const index = caseSensitive ? fullString.indexOf(substring) : fullString.toLowerCase().indexOf(substring.toLowerCase());
     if (index === -1) {
         return '';
     }
