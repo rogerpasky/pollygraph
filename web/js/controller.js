@@ -8,68 +8,72 @@ export class Controller {
         if (!model || model.constructor !== Model) {
             throw new Error('Model is required');
         }
-        this.model = model;
+        this._model = model;
 
         if (!view || view.constructor !== View) {
             throw new Error('View is required');
         }
-        this.view = view;
+        this._view = view;
 
-        this.view.setController(this);
-        this.model.setController(this);
+        this._view.setController(this);
+        this._model.setController(this);
 
-        this.router = null;
-        this.focusedNodeId = null;
-        this.preFocusedNodeId = null;
-        this.focusedEdgeId = null;
-        this.traversingNearby = false;
-        this.currentDataSource = null;
-        this.history = [];
+        this._router = null;
+        this._focusedNodeId = null;
+        this._preFocusedNodeId = null;
+        this._focusedEdgeId = null;
+        this._traversingNearby = false;
+        this._currentDataSource = null;
+        this._history = [];
     }
 
     init(datasourceInitialContent, router=null) {
         if (router && router.constructor !== Router) {
             throw new Error('Provided `router` is not a proper Router instance');
         }
-        this.router = router;
+        this._router = router;
 
-        if (this.router) {
+        if (this._router) {
             const onUrlChangeCallback = this.setDataFromSource.bind(this)
-            this.router.init(onUrlChangeCallback, datasourceInitialContent);
+            this._router.init(onUrlChangeCallback, datasourceInitialContent);
         }
         else {
-            this.model.setDataFromSource(datasourceInitialContent);
+            this._model.setDataFromSource(datasourceInitialContent);
         }
+    }
+
+    search(query, length, caseSensitive=false) {
+        return this._model.search(query, this._currentDataSource, length);
     }
 
     // Focus methods -----------------------------------------------------------
 
     focusNode(nodeId) {
-        if (this.preFocusedNodeId) {
-            this.view.displayUnFocusOnNodeId(this.preFocusedNodeId);
+        if (this._preFocusedNodeId) {
+            this._view.displayUnFocusOnNodeId(this._preFocusedNodeId);
         }
 
-        this.focusedNodeId = this.preFocusedNodeId = nodeId;
+        this._focusedNodeId = this._preFocusedNodeId = nodeId;
 
-        this.view.displayPreFocusOnConnectedEdgesToNodeId(this.preFocusedNodeId);
-        this.focusedEdgeId = null;
+        this._view.displayPreFocusOnConnectedEdgesToNodeId(this._preFocusedNodeId);
+        this._focusedEdgeId = null;
 
-        this.view.displayFocusOnNodeId(this.focusedNodeId);
-        this.view.displayElementInfo(this.focusedNodeId);
+        this._view.displayFocusOnNodeId(this._focusedNodeId);
+        this._view.displayElementInfo(this._focusedNodeId);
 
-        if (this.router && this.currentDataSource !== "") {  // TODO: handle clusters' paths
-            this.router.route(this.currentDataSource, this.focusedNodeId);
+        if (this._router && this._currentDataSource !== "") {  // TODO: handle clusters' paths
+            this._router.route(this._currentDataSource, this._focusedNodeId);
         }
     
-        console.log("Focused Node: " + this.focusedNodeId + " -----------------");
+        console.log("Focused Node: " + this._focusedNodeId + " -----------------");
     }
 
     unFocusNode(nodeId) {
-        if (this.traversingNearby) {
-            this.view.displayPreFocusOnNodeId(nodeId);
+        if (this._traversingNearby) {
+            this._view.displayPreFocusOnNodeId(nodeId);
         }
         else {
-            this.view.displayUnFocusOnNodeId(nodeId);
+            this._view.displayUnFocusOnNodeId(nodeId);
         }
         console.log("UnFocused Node: " + nodeId);
     }
@@ -77,19 +81,19 @@ export class Controller {
     focusEdge(edgeId) {
         this._cleanUpWhenFocusOnNonRelatedEdge(edgeId);
 
-        this.focusedEdgeId = edgeId;
+        this._focusedEdgeId = edgeId;
 
-        this.view.displayFocusOnEdgeId(this.focusedEdgeId);
-        this.view.displayElementInfo(this.focusedEdgeId);
-        console.log("Focused Edge: " + this.focusedEdgeId);
+        this._view.displayFocusOnEdgeId(this._focusedEdgeId);
+        this._view.displayElementInfo(this._focusedEdgeId);
+        console.log("Focused Edge: " + this._focusedEdgeId);
     }
 
     unFocusEdge(edgeId) {
-        if (this.traversingNearby) {
-            this.view.displayPreFocusOnEdgeId(edgeId);
+        if (this._traversingNearby) {
+            this._view.displayPreFocusOnEdgeId(edgeId);
         }
         else {
-            this.view.displayUnFocusOnEdgeId(edgeId);
+            this._view.displayUnFocusOnEdgeId(edgeId);
         }
         console.log("UnFocused Edge: " + edgeId);
     }
@@ -97,22 +101,22 @@ export class Controller {
     // Actions -----------------------------------------------------------------
 
     setDataFromSource(dataSourcePath, focusedNodeId="", fromRouter=false) {
-        if (this.currentDataSource === dataSourcePath) {
+        if (this._currentDataSource === dataSourcePath) {
             this.onDataChange(null, dataSourcePath, focusedNodeId, fromRouter)
         }
         else {
-            this.model.setDataFromSource(dataSourcePath, focusedNodeId, fromRouter);
+            this._model.setDataFromSource(dataSourcePath, focusedNodeId, fromRouter);
         }
     }
 
     focusForward() {
-        if (this.focusedEdgeId) {
+        if (this._focusedEdgeId) {
             this._focusOnOtherSideToPrefocusedNode();
         }
-        else if (this.focusedNodeId) {
-            this.traversingNearby = true;
+        else if (this._focusedNodeId) {
+            this._traversingNearby = true;
             this._focusOnFirstNonVisitedEdge();
-            this.traversingNearby = false;
+            this._traversingNearby = false;
         }
         else {
             console.log("No focused element to go forward");
@@ -121,57 +125,57 @@ export class Controller {
     }
 
     focusBackward() {
-        if (this.history.length !== 0) {
-            const element = this.history.pop();
-            this.view.findAndFocusElement(element);
+        if (this._history.length !== 0) {
+            const element = this._history.pop();
+            this._view.findAndFocusElement(element);
             console.log("Focus Backward");
         }
     }
 
     focusNext() {
-        this.focusedEdgeId = this.model.getNextEdgeId(this.preFocusedNodeId, this.focusedEdgeId, 1);
+        this._focusedEdgeId = this._model.getNextEdgeId(this._preFocusedNodeId, this._focusedEdgeId, 1);
         // this.view.displayPreFocusOnConnectedEdgesToNodeId(this.preFocusedNodeId);
-        this.traversingNearby = true;
-        this.view.findAndFocusElement(this.focusedEdgeId);
-        this.traversingNearby = false;
+        this._traversingNearby = true;
+        this._view.findAndFocusElement(this._focusedEdgeId);
+        this._traversingNearby = false;
     }
 
     focusPrevious() {
-        this.focusedEdgeId = this.model.getNextEdgeId(this.preFocusedNodeId, this.focusedEdgeId, -1);
-        this.traversingNearby = true;
-        this.view.findAndFocusElement(this.focusedEdgeId);
-        this.traversingNearby = false;
+        this._focusedEdgeId = this._model.getNextEdgeId(this._preFocusedNodeId, this._focusedEdgeId, -1);
+        this._traversingNearby = true;
+        this._view.findAndFocusElement(this._focusedEdgeId);
+        this._traversingNearby = false;
     }
 
     focusInner() {
         console.log("Focus Next Level");
-        this.model.setDataFromInnerData(this.focusedNodeId ? this.focusedNodeId : this.preFocusedNodeId);
+        this._model.setDataFromInnerData(this._focusedNodeId ? this._focusedNodeId : this._preFocusedNodeId);
     }
 
     focusOuter() {
         console.log("Focus Previous Level");
-        this.model.setDataFromOuterData();
+        this._model.setDataFromOuterData();
     }
 
     focusDetails() {
         console.log("Focus Details");
-        this.traversingNearby = true;
-        this.view.focusInfo();
-        this.traversingNearby = false;
+        this._traversingNearby = true;
+        this._view.focusInfo();
+        this._traversingNearby = false;
     }
 
     focusBackFromDetails() {
         console.log("Focus Back From Details");
-        if (this.focusedEdgeId) {
-            this.view.findAndFocusElement(this.focusedEdgeId);
+        if (this._focusedEdgeId) {
+            this._view.findAndFocusElement(this._focusedEdgeId);
         }
         else {
-            this.view.findAndFocusElement(this.focusedNodeId);
+            this._view.findAndFocusElement(this._focusedNodeId);
         }
     }
 
     getInfo(elementId) {
-        return this.model.getInfo(elementId);
+        return this._model.getInfo(elementId);
     }
 
     // Event handlers ----------------------------------------------------------
@@ -179,52 +183,52 @@ export class Controller {
     onDataChange(data, dataSourcePath, focusedNodeId, fromRouter=false) {
         console.log("Controller: onDataChange");
 
-        this.currentDataSource = dataSourcePath;
+        this._currentDataSource = dataSourcePath;
 
         // if (this.router && dataSourcePath !== "") {  // TODO: handle clusters' paths
         //     this.router.route(dataSourcePath, focusedNodeId, fromRouter);
         // }
 
         if (data) {
-            this.view.onDataChange(data);
+            this._view.onDataChange(data);
         }
 
-        this.preFocusedNodeId = this.focusedNodeId = focusedNodeId;
-        this.focusedEdgeId = null;
-        this.traversingNearby = false;
+        this._preFocusedNodeId = this._focusedNodeId = focusedNodeId;
+        this._focusedEdgeId = null;
+        this._traversingNearby = false;
 
-        this.view.findAndFocusElement(this.focusedNodeId);
+        this._view.findAndFocusElement(this._focusedNodeId);
     }
     
     // Internal methods --------------------------------------------------------
 
     _focusOnOtherSideToPrefocusedNode() {
         // this.traversingNearby = false;
-        const nodeId = this.model.getNodeIdOnOtherSide(this.preFocusedNodeId, this.focusedEdgeId);
-        this.history.push(this.focusedEdgeId);
-        this.view.displayUnFocusOnNodeId(this.preFocusedNodeId);
-        this.view.findAndFocusElement(nodeId);
+        const nodeId = this._model.getNodeIdOnOtherSide(this._preFocusedNodeId, this._focusedEdgeId);
+        this._history.push(this._focusedEdgeId);
+        this._view.displayUnFocusOnNodeId(this._preFocusedNodeId);
+        this._view.findAndFocusElement(nodeId);
     }
 
     _focusOnFirstNonVisitedEdge() {
-        const edgeId = this.model.getFirstNonVisitedEdgeId(this.focusedNodeId, this.history);
+        const edgeId = this._model.getFirstNonVisitedEdgeId(this._focusedNodeId, this._history);
         if (edgeId) {
-            this.history.push(this.focusedNodeId);
-            this.view.findAndFocusElement(edgeId);
+            this._history.push(this._focusedNodeId);
+            this._view.findAndFocusElement(edgeId);
         }
         else {  // isolated node with no edges
-            this.view.findAndFocusElement(this.focusedNodeId);
+            this._view.findAndFocusElement(this._focusedNodeId);
         }
     }
 
     _cleanUpWhenFocusOnNonRelatedEdge(edgeId) {
-        if (!this.focusedEdgeId || this.traversingNearby) {
+        if (!this._focusedEdgeId || this._traversingNearby) {
             return;
         }  // USE_CASE: when traversing outbound edges
-        this.view.displayUnFocusOnNodeId(this.preFocusedNodeId);
-        this.preFocusedNodeId = this.model.getNodeIdOnOtherSide("", edgeId);
-        this.view.displayPreFocusOnNodeId(this.preFocusedNodeId);
-        this.view.displayPreFocusOnConnectedEdgesToNodeId(this.preFocusedNodeId);
-        this.focusedNodeId = null;
+        this._view.displayUnFocusOnNodeId(this._preFocusedNodeId);
+        this._preFocusedNodeId = this._model.getNodeIdOnOtherSide("", edgeId);
+        this._view.displayPreFocusOnNodeId(this._preFocusedNodeId);
+        this._view.displayPreFocusOnConnectedEdgesToNodeId(this._preFocusedNodeId);
+        this._focusedNodeId = null;
     }
 }

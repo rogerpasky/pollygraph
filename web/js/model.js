@@ -16,6 +16,33 @@ export class Model {
 
     // Public methods ----------------------------------------------------------
 
+    search(query, currentDataSource, length, caseSensitive=false) {
+        if (! query) {
+            return;
+        }
+
+        const finalQuery = caseSensitive ? query : query.toLowerCase();
+        let findings = {};
+
+        const nodes = this._data.nodes;
+        findings["nodeLabels"] = nodes
+            .filter(node => node.label.toLowerCase().includes(finalQuery))
+            .map(node => [`${currentDataSource}#${node.id}`, _getExtendedSubstring(node.label, query, length)]);
+        findings["nodeInfos"] = nodes
+            .filter(node => node.info.toLowerCase().includes(finalQuery))
+            .map(node => [`${currentDataSource}#${node.id}`, _getExtendedSubstring(node.info, query, length)]);
+
+        const edges = this._data.edges;
+        findings["edgeLabels"] = edges
+            .filter(edge => edge.label.toLowerCase().includes(finalQuery))
+            .map(edge => [`${currentDataSource}#${edge.id}`, _getExtendedSubstring(edge.label, query, length)]);
+        findings["edgeInfos"] = edges
+            .filter(edge => edge.info.toLowerCase().includes(finalQuery))
+            .map(edge => [`${currentDataSource}#${edge.id}`, _getExtendedSubstring(edge.info, query, length)]);
+
+        return findings;
+    }
+
     async setDataFromOuterData() {
         if (this._data.outer) {
             this.setDataFromSource(this._data.outer);
@@ -318,4 +345,16 @@ function _getEdgeId(source, target) {
     else {
         return `${target} - ${source}`;
     }
+}
+
+function _getExtendedSubstring(fullString, substring, length) {
+    const index = fullString.indexOf(substring);
+    if (index === -1) {
+        return '';
+    }
+
+    const start = Math.max(0, index - length);
+    const end = Math.min(fullString.length, index + substring.length + length);
+
+    return fullString.substring(start, end);
 }

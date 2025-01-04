@@ -3,7 +3,8 @@
 
 ## TO-DO
 
-* make info optional
+* make an optional searcher
+* make info DIV optional
 * edges integration with router
 * cluster integration with router
 * better content on cluster's info

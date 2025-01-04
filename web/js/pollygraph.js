@@ -13,3 +13,8 @@ export function pollygraph(datasourceInitialContent, spiRootPath="", datasourceR
     const router = datasourceRootPath != "" ? new Router(spiRootPath, datasourceRootPath) : null;
     controller.init(datasourceInitialContent, router);
 }
+
+export function search(query) {
+    const result = controller.search(query, 10);
+    return result;
+}
