@@ -32,11 +32,19 @@ searchInput.addEventListener('input', () => {
         filteredData.nodeLabels.forEach(suggestion => {
             const [id, label] = suggestion;
             const li = document.createElement('li');
+            li.setAttribute('tabindex', '0');
             li.innerHTML = label.replace(new RegExp(searchTerm, 'gi'), match => `<strong>${match}</strong>`);
             li.addEventListener('click', () => {
                 searchInput.value = label;
                 suggestions.style.display = 'none';
                 controller.onFocusChange(id);
+            });
+            li.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    searchInput.value = label;
+                    suggestions.style.display = 'none';
+                    controller.onFocusChange(id);
+                }
             });
             suggestions.appendChild(li);
         });

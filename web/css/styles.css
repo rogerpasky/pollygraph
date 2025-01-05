@@ -20,6 +20,8 @@
     border: 1px solid #00F;
     padding: 10px;
     resize: horizontal;
+    overflow: auto;
+    position: relative;
 }
 
 .info {
@@ -30,11 +32,34 @@
     overflow-y: auto;
 }
 
+.search-container {
+    position: relative;
+    width: 100%;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+}
+
 #suggestions {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
     display: none;
     position: absolute;
+    top: 100%;
+    left: 0;
     background-color: white;
     z-index: 1;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 #suggestions li {
     list-style: none;
