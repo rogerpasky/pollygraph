@@ -26,18 +26,18 @@ export class Model {
 
         findings["nodeLabels"] = nodes
             .filter(node => node.label.toLowerCase().includes(query))
-            .map(node => [`${currentDataSource}#${node.id}`, _getExtendedSubstring(node.label, query, caseSensitive, length)]);
+            .map(node => [`${node.id}`, _getExtendedSubstring(node.label, query, caseSensitive, length)]);
         findings["nodeInfos"] = nodes
             .filter(node => node.info.toLowerCase().includes(query))
-            .map(node => [`${currentDataSource}#${node.id}`, _getExtendedSubstring(node.info, query, caseSensitive, length)]);
+            .map(node => [`${node.id}`, _getExtendedSubstring(node.info, query, caseSensitive, length)]);
 
         const edges = this._data.edges;
         findings["edgeLabels"] = edges
             .filter(edge => edge.label.toLowerCase().includes(query))
-            .map(edge => [`${currentDataSource}#${edge.id}`, _getExtendedSubstring(edge.label, query, caseSensitive, length)]);
+            .map(edge => [`${edge.id}`, _getExtendedSubstring(edge.label, query, caseSensitive, length)]);
         findings["edgeInfos"] = edges
             .filter(edge => edge.info.toLowerCase().includes(query))
-            .map(edge => [`${currentDataSource}#${edge.id}`, _getExtendedSubstring(edge.info, query, caseSensitive, length)]);
+            .map(edge => [`${edge.id}`, _getExtendedSubstring(edge.info, query, caseSensitive, length)]);
 
         return findings;
     }
