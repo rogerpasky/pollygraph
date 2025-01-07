@@ -1,6 +1,8 @@
 import { Model } from './model.js';
 import { View } from './view.js';
+import { Informer } from './informer.js';
 import { Router } from './router.js';
+import { Searcher } from './searcher.js';
 
 
 export class Controller {
@@ -18,7 +20,9 @@ export class Controller {
         this._view.setController(this);
         this._model.setController(this);
 
+        this._informer = null;
         this._router = null;
+        this._searcher = null;
         this._focusedNodeId = null;
         this._preFocusedNodeId = null;
         this._focusedEdgeId = null;
@@ -27,11 +31,21 @@ export class Controller {
         this._history = [];
     }
 
-    init(datasourceInitialContent, router=null) {
+    init(datasourceInitialContent, informer=null, router=null, searcher=null) {
+        if (informer && informer.constructor !== Informer) {
+            throw new Error('Provided `informer` is not a proper Informer instance');
+        }
+        this._informer = informer;
+
         if (router && router.constructor !== Router) {
             throw new Error('Provided `router` is not a proper Router instance');
         }
         this._router = router;
+
+        if (searcher && searcher.constructor !== Searcher) {
+            throw new Error('Provided `searcher` is not a proper Searcher instance');
+        }
+        this._searcher = searcher;
 
         if (this._router) {
             const onUrlChangeCallback = this.setDataFromSource.bind(this)
@@ -59,7 +73,7 @@ export class Controller {
         this._focusedEdgeId = null;
 
         this._view.displayFocusOnNodeId(this._focusedNodeId);
-        this._view.displayElementInfo(this._focusedNodeId);
+        this._informer && this._informer.onInfoChange(this._model.getInfo(this._focusedNodeId));
 
         if (this._router && this._currentDataSource !== "") {  // TODO: handle clusters' paths
             this._router.route(this._currentDataSource, this._focusedNodeId);
@@ -84,7 +98,7 @@ export class Controller {
         this._focusedEdgeId = edgeId;
 
         this._view.displayFocusOnEdgeId(this._focusedEdgeId);
-        this._view.displayElementInfo(this._focusedEdgeId);
+        this._informer && this._informer.onInfoChange(this._model.getInfo(this._focusedEdgeId));
         console.log("Focused Edge: " + this._focusedEdgeId);
     }
 
@@ -157,25 +171,14 @@ export class Controller {
         this._model.setDataFromOuterData();
     }
 
-    focusDetails() {
-        console.log("Focus Details");
-        this._traversingNearby = true;
-        this._view.focusInfo();
-        this._traversingNearby = false;
-    }
-
-    focusBackFromDetails() {
-        console.log("Focus Back From Details");
+    focusBackToGraph() {
+        console.log("Focus Back To Graph");
         if (this._focusedEdgeId) {
             this._view.findAndFocusElement(this._focusedEdgeId);
         }
         else {
             this._view.findAndFocusElement(this._focusedNodeId);
         }
-    }
-
-    getInfo(elementId) {
-        return this._model.getInfo(elementId);
     }
 
     // Event handlers ----------------------------------------------------------

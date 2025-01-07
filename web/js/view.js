@@ -26,19 +26,15 @@ const EDGE_OPACITY_UNFOCUSED = 0.2;
 
 
 export class View {
-    constructor(
-        nonDirectedEdgeTextFormatter = _defaultNonDirectedEdgeTextFormatter,
-        directedEdgeTextFormatter = _defaultDirectedEdgeTextFormatter,
-    ) {
-        this._nonDirectedEdgeTextFormatter = nonDirectedEdgeTextFormatter;
-        this._directedEdgeTextFormatter = directedEdgeTextFormatter;
+    constructor(graphSvgId, nonDirectedEdgeTextFormatter, directedEdgeTextFormatter) {
+        this._nonDirectedEdgeTextFormatter = nonDirectedEdgeTextFormatter || _defaultNonDirectedEdgeTextFormatter;
+        this._directedEdgeTextFormatter = directedEdgeTextFormatter || _defaultDirectedEdgeTextFormatter;
         this._controller = null;
         this._edgesSelection = null;
         this._nodesSelection = null;
         this._simulation = null;
         this._keyModifierStatus = {"Shift": false, "Alt": false, "Control": false, "Meta": false, "CapsLock": false};
-        this._svg = _getSvgSelection('#the-graph');
-        this._infoDiv = _getInfoDiv('info');
+        this._svg = _getSvgSelection(graphSvgId);
         this._setKeyCallbacks();
         this._restart()
     }
@@ -109,11 +105,6 @@ export class View {
             });
     }
 
-    displayElementInfo(elementId) {
-        const text = this._controller.getInfo(elementId);
-        this._infoDiv.innerHTML = text;
-    }
-
     // Find and Focus methods --------------------------------------------------
 
     findAndFocusElement(elementId) {
@@ -131,10 +122,6 @@ export class View {
         element.focus();
     }
 
-    focusInfo() {
-        this._infoDiv.focus();
-    }
-
     // Setup methods -----------------------------------------------------------
 
     _restart() {
@@ -150,9 +137,8 @@ export class View {
     }
 
     _setKeyCallbacks() {
-        d3.select("body")
-            .on("keydown", (event) => this._onKeydown(event.key))
-            .on("keyup", (event) => this._onKeyup(event.key));
+        document.addEventListener("keydown", (event) => this._onKeydown(event.key));
+        document.addEventListener("keyup", (event) => this._onKeyup(event.key));
     }
 
     _createNodes(nodesData) {
@@ -329,11 +315,8 @@ export class View {
         else if (key === "Enter" && this._onlyShiftKeyPressed()) {
             this._controller.focusOuter();
         }
-        else if (key === " " && this._noModifierKeyPressed()) {
-            this._controller.focusDetails();
-        }
         else if (key === "Escape" && this._noModifierKeyPressed()) {
-            this._controller.focusBackFromDetails();
+            this._controller.focusBackToGraph();
         }
         else if (key in this._keyModifierStatus) {
             this._keyModifierStatus[key] = true;
@@ -413,13 +396,7 @@ function _getHeight(element) {
 }
 
 function _getSvgSelection(elementId) {
-    return d3.select(elementId);
-}
-
-function _getInfoDiv(elementId) {
-    const div = document.getElementById(elementId);
-    div.setAttribute('tabindex', 0);
-    return div;
+    return d3.select(`${elementId[0] !== "#" ? "#" : ""}${elementId}`);
 }
 
 function _getRadius(d) {

@@ -10,11 +10,14 @@ export class Searcher {
             this._caseSensitive = false;
 
             this._input.addEventListener('input', this._onInput.bind(this));
+            this._keyModifierStatus = {"Shift": false, "Alt": false, "Control": false, "Meta": false, "CapsLock": false};
+            document.addEventListener('keydown', this._onKeydown.bind(this));
+            document.addEventListener('keyup', this._onKeyup.bind(this));
         }
     }
 
     _search(query) {
-        const result = this._controller.search(query, 10);
+        const result = this._controller.search(query, 20);
         return result;
     }
 
@@ -52,5 +55,24 @@ export class Searcher {
         this._input.value = label;
         this._suggestions.style.display = 'none';
         this._controller.onFocusChange(id);
+    }
+
+    _onKeydown(event) {
+        if (this._keyModifierStatus['Control'] && event.key === 'f') {
+            this._input.focus();
+        }
+        else if (event.key in this._keyModifierStatus) {
+            this._keyModifierStatus[event.key] = true;
+        }
+    }
+
+    _onKeyup(event) {
+        if (event.key in this._keyModifierStatus) {
+            this._keyModifierStatus[event.key] = false;
+        }
+        else if (event.key === 'Escape') {
+            this._input.value = '';
+            this._suggestions.style.display = 'none';
+        }
     }
 }

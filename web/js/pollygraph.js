@@ -3,15 +3,37 @@ import { View } from './view.js';
 import { Controller } from './controller.js';
 import { Router } from './router.js';
 import { Searcher } from './searcher.js';
+import { Informer } from './informer.js';
 
 
-const model = new Model();
-const view = new View();
-const controller = new Controller(model, view);
-const searcher = new Searcher(controller, "search-input", "search-suggestions");
+export function pollygraph(
+    {
+        graphSvgId = "", 
+        datasourceInitialContent = "", 
+        spiRootPath="", 
+        datasourceRootPath="", 
+        informerDivId="", 
+        searchInputId="", 
+        searchSuggestionsUlId="",
+        nonDirectedEdgeTextFormatter=null,
+        directedEdgeTextFormatter=null
+    } = {}
+) {  
+    if (graphSvgId == "") {
+        throw new Error('graphSvgId is required');
+    }
+    if (datasourceInitialContent == "") {
+        throw new Error('datasourceInitialContent is required');
+    }
 
+    const model = new Model();
+    const view = new View(graphSvgId, nonDirectedEdgeTextFormatter, directedEdgeTextFormatter);
+    const controller = new Controller(model, view);
 
-export function pollygraph(datasourceInitialContent, spiRootPath="", datasourceRootPath="") {  
+    const informer = informerDivId != "" ? new Informer(informerDivId) : null;
     const router = datasourceRootPath != "" ? new Router(spiRootPath, datasourceRootPath) : null;
-    controller.init(datasourceInitialContent, router);
+    const searcher = searchInputId != "" ? new Searcher(controller, searchInputId, searchSuggestionsUlId) : null;
+
+    controller.init(datasourceInitialContent, informer, router, searcher);
+    return controller
 }

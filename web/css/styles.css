@@ -24,7 +24,7 @@
     position: relative;
 }
 
-.info {
+.informer {
     width: auto;
     height: auto;
     border: 1px solid #F00;
@@ -37,7 +37,7 @@
     width: 100%;
 }
 
-#search-input {
+.search-input {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
@@ -46,7 +46,7 @@
     border-radius: 5px;
 }
 
-#search-suggestions {
+.search-suggestions {
     width: 100%;
     padding: 0px;
     margin: 0px;
@@ -61,11 +61,11 @@
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-#search-suggestions li {
+.search-suggestions li {
     list-style: none;
     padding: 10px;
     cursor: pointer;
 }
-#search-suggestions li:hover {
+.search-suggestions li:hover {
     background-color: #f0f0f0;
 }

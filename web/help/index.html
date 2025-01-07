@@ -3,12 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Polly Graph</title>
+  <title>Polly Graph: Help</title>
 
   <script src="https://d3js.org/d3.v7.min.js" defer></script>
   <script type="module" defer>
     import { pollygraph } from '/js/pollygraph.js';
-    pollygraph("/help/help-contents/help-content-1", "/help", "/help/help-contents");
+    const controller = pollygraph(
+      {
+        datasourceInitialContent: "/help/help-contents/help-content-1", 
+        spiRootPath: "/help", 
+        datasourceRootPath: "/help/help-contents", 
+        graphSvgId: "the-graph", 
+        informerDivId: "the-informer-div", 
+        searchInputId: "the-search-input", 
+        searchSuggestionsUlId: "the-search-suggestions-ul"
+      }
+    );
   </script>
   
   <link rel="stylesheet" href="/css/styles.css">
@@ -24,10 +34,10 @@
 
   <div id="sidebar" class="resizable">
     <div class="search-container">
-      <input type="text" id="search-input" placeholder="Search... 🔎">
-      <ul id="search-suggestions"></ul>
+      <input type="text" id="the-search-input" class="search-input" placeholder="Search...">
+      <ul id="the-search-suggestions-ul" class="search-suggestions"></ul>
     </div>
-    <div id="info" class="info"></div>
+    <div id="the-informer-div" class="informer"></div>
   </div>
 
 </div>
