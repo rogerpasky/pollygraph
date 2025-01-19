@@ -17,7 +17,7 @@
 .resizable {
     width: 40%;
     height: auto;
-    border: 1px solid #00F;
+    border: 1px solid #d3d3d3;
     padding: 10px;
     resize: horizontal;
     overflow: auto;
@@ -27,7 +27,6 @@
 .informer {
     width: auto;
     height: auto;
-    border: 1px solid #F00;
     padding: 10px;
     overflow-y: auto;
 }

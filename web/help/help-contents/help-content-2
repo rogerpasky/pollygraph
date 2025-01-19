@@ -6,7 +6,7 @@
             "type": 1, 
             "size": 0.5,
             "label": "Node One", 
-            "info": "<H1>Help</H1>This is node one.",
+            "info": "<H1>Help</H1><p>This is the first <strong>node</strong> of a two nodes <strong>graph</strong>. This graph has only one edge connecting those two nodes.</p><p>You can notice this node is the sellected one because it has a different colored border or because your preferred accessibility tool should have told you its label. You can sellect any node or edge by directly clicking them or using your keyboard, which has a higer accesibility.</p><p></p><p>press [ENTER] key or [CLICK] on it to dig into its content.</p>",
             "inner": ""
         },
         {

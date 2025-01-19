@@ -6,7 +6,7 @@
             "type": 0, 
             "size": 0.5,
             "label": "Start", 
-            "info": "<H1>Help</H1>This is a node.",
+            "info": "<H1>Help</H1><p>This is a <strong>node</strong>.</p><p>We assume you know enough about graphs, their <strong>nodes</strong> and <strong>edges</strong> connecting them, so we'll focus in this <strong>info panel</strong> how to manage in <strong>Pollygraph</strong> to traverse trhough their content.</p><p>In this case this is a single node graph, showing no edges.</p><p>Every node has an <strong>id</strong>, and the id of this one is \"start\". Ids must must be different within a graph and comply with web identifiers riles (no whitespaces and words are preferred to be lowercase and separated by hyphens in what's called \"kebab-case\"). In order to be more readable, nodes can have an optional <strong>label</strong> as well.</p><p>In this case, the label is \"Start\". Every time you arrive to a node it will be spoken through your preferred accessibility tool its label or, if there's none, its id. Hovering with the mouse will show the text as well.</p><p>Press [ENTER] key or [DOUBLE CLICK] on it to dig into its content.</p>",
             "inner": "/help/help-contents/help-content-2"
         }
     ],
